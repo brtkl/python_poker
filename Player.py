@@ -12,29 +12,32 @@ class Player():
     def __init__(self, name, cur_round, balance=1000, strategy='default'):
         self.balance=balance
         self.strategy=Strategy(self,cur_round)
+        self.cur_round=cur_round
         self.name=name
         self.hand=[]
         self.bet=0
+        self.probwin=0
         self.folded=0
-        self.cur_round=cur_round
+        
         
     def updatebalance(self, bet, balanceonly=0):
-        self.balance+=-bet
+        self.balance+=bet
         if balanceonly == 0:
-            self.bet+=bet
+            self.bet+=-bet
         
     def check(self):
         val=self.cur_round.maxbet-self.bet
-        self.updatebalance(val)
+        self.updatebalance(-val)
         self.cur_round.pot+=val
         self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
     
     def raise_(self, val):
         if val<self.cur_round.maxbet:
             print('ERROR: raise by at least the previous bet/raise')
-        self.updatebalance(val)
+        self.updatebalance(-val)
         self.cur_round.pot+=val
         self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
+        self.cur_round.minraise=max(self.cur_round.minraise,val)
     
     def fold(self):
         self.folded=1

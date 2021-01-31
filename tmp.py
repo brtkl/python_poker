@@ -63,6 +63,7 @@ a=1
 b=a
 a=2
 
+r1.hplayer.balance
 
 
 d1=Deck()

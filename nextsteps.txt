@@ -1,0 +1,10 @@
+-upper cap when betting
+-all in implemented
+-creation of Game class
+-implementation for up to 8 players
+-interactive mode
+-adding more tests
+-Frontend implementation? 
+  -ask Kacper?
+-Strategy() improvements
+  -Machine Learning implementation?

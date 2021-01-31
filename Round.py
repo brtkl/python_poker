@@ -8,6 +8,7 @@ Created on Sat Jan 30 10:43:21 2021
 from Player import Player
 from Deck import Deck
 from eval_hand import eval_hand
+from calc_probwin import calc_probwin
 
 class Round():
     """ round of a game. Game consists of rounds, round consist of stages
@@ -29,6 +30,7 @@ class Round():
         self.cplayer=Player('cmp', self)
         self.players_active=[self.hplayer, self.cplayer]
         self.button='brtkl'
+        self.minraise=bblind
     
     def assigncards(self):
         self.hplayer.hand=self.deck.draw(2)
@@ -45,8 +47,8 @@ class Round():
             tmp1=self.bblind
             tmp2=self.sblind
             self.player_ord=[self.cplayer,self.hplayer]
-        self.hplayer.updatebalance(tmp1)
-        self.cplayer.updatebalance(tmp2)
+        self.hplayer.updatebalance(-tmp1)
+        self.cplayer.updatebalance(-tmp2)
         self.pot=self.sblind+self.bblind
         self.maxbet=self.bblind
     
@@ -54,11 +56,13 @@ class Round():
         if len(self.players_active)>1:
             n=0
             tmp=self.player_ord[:]
+            for p in tmp:
+                    p.probwin=round(calc_probwin(p.hand, self.table)[0],2)
             if self.stage != 'pre-flop':
                 tmp.reverse()
             while((min([i.bet for i in self.players_active]) != self.maxbet) or n<1):
                 for p in tmp:
-                    if len(self.players_active)>1:
+                    if len(self.players_active)>1 and (p.bet<self.maxbet or n<1):
                         p.strategy.strat(self.stage)
                 n+=1
     
@@ -81,10 +85,23 @@ class Round():
         resc=eval_hand(self.cplayer.hand+self.table)
         if (resh>resc and self.hplayer.folded==0) or self.cplayer.folded==1:
             self.hplayer.updatebalance(self.pot, balanceonly=1)
+            if self.cplayer.folded==1:
+                print(f"{self.hplayer.name} wins, opponent folded")
+            else:
+                print(f"{self.hplayer.name} wins having {resh}")
+                
+        
         elif (resh<resc and self.cplayer.folded==0) or self.hplayer.folded==1:
             self.cplayer.updatebalance(self.pot, balanceonly=1)
+            if self.hplayer.folded==1:
+                print(f"{self.cplayer.name} wins, opponent folded")
+            else:
+                print(f"{self.cplayer.name} wins having {resc}")
+            
         elif resh==resc:
             self.hplayer.updatebalance(self.pot/2, balanceonly=1)
             self.cplayer.updatebalance(self.pot/2, balanceonly=1)
+            print(f"{self.hplayer.name} and {self.cplayer.name} win, both"
+                  +f"having {resc}")
             
     
