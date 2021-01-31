@@ -25,15 +25,16 @@ class Round():
         self.pot=0
         self.maxbet=0
         self.table=[]
-        self.round_finished=0
-        self.players_active=2
         self.hplayer=Player('brtkl', self)
         self.cplayer=Player('cmp', self)
+        self.players_active=[self.hplayer, self.cplayer]
         self.button='brtkl'
     
     def assigncards(self):
         self.hplayer.hand=self.deck.draw(2)
         self.cplayer.hand=self.deck.draw(2)
+        print(f"{self.hplayer.name} hand: {self.hplayer.hand} \n")
+        print(f"{self.cplayer.name} hand: {self.cplayer.hand} \n")
         
     def assignblinds(self):
         if self.button==self.hplayer.name:
@@ -50,18 +51,19 @@ class Round():
         self.maxbet=self.bblind
     
     def betting(self):
-        if self.round_finished==0:
+        if len(self.players_active)>1:
             n=0
+            tmp=self.player_ord[:]
             if self.stage != 'pre-flop':
-                tmp=sorted(self.player_ord,reverse=True)
-            while(min([i.bet for i in self.player_ord]) != self.maxbet or n<1):
+                tmp.reverse()
+            while((min([i.bet for i in self.players_active]) != self.maxbet) or n<1):
                 for p in tmp:
-                    if self.players_active>1:
+                    if len(self.players_active)>1:
                         p.strategy.strat(self.stage)
                 n+=1
     
     def nextstage(self,newstage):
-        if self.round_finished==0:
+        if len(self.players_active)>1:
             self.stage=newstage
             if newstage=='flop':
                 self.table=self.deck.draw(3)
@@ -69,16 +71,20 @@ class Round():
                 self.table+=self.deck.draw(1)
             elif newstage=='river':
                 self.table+=self.deck.draw(1)
+            print(f"{newstage}: {self.table} \n")
+        else:
+            print("All but 1 players folded \n")
+            
     
-    def checkwiner(self):
-        resh=eval_hand(self.hplayer.hand,self.table)
-        resc=eval_hand(self.cplayer.hand,self.table)
-        if resh>resc:
+    def finalizeround(self):
+        resh=eval_hand(self.hplayer.hand+self.table)
+        resc=eval_hand(self.cplayer.hand+self.table)
+        if (resh>resc and self.hplayer.folded==0) or self.cplayer.folded==1:
             self.hplayer.updatebalance(self.pot, balanceonly=1)
+        elif (resh<resc and self.cplayer.folded==0) or self.hplayer.folded==1:
+            self.cplayer.updatebalance(self.pot, balanceonly=1)
         elif resh==resc:
             self.hplayer.updatebalance(self.pot/2, balanceonly=1)
             self.cplayer.updatebalance(self.pot/2, balanceonly=1)
-        elif resh<resc:
-            self.cplayer.updatebalance(self.pot, balanceonly=1)
             
     

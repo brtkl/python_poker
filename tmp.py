@@ -18,6 +18,10 @@ highcheck=[(14,'S'),(14,'H')]
 highcheck=[(14,'C'),(13,'C')]
 calc_probwin(highcheck,[])
 
+a=highcheck[:]
+
+a.reverse()
+
 tst=d1.cards
 
 
@@ -40,6 +44,24 @@ eval_hand(myhand+table)
 
 calc_probwin(myhand, table)
 
+
+class X:
+    def __init__(self):
+        self.abc=7
+
+x1=X()
+x1.abc
+
+y1=x1
+
+y1.abc=44
+l1=[x1,y1]
+
+l1.remove(y1)
+
+a=1
+b=a
+a=2
 
 
 

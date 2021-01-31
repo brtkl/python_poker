@@ -31,6 +31,6 @@ r1.betting()
 
 #river bets
 r1.nextstage('river')
-r1.betting
+r1.betting()
 
-r1.checkwinner()
+r1.finalizeround()

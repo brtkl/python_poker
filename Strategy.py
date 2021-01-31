@@ -15,12 +15,12 @@ class Strategy:
         
     def strat(self, stage):
         # if stage=='pre-flop':
-            if self.player.bet < self.round_.maxbet:
-                tmpprob=calc_probwin(self.player.hand, self.round_.table)[0]
+            if self.player.bet <= self.round_.maxbet:
+                tmpprob=round(calc_probwin(self.player.hand, self.round_.table)[0],2)
                 if tmpprob>0.6:
                     self.player.raise_(self.round_.maxbet)
-                    print(f'Player {self.player.name} raises by {self.round_.maxbet}')
-                elif tmpprob>0.4:
+                    print(f'Player {self.player.name} raises by {self.round_.maxbet/2}')
+                elif tmpprob>=0.4 or self.player.bet==self.round_.maxbet:
                     self.player.check()
                     print(f'Player {self.player.name} checks')
                 else:

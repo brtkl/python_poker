@@ -38,4 +38,4 @@ class Player():
     
     def fold(self):
         self.folded=1
-        self.cur_round.players_active += -1
+        self.cur_round.players_active.remove(self)
