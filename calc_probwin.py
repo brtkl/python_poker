@@ -5,7 +5,7 @@ Created on Wed Jan 27 20:44:33 2021
 @author: brtk
 """
 from itertools import combinations
-from Classes import Deck
+from Deck import Deck
 from eval_hand import eval_hand
 import random
 
@@ -66,8 +66,9 @@ def calc_probwin(hand, table, type='def', simnum=10000):
         ntot=0
         
         for i in range(simnum):
-            random.shuffle(tmpdeck2)
-            rand_row=tmpdeck2[:9-len(hand+table)]
+            #random.shuffle(tmpdeck2)
+            rand_row=random.sample(tmpdeck2,7-len(table))
+            #rand_row=tmpdeck2[:9-len(hand+table)]
             tmp_h=eval_hand(hand+table+rand_row[2:])
             tmp_com=eval_hand(rand_row+table)
             ntot += 1
@@ -80,3 +81,11 @@ def calc_probwin(hand, table, type='def', simnum=10000):
     
         return [round(nwin/ntot,3), round(ndra/ntot,3), round(nlos/ntot,3), 
                 'sim']
+    
+    
+    
+    
+    
+    
+    
+    

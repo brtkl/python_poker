@@ -28,25 +28,8 @@ class Deck():
             res.append(self.cards.pop(0))
         return res
 
-class Player():
-    """ defining a player with attributes"""
-    def __init__(self, name, capital=1000, strategy='default'):
-        self.capital=capital
-        self.strategy=strategy
-        self.name=name
-    
-        
-class Round():
-    """ round of a game. Game consists of rounds, round consist of stages
-    (pre-flop, flop, turn, river) """
-    def __init__(self, players=[], bblind=10, sblind=5):
-        deck=Deck()
-        deck.shuffle()
-        self.players=players
-        self.bblind=bblind
-        self.sblind=sblind
-        self.stage='pre-flop'
 
+  
 
 
     
