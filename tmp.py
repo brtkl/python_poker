@@ -44,15 +44,37 @@ eval_hand(myhand+table)
 
 calc_probwin(myhand, table)
 
+class Y:
+    def __init__(self,list):
+        self.list=list
 
 class X:
-    def __init__(self):
-        self.abc=7
+    def __init__(self,abc):
+        self.abc=abc
+        
+class Z:
+    def __init__(self,insty):
+        self.check=insty
+    
 
-x1=X()
+x1=X(1)
+x2=X(2)
+y1=Y([x1,x2])
+z1=
+
+tmp=[x1,x2]
+
+tmp2=tmp[:]
+
+tmp2[0].abc=7
+
+tmp[0].abc
+
 x1.abc
 
-y1=x1
+y1=X()
+
+y1=X()
 
 y1.abc=44
 l1=[x1,y1]

@@ -15,18 +15,19 @@ from Player import Player
 class Game():
     """ Game class - main mode"""
     def __init__(self, players, mode='sim', maxrounds=100):
-        self.players_init=[Player(p) for p in players]
-        self.players_active=self.players_init[:]
+        self.players_init=players
+        self.players_active=[Player(p) for p in players]
         self.maxrounds=maxrounds
         self.mode=mode
         
     def play(self):
         n=0
         while(len(self.players_active)>0 and n<=self.maxrounds):
+            r=Round(self)
             for p in self.players_active:
                 if p.balance<=0:
                     self.players_active.remove(p)
-            r=Round()
+                p.prepare_for_round(r)
             r.assigncards()
             r.assignblinds()
             #pre-flop bets

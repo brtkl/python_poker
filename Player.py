@@ -9,16 +9,21 @@ from Strategy import Strategy
 
 class Player():
     """ defining a player with attributes"""
-    def __init__(self, name, cur_round, balance=1000, strategy='default'):
+    def __init__(self, name, balance=1000, strategy='default'):
         self.balance=balance
-        self.strategy=Strategy(self,cur_round)
-        self.cur_round=cur_round
         self.name=name
         self.hand=[]
         self.bet=0
         self.probwin=0
         self.folded=0
         
+    def prepare_for_round(self, cur_round):
+        self.hand=[]
+        self.cur_round=cur_round
+        self.strategy=Strategy(self,cur_round)
+        self.bet=0
+        self.probwin=0
+        self.folded=0
         
     def updatebalance(self, bet, balanceonly=0):
         self.balance+=bet
