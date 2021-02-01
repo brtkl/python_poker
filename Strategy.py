@@ -12,14 +12,29 @@ class Strategy:
         self.round_=round_
         
     def strat(self, stage):
-        # if stage=='pre-flop':
-            if self.player.bet <= self.round_.maxbet:
-                if self.player.probwin>0.6:
-                    self.player.raise_(self.round_.minraise)
-                    print(f'Player {self.player.name} raises by {self.round_.minraise}')
-                elif self.player.probwin>=0.4 or self.player.bet==self.round_.maxbet:
-                    self.player.check()
-                    print(f'Player {self.player.name} checks')
+        if stage=='pre-flop':
+            thrsh=0.4
+        else:
+            thrsh=0.45
+        if self.player.bet <= self.round_.maxbet:
+            checkminbal=min([i.balance for i in self.round_.players_active])
+            
+            if self.player.probwin>0.6:
+                if checkminbal==0: #if opp made all in it's sufficient to call
+                    self.player.call()
                 else:
-                    self.player.fold()
-                    print(f'Player {self.player.name} folds')
+                    propos=self.round_.minraise #replace with Erlang dist?
+                    if stage != 'pre-flop' and self.player.probwin>0.8:
+                        propos=self.player.balance #go all-in
+                    self.player.raise_(
+                        max(self.round_.maxbet - self.player.bet + 
+                            self.round_.minraise , min(checkminbal, propos)))
+                
+            elif self.player.probwin>=thrsh and self.player.bet<self.round_.maxbet:
+                self.player.call()
+                
+            elif self.player.bet==self.round_.maxbet:
+                self.player.check()
+                
+            else:
+                self.player.fold()

@@ -1,6 +1,8 @@
--upper cap when betting
--all in implemented
--creation of Game class
+-upper cap when betting				done			
+-all in implementation				done?
+-split check to call and check			done
+-creation of Game class				
+
 -implementation for up to 8 players
 -interactive mode
 -adding more tests

@@ -26,19 +26,31 @@ class Player():
             self.bet+=-bet
         
     def check(self):
+        print(f'Player {self.name} checks')
+        
+    def call(self):
+        allintxt=''
         val=self.cur_round.maxbet-self.bet
+        if val>=self.balance:
+            val=self.balance
+            allintxt='(all in)'
         self.updatebalance(-val)
         self.cur_round.pot+=val
         self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
+        print(f'Player {self.name} calls {allintxt}')
     
     def raise_(self, val):
-        if val<self.cur_round.maxbet:
-            print('ERROR: raise by at least the previous bet/raise')
+        allintxt=''
+        if val>=self.balance:
+            val=self.balance
+            allintxt='(all in)'
+        self.cur_round.minraise=max(self.cur_round.minraise, val-self.bet)
         self.updatebalance(-val)
         self.cur_round.pot+=val
-        self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
-        self.cur_round.minraise=max(self.cur_round.minraise,val)
+        self.cur_round.maxbet=max(self.cur_round.maxbet, self.bet)
+        print(f'Player {self.name} raises by {val} {allintxt}')
     
     def fold(self):
         self.folded=1
         self.cur_round.players_active.remove(self)
+        print(f'Player {self.name} folds')
