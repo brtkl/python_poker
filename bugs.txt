@@ -4,10 +4,28 @@ comp balance: 985
 Round 9 begins
 brtkl hand: [(10, 'H'), (4, 'D')]
 comp hand: [(8, 'H'), (4, 'C')]
-Player brtkl calls 
-Player comp checks
+Player brtkl calls 	10
+Player comp checks	10
 flop: [(2, 'C'), (4, 'H'), (13, 'C')]
+Player comp raises by 10 	20
+Player brtkl raises by 10 	30
+Player comp raises by 10 	40
+Player brtkl raises by 10 
 Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 	200
 Player brtkl raises by 10 
 Player comp raises by 10 
 Player brtkl raises by 10 
@@ -27,7 +45,7 @@ Player comp raises by 10
 Player brtkl raises by 10 
 Player comp raises by 10 
 Player brtkl raises by 10 
-Player comp raises by 10 
+Player comp raises by 10 	400
 Player brtkl raises by 10 
 Player comp raises by 10 
 Player brtkl raises by 10 
@@ -37,26 +55,8 @@ Player comp raises by 10
 Player brtkl raises by 10 
 Player comp raises by 10 
 Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
-Player comp raises by 10 
-Player brtkl raises by 10 
+Player comp raises by 10 	500
+Player brtkl raises by 10 	510
 Player comp calls ??? why call in this place?? prob doesn't change
 turn: [(2, 'C'), (4, 'H'), (13, 'C'), (13, 'D')]
 Player comp calls ???

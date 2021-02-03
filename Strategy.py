@@ -19,7 +19,7 @@ class Strategy:
         if self.player.bet <= self.round_.maxbet:
             checkminbal=min([i.balance for i in self.round_.players_r_active])
             if self.player.balance==0:
-                        self.player.check() #already all in
+                self.player.check() #already all in
             elif self.player.probwin>0.6:
                 if checkminbal==0: 
                     if self.player.bet < self.round_.maxbet:
@@ -30,7 +30,8 @@ class Strategy:
                     propos=self.round_.minraise #replace with Erlang dist?
                     if stage != 'pre-flop' and self.player.probwin>0.8:
                         propos=self.player.balance #go all-in
-                    if self.round_.maxbet>=self.player.balance>0:
+                        allinfn=1
+                    if self.round_.maxbet>=self.player.balance>0 and allinfn==1:
                         self.player.call() #call to all in
                     else:
                         self.player.raise_(
