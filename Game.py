@@ -60,6 +60,6 @@ class Game():
         
         
 
-g=Game(['brtkl', 'comp'], simnum_prob=5000)
+g=Game(['brtkl', 'comp'], simnum_prob=1000)
 
 g.play()

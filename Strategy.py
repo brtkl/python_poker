@@ -12,6 +12,7 @@ class Strategy:
         self.round_=round_
         
     def strat(self, stage):
+        allinfn=0
         if stage=='pre-flop':
             thrsh=0.4
         else:
