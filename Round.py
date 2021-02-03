@@ -25,8 +25,9 @@ class Round():
         self.maxbet=0
         self.table=[]
         self.players_r_active=cur_game.players_active[:]
-        self.button='brtkl'
+        self.button=cur_game.button_idx
         self.minraise=bblind
+        self.simnum_prob=cur_game.simnum_prob
     
     def assigncards(self):
         for p in self.players_r_active:
@@ -34,30 +35,37 @@ class Round():
             print(f"{p.name} hand: {p.hand}")
         
     def assignblinds(self):
-        if self.button==self.players_r_active[0].name:
-            tmp1=self.sblind
-            tmp2=self.bblind
-            self.player_ord=[self.players_r_active[0],self.players_r_active[1]]
+        lenact=len(self.players_r_active)
+        if lenact==2:
+            tmp=0
         else:
-            tmp1=self.bblind
-            tmp2=self.sblind
-            self.player_ord=[self.players_r_active[1],self.players_r_active[0]]
-        self.players_r_active[0].updatebalance(-tmp1)
-        self.players_r_active[1].updatebalance(-tmp2)
+            tmp=1
+        self.players_r_active[(self.button+tmp) % lenact].updatebalance(-self.sblind)
+        self.players_r_active[(self.button+1+tmp) % lenact].updatebalance(-self.bblind)
+        self.player_ord_preflop=self.players_r_active[
+            (self.button+2+tmp) % lenact:]+self.players_r_active[:(self.button+
+                                                               2+tmp) % lenact]
+        self.player_ord_postflop=self.players_r_active[
+            (self.button+1+tmp) % lenact:]+self.players_r_active[:(self.button+
+                                                               1+tmp) % lenact]
         self.pot=self.sblind+self.bblind
         self.maxbet=self.bblind
     
     def betting(self):
         if len(self.players_r_active)>1:
             n=0
-            tmp=self.player_ord[:]
-            for p in tmp:
-                    p.probwin=round(calc_probwin(p.hand, self.table)[0],2)
-            if self.stage != 'pre-flop':
-                tmp.reverse()
-            while((min([i.bet for i in self.players_r_active]) != self.maxbet) or n<1):
+            for p in self.players_r_active:
+                    p.probwin=round(calc_probwin(p.hand, self.table, 
+                                                 simnum=self.simnum_prob)[0],2)
+            if self.stage == 'pre-flop':
+               tmp=self.player_ord_preflop
+            else:
+               tmp=self.player_ord_postflop
+            while((min([i.bet for i in self.players_r_active if i.balance!=0]
+                       +[self.maxbet]) != self.maxbet) or n<1):
                 for p in tmp:
-                    if len(self.players_r_active)>1 and (p.bet<self.maxbet or n<1):
+                    if len(self.players_r_active)>1 and (p.bet<self.maxbet or n<1
+                                                         ) and p.folded==0:
                         p.strategy.strat(self.stage)
                 n+=1
     
@@ -70,36 +78,27 @@ class Round():
                 self.table+=self.deck.draw(1)
             elif newstage=='river':
                 self.table+=self.deck.draw(1)
-            print(f"{newstage}: {self.table} \n")
-        else:
-            print("All but 1 players folded \n")
+            print(f"{newstage}: {self.table}")
             
     
     def finalizeround(self):
-        resh=eval_hand(self.players_r_active[0].hand+self.table)
-        resc=eval_hand(self.players_r_active[1].hand+self.table)
-        if (resh>resc and self.players_r_active[0].folded==0
-            ) or self.players_r_active[1].folded==1:
+        if len(self.players_r_active)==1:
+            print(f"{self.players_r_active[0].name} wins, opponent folded")
             self.players_r_active[0].updatebalance(self.pot, balanceonly=1)
-            if self.players_r_active[1].folded==1:
-                print(f"{self.players_r_active[0].name} wins, opponent folded")
-            else:
+        else:
+            resh=eval_hand(self.players_r_active[0].hand+self.table)
+            resc=eval_hand(self.players_r_active[1].hand+self.table)
+            if (resh>resc):
+                self.players_r_active[0].updatebalance(self.pot, balanceonly=1)
                 print(f"{self.players_r_active[0].name} wins having {resh}")
-                
-        
-        elif (resh<resc and self.players_r_active[1].folded==0
-              ) or self.players_r_active[0].folded==1:
-            self.players_r_active[1].updatebalance(self.pot, balanceonly=1)
-            if self.players_r_active[0].folded==1:
-                print(f"{self.players_r_active[1].name} wins, opponent folded")
-            else:
-                print(f"{self.players_r_active[1].name} wins having {resc}")
-            
-        elif resh==resc:
-            self.players_r_active[0].updatebalance(self.pot/2, balanceonly=1)
-            self.players_r_active[1].updatebalance(self.pot/2, balanceonly=1)
-            print(f"{self.players_r_active[0].name} and "
-                  +f"{self.players_r_active[1].name} win, both"
+            elif (resh<resc):
+                self.players_r_active[1].updatebalance(self.pot, balanceonly=1)
+                print(f"{self.players_r_active[1].name} wins having {resc}")    
+            elif resh==resc:
+                self.players_r_active[0].updatebalance(self.pot/2, balanceonly=1)
+                self.players_r_active[1].updatebalance(self.pot/2, balanceonly=1)
+                print(f"{self.players_r_active[0].name} and "
+                  +f"{self.players_r_active[1].name} draw, both"
                   +f"having {resc}")
             
     

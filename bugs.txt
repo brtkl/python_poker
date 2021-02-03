@@ -1,0 +1,69 @@
+brtkl balance: 1015
+comp balance: 985
+
+Round 9 begins
+brtkl hand: [(10, 'H'), (4, 'D')]
+comp hand: [(8, 'H'), (4, 'C')]
+Player brtkl calls 
+Player comp checks
+flop: [(2, 'C'), (4, 'H'), (13, 'C')]
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp raises by 10 
+Player brtkl raises by 10 
+Player comp calls ??? why call in this place?? prob doesn't change
+turn: [(2, 'C'), (4, 'H'), (13, 'C'), (13, 'D')]
+Player comp calls ???
+Player brtkl calls ???
+river: [(2, 'C'), (4, 'H'), (13, 'C'), (13, 'D'), (6, 'H')]
+Player comp calls ???
+Player brtkl calls ???
+brtkl wins having [3, 13, 4, 10]
+brtkl balance: 1525
+comp balance: 475 ?? looks as if division by 2 /

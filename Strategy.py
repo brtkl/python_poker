@@ -17,17 +17,24 @@ class Strategy:
         else:
             thrsh=0.45
         if self.player.bet <= self.round_.maxbet:
-            checkminbal=min([i.balance for i in self.round_.players_active])
-            
-            if self.player.probwin>0.6:
-                if checkminbal==0: #if opp made all in it's sufficient to call
-                    self.player.call()
+            checkminbal=min([i.balance for i in self.round_.players_r_active])
+            if self.player.balance==0:
+                        self.player.check() #already all in
+            elif self.player.probwin>0.6:
+                if checkminbal==0: 
+                    if self.player.bet < self.round_.maxbet:
+                        self.player.call() #if opp made all in it's sufficient to call
+                    else:
+                        self.player.check()
                 else:
                     propos=self.round_.minraise #replace with Erlang dist?
                     if stage != 'pre-flop' and self.player.probwin>0.8:
                         propos=self.player.balance #go all-in
-                    self.player.raise_(
-                        max(self.round_.maxbet - self.player.bet + 
+                    if self.round_.maxbet>=self.player.balance>0:
+                        self.player.call() #call to all in
+                    else:
+                        self.player.raise_(
+                            max(self.round_.maxbet - self.player.bet + 
                             self.round_.minraise , min(checkminbal, propos)))
                 
             elif self.player.probwin>=thrsh and self.player.bet<self.round_.maxbet:

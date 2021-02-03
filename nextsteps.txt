@@ -1,13 +1,14 @@
 -upper cap when betting					done		
 -all in implementation					done?
 -split check to call and check				done
--creation of Game class					
-  -button rotating
-  -adding stats/summary from a game
-  -speed up? 20 secs per round/player is too much
+-creation of Game class					done
+  -button rotating					done
+  -adding stats/summary from a game			later
+  -speed up? 20 secs per round/player is too much	later
+  -create some tests for Round/Game for 2 players	
 
--implementation for up to 8 players
 -interactive mode
+-implementation for up to 8 players
   -player attrib - human vs comp?
 -adding more tests
 -Frontend implementation? 
@@ -19,22 +20,3 @@
 
 
 
-
-without Game class the structure was:
--Round()
-  -Player(round)
-    -Strategy(player,round)
-
-now:
--Game()
-  -Player()
-  -Round(game)1
-  -Player.prepare_for_round(round1)
-    -Strategy(player,round1)
-  -Round(game)2
-  -Player.prepare_for_round(round1)
-    -Strategy(player,round1)
-  -Round(game)3
-  -Player.prepare_for_round(round1)
-    -Strategy(player,round1)
-  ...
