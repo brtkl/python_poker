@@ -6,11 +6,20 @@
   -adding stats/summary from a game			later
   -speed up? 20 secs per round/player is too much	later
   -create some tests for Round/Game for 2 players	
+  -implement strategies from sas?
+  -refactor Strategy?
+
+
+-implementation for up to 8 players
+  -note that probabilities are for heads-up. 
+   To create simul prob mode for x players? 
+   Alternatively we could assume independence 
+   (not exactly true) and calc prob^(num of opps)
+   i.e. if prob=0.9 then prob of winning with both=0.81
 
 -interactive mode
--implementation for up to 8 players
   -player attrib - human vs comp?
--adding more tests
+-use prob of draw in strats as well?
 -Frontend implementation? 
   -ask Kacper?
 -Strategy() improvements

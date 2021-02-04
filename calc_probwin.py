@@ -18,7 +18,7 @@ def calc_probwin(hand, table, type='def', simnum=10000):
         
     if len(hand)!=2 or len(table)>5 or isinstance(hand,list) != True:
         return ['2 cards in hand and between 0 and 5 cards in a table are'
-                +'needed in lists']
+                +' needed in lists']
     
     if len(hand+table) != len(set(hand+table)):
         return ['repeating cards in the input data']
