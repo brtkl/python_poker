@@ -1,21 +1,21 @@
+##############################
+GENERAL status
+##############################
 -upper cap when betting					done		
 -all in implementation					done?
 -split check to call and check				done
 -creation of Game class					done
   -button rotating					done
-  -adding stats/summary from a game			later
-  -speed up? 20 secs per round/player is too much	later
-  -create some tests for Round/Game for 2 players	
-  -implement strategies from sas?
-  -refactor Strategy?
+  -adding stats/summary from a game			leave for now
+  -speed up? 20 secs per round/player is too much	leave for now
+  -create some tests for Round/Game for 2 players	done
+  -implement strategies from sas?			after 10 players implemented?
+  -refactor Strategy?					
 
 
--implementation for up to 8 players
-  -note that probabilities are for heads-up. 
-   To create simul prob mode for x players? 
-   Alternatively we could assume independence 
-   (not exactly true) and calc prob^(num of opps)
-   i.e. if prob=0.9 then prob of winning with both=0.81
+-implementation for up to 8 players			
+  -To create simul prob mode for x players		done
+    
 
 -interactive mode
   -player attrib - human vs comp?
@@ -28,4 +28,23 @@
 
 
 
+##############################
+TESTS status
+##############################
+calc_probwin		done
+eval_hand		done
+Deck			done
+Player			done
+Round			done, except betting() method - since strictly related to Strategy
+Strategy		leave for now
+Game			leave for now
 
+
+
+
+
+##############################
+ISSUES
+##############################
+
+all in problem - check implementation, it raises minbalance -10 for some reason???

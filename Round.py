@@ -46,8 +46,8 @@ class Round():
             (self.button+2+tmp) % lenact:]+self.players_r_active[:(self.button+
                                                                2+tmp) % lenact]
         self.player_ord_postflop=self.players_r_active[
-            (self.button+1+tmp) % lenact:]+self.players_r_active[:(self.button+
-                                                               1+tmp) % lenact]
+            (self.button+1) % lenact:]+self.players_r_active[:(self.button
+                                                               +1) % lenact]
         self.pot=self.sblind+self.bblind
         self.maxbet=self.bblind
     
@@ -64,12 +64,20 @@ class Round():
             while((min([i.bet for i in self.players_r_active if i.balance!=0]
                        +[self.maxbet]) != self.maxbet) or n<1):
                 for p in tmp:
-                    if len(self.players_r_active)>1 and (p.bet<self.maxbet or n<1
-                                                         ) and p.folded==0:
+                    if len(self.players_r_active)>1 and (p.bet<self.maxbet or 
+                                                         n<1) and p.folded==0:
                         p.strategy.strat(self.stage)
                 n+=1
     
     def nextstage(self,newstage):
+        if newstage not in ['flop','turn','river']:
+            return ['newstage needs to be flop, turn or river']
+        
+        if ((self.stage=='pre-flop' and newstage != 'flop') or 
+            (self.stage=='flop' and newstage != 'turn') or
+            (self.stage=='turn' and newstage != 'river')):
+            return ['wrong order of stages']
+        
         if len(self.players_r_active)>1:
             self.stage=newstage
             if newstage=='flop':
@@ -83,22 +91,18 @@ class Round():
     
     def finalizeround(self):
         if len(self.players_r_active)==1:
-            print(f"{self.players_r_active[0].name} wins, opponent folded")
+            print(f"{self.players_r_active[0].name} wins, opponents folded")
             self.players_r_active[0].updatebalance(self.pot, balanceonly=1)
         else:
-            resh=eval_hand(self.players_r_active[0].hand+self.table)
-            resc=eval_hand(self.players_r_active[1].hand+self.table)
-            if (resh>resc):
-                self.players_r_active[0].updatebalance(self.pot, balanceonly=1)
-                print(f"{self.players_r_active[0].name} wins having {resh}")
-            elif (resh<resc):
-                self.players_r_active[1].updatebalance(self.pot, balanceonly=1)
-                print(f"{self.players_r_active[1].name} wins having {resc}")    
-            elif resh==resc:
-                self.players_r_active[0].updatebalance(self.pot/2, balanceonly=1)
-                self.players_r_active[1].updatebalance(self.pot/2, balanceonly=1)
-                print(f"{self.players_r_active[0].name} and "
-                  +f"{self.players_r_active[1].name} draw, both"
-                  +f"having {resc}")
+            maxhand=max([eval_hand(i.hand+self.table) for i in self.players_r_active])
+            winplay=[i for i in self.players_r_active if 
+                     eval_hand(i.hand+self.table)==maxhand]
+            if len(winplay)==1:
+                winplay[0].updatebalance(self.pot, balanceonly=1)
+                print(f"{winplay[0].name} wins having {winplay[0].hand}")
+            elif len(winplay)>1:
+                for i in winplay:
+                    i.updatebalance(self.pot/len(winplay), balanceonly=1)
+                    print(f"{i.name} drew having {i.hand}")
             
     

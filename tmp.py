@@ -14,9 +14,16 @@ from Deck import Deck
 d1=Deck()
 d1.shuffle()
 
+table=[(13,'D'),(14,'H'),(14,'C'),(13,'C')]
 highcheck=[(14,'S'),(14,'H')]
-highcheck=[(14,'C'),(13,'C')]
-calc_probwin(highcheck,[])
+# highcheck=[(14,'C'),(13,'C')]
+calc_probwin(highcheck,table,n=10)
+calc_probwin(highcheck,[],n=3)
+
+table=[]
+lowcheck=[(2,'S'),(7,'H')]
+# highcheck=[(14,'C'),(13,'C')]
+calc_probwin(lowcheck,table,n=1)
 
 a=highcheck[:]
 

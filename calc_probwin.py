@@ -9,7 +9,7 @@ from Deck import Deck
 from eval_hand import eval_hand
 import random
 
-def calc_probwin(hand, table, type='def', simnum=10000):
+def calc_probwin(hand, table, n=2, type='def', simnum=10000):
     """ calc probability of winning with a given hand.
         Returns probability of winning, drawing and loosing""" 
     
@@ -27,6 +27,9 @@ def calc_probwin(hand, table, type='def', simnum=10000):
         type='exact'
     elif type=='def':
         type='simul'
+        
+    if not (2<=n<=10):
+        return ['n needs to be between 2 and 10']
         
     if type=='exact':
         tmpdeck=Deck()
@@ -67,14 +70,18 @@ def calc_probwin(hand, table, type='def', simnum=10000):
         
         for i in range(simnum):
             #random.shuffle(tmpdeck2)
-            rand_row=random.sample(tmpdeck2,7-len(table))
+            rand_row=random.sample(tmpdeck2,2*(n-1)+5-len(table))
             #rand_row=tmpdeck2[:9-len(hand+table)]
-            tmp_h=eval_hand(hand+table+rand_row[2:])
-            tmp_com=eval_hand(rand_row+table)
+            tmp_h=eval_hand(hand+table+rand_row[2*(n-1):])
+            tmp_comall=[]
+            for i in range(n-1):    
+                tmp_comall.append(
+                    eval_hand(rand_row[i*2:i*2+2]+table+rand_row[2*(n-1):]))
+                
             ntot += 1
-            if tmp_h>tmp_com:
+            if tmp_h>max(tmp_comall):
                 nwin += 1
-            elif tmp_h==tmp_com:
+            elif tmp_h==max(tmp_comall):
                 ndra += 1
             else:
                 nlos += 1

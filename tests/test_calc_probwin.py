@@ -56,6 +56,12 @@ class CalcProbwinTestCase(unittest.TestCase):
         self.assertEqual(calc_probwin(self.testrep[:2],self.testrep[2:]),
                         ['repeating cards in the input data'])
     
+    def test_wrongn(self):
+        self.assertEqual(calc_probwin(self.testhand_strflush[:2],[],n=1),
+                        ['n needs to be between 2 and 10'])
+        self.assertEqual(calc_probwin(self.testhand_strflush[:2],[],n=11),
+                        ['n needs to be between 2 and 10'])
+    
     def test_cant_lose(self):
         self.assertTrue(calc_probwin(self.testhand_strflush[:2],
                                       self.testhand_strflush[2:])[0]==1)
@@ -101,6 +107,8 @@ class CalcProbwinTestCase(unittest.TestCase):
     def test_2card_sim_high(self):
         self.assertTrue(calc_probwin(self.testhand_2high,[],type='simul')[0]
                         >0.8)
+        self.assertTrue(0.8>calc_probwin(self.testhand_2high,[],type='simul',n=3)[0]
+                        >0.7)
         
     def test_2card_sim_low(self):
         self.assertTrue(calc_probwin(self.testhand_2low,[],type='simul')[0]
@@ -109,22 +117,45 @@ class CalcProbwinTestCase(unittest.TestCase):
     def test_3any(self):
         self.assertTrue(1>calc_probwin(self.testhand_3any[:2],
                                      self.testhand_3any[2:],type='simul')[0]>0)
+        self.assertTrue(1>calc_probwin(self.testhand_3any[:2],
+                                     self.testhand_3any[2:],type='simul',n=3)[0]>0)
         
     def test_4any(self):
         self.assertTrue(1>calc_probwin(self.testhand_4any[:2],
                                      self.testhand_4any[2:],type='simul')[0]>0)
+        self.assertTrue(1>calc_probwin(self.testhand_4any[:2],
+                                     self.testhand_4any[2:],type='simul',n=7)[0]>0)
         
     def test_5any(self):
         self.assertTrue(1>calc_probwin(self.testhand_5any[:2],
                                      self.testhand_5any[2:],type='simul')[0]>0)
+        self.assertTrue(1>calc_probwin(self.testhand_5any[:2],
+                                     self.testhand_5any[2:],type='simul',n=9)[0]>0)
         
     def test_6any(self):
         self.assertTrue(1>calc_probwin(self.testhand_6any[:2],
                                      self.testhand_6any[2:],type='simul')[0]>0)
+        self.assertTrue(1>calc_probwin(self.testhand_6any[:2],
+                                     self.testhand_6any[2:],type='simul',n=10)[0]>0)
         
     def test_sumprob(self):
         a=calc_probwin(self.testhand_5any[:2], self.testhand_5any[2:])
-        self.assertAlmostEqual(a[0]+a[1]+a[2],1,places=3)
+        self.assertAlmostEqual(a[0]+a[1]+a[2],1,places=2)
+        
+    def test_sumprob_n5(self):
+        a=calc_probwin(self.testhand_5any[:2], self.testhand_5any[2:],n=5)
+        self.assertAlmostEqual(a[0]+a[1]+a[2],1,places=2)
+        
+    def test_increment_n10(self):
+        self.assertTrue(calc_probwin(self.testhand_5any[:2],[],n=2)>
+                        calc_probwin(self.testhand_5any[:2],[],n=3)>
+                        calc_probwin(self.testhand_5any[:2],[],n=4)>
+                        calc_probwin(self.testhand_5any[:2],[],n=5)>
+                        calc_probwin(self.testhand_5any[:2],[],n=6)>
+                        calc_probwin(self.testhand_5any[:2],[],n=7)>
+                        calc_probwin(self.testhand_5any[:2],[],n=8)>
+                        calc_probwin(self.testhand_5any[:2],[],n=9)>
+                        calc_probwin(self.testhand_5any[:2],[],n=10))
 
 
 

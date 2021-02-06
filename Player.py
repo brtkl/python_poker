@@ -30,6 +30,14 @@ class Player():
         if balanceonly == 0:
             self.bet+=-bet
         
+    def updatetable(self, val, raise_='N', raisval=0):
+        if raisval>val:
+            return('ERROR: raisval greater than val')
+        self.cur_round.pot+=val
+        self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
+        if raise_=='Y':
+            self.cur_round.minraise=max(self.cur_round.minraise, raisval)
+            
     def check(self):
         allintxt='checks'
         if self.balance==0:
@@ -43,11 +51,15 @@ class Player():
             val=self.balance
             allintxt='(all in)'
         self.updatebalance(-val)
-        self.cur_round.pot+=val
-        self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
+        self.updatetable(val)
         print(f'Player {self.name} calls {allintxt}')
     
     def raise_(self, val):
+        """ Note, when using raise_, val param denotes all the money the player
+        needs to shift from his stack to the table, which means that if 
+        player.bet<round.maxbet then some of the val value will be used for 
+        calling and the remaining for actual raising
+        """
         allintxt=''
         if val>=self.balance:
             val=self.balance
@@ -56,10 +68,8 @@ class Player():
             raisval=val-(self.cur_round.maxbet-self.bet)
         else:
             raisval=val
-        self.cur_round.minraise=max(self.cur_round.minraise, val-self.bet)
         self.updatebalance(-val)
-        self.cur_round.pot+=val
-        self.cur_round.maxbet=max(self.cur_round.maxbet, self.bet)
+        self.updatetable(val, raise_='Y', raisval=raisval)
         print(f'Player {self.name} raises by {raisval} {allintxt}')
     
     def fold(self):
