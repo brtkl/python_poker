@@ -14,10 +14,10 @@ GENERAL status
 -refactor Strategy?					
 -multiple all-ins - side pots				done
 -not enough for bblind/sblind				done	
--raise by minus to correct (see tmp)			
--multiple pots but should be 1, perhaps related		
+-raise by minus to correct (see tmp)			done
+-multiple pots but should be 1, perhaps related		done (ok)
 -in Game, define players with dictionaries for 		done
- starting balance and human/player mode
+ starting balance and human/player mode			
 
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
@@ -39,9 +39,9 @@ calc_probwin		done
 eval_hand		done
 Deck			done
 Player			done
-Round			done, except betting() method - since strictly related to Strategy
+Round			done, except betting() method - since strictly related to Strategy and somewhat tested in Game
 Strategy		leave for now
-Game			wip
+Game			done
 
 
 
@@ -52,3 +52,4 @@ ISSUES
 ##############################
 see tmp folder
 
+#func = globals()["F" + temp]

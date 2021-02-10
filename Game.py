@@ -15,8 +15,7 @@ from Player import Player
 class Game():
     """ Game class - main mode"""
     def __init__(self, players, mode='sim', maxrounds=20, simnum_prob=10000
-                 , sblind=5, bblind=10):
-        self.players_init=players
+                 , sblind=5, bblind=10, round_req=[], button_idx=0):
         self.players_active=[]
         for p in players:
             if isinstance(p, str):
@@ -30,12 +29,23 @@ class Game():
                     tmp.cards_req=p['cards']
                 if 'strat' in p:
                     tmp.strategy=p['strat']
+        self.flop_req=[]
+        self.turn_req=[]
+        self.river_req=[]
+        if round_req:
+            if 'flop' in round_req:
+                self.flop_req=round_req['flop']
+            if 'turn' in round_req:
+                self.turn_req=round_req['turn']
+            if 'river' in round_req:
+                self.river_req=round_req['river']
         self.maxrounds=maxrounds
         self.mode=mode
-        self.button_idx=0
+        self.button_idx=button_idx
         self.simnum_prob=simnum_prob
         self.bblind=bblind
         self.sblind=sblind
+        self.players_init=self.players_active[:]
         if self.players_active[(self.button_idx+2) % len(self.players_active)
                                ].balance<sblind:
             del self.players_active[self.button_idx+2]
@@ -90,6 +100,8 @@ class Game():
 
 #g=Game([{'name':'brtkl', 'balance':1000, 'cards'=[]},
 #        {'name':'c1', 'balance':1000, 'cards'=[]},
-#        {'name':'c2', 'balance':1000, 'cards'=[]}])
-#
+#        {'name':'c2', 'balance':1000, 'cards'=[]}],
+#       round_req={'flop':[], 'turn':[], 'river':[]})
+
+#g=Game(['brtkl','c1','c2'])
 #g.play()

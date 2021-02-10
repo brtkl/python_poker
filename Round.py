@@ -32,6 +32,7 @@ class Round():
         self.button=cur_game.button_idx
         self.minraise=bblind
         self.simnum_prob=cur_game.simnum_prob
+        self.cur_game=cur_game
     
     def assigncards(self):
         for p in self.players_r_active:
@@ -95,11 +96,11 @@ class Round():
         if len(self.players_r_active)>1:
             self.stage=newstage
             if newstage=='flop':
-                self.table=self.deck.draw(3)
+                self.table=self.deck.draw(3, cards=self.cur_game.flop_req)
             elif newstage=='turn':
-                self.table+=self.deck.draw(1)
+                self.table+=self.deck.draw(1, cards=self.cur_game.turn_req)
             elif newstage=='river':
-                self.table+=self.deck.draw(1)
+                self.table+=self.deck.draw(1, cards=self.cur_game.river_req)
             print(f"{newstage}: {self.table}")
             
     
@@ -134,7 +135,7 @@ class Round():
                 winplay=[p for p in elig_players if eval_hand(p.hand+self.table)==maxhand]
                 if len(winplay)==1:
                     winplay[0].updatebalance(pots_all[i], balanceonly=1)
-                    print(f"{winplay[0].name} wins pot {i} having {maxhand}")
+                    print(f"{winplay[0].name} wins pot {i}, {pots_all[i]} having {maxhand}")
                 elif len(winplay)>1:
                     if round(pots_all[i]/len(winplay),2)*len(winplay)==pots_all[i]:
                         valperp=round(pots_all[i]/len(winplay),2)
@@ -147,7 +148,7 @@ class Round():
                         p.updatebalance(valperp, balanceonly=1)
                         if rest != 0 and winplay.index(p)==idxrest:
                             p.updatebalance(rest, balanceonly=1)
-                        print(f"{p.name} drew pot {i} having {maxhand}")
+                        print(f"{p.name} drew pot {i}, {valperp} having {maxhand}")
                     
             
         

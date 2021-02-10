@@ -37,6 +37,29 @@ class GameTestCase(unittest.TestCase):
         self.g.play()
         self.assertTrue(self.g.players_active[0].balance==15 and
                         self.g.players_active[1].balance==25 )
+ 
+    def test_3p_game_noten_sb_2(self):
+        self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
+                     {'name':'p2', 'balance':20, 'cards':[(2,'S'),(6,'D')]},
+                     {'name':'p3', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
+                    round_req={'flop':[(6, 'S'), (8, 'H'), (3, 'S')],
+                               'turn':[(5, 'D')], 'river':[(5,'S')]},
+                    maxrounds=1, button_idx=2)
+        self.g.play()
+        self.assertTrue(self.g.players_active[0].balance==15 and
+                        self.g.players_active[1].balance==17 and
+                        self.g.players_active[2].balance==12 )
+    
+    def test_issue_wrongsidepot_minusraise(self):
+        self.g=Game([{'name':'p1', 'balance':1985, 'cards':[(12, 'S'), (9, 'S')]},
+                     {'name':'p2', 'balance':1015, 'cards':[(9, 'H'), (3, 'H')]}],
+                    round_req={'flop':[(7, 'S'), (10, 'C'), (9, 'C')],
+                               'turn':[(5, 'S')], 'river':[(10,'H')]},
+                    maxrounds=1, button_idx=0)
+
+        self.g.play()
+        self.assertTrue(self.g.players_init[0].balance==3000 and
+                        self.g.players_init[1].balance==0 )
     
     
 if __name__ == '__main__':
