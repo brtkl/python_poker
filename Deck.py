@@ -22,11 +22,16 @@ class Deck():
         for i in range(0,times):
             random.shuffle(self.cards)
         
-    def draw(self,n=1):
-        res=[]
-        for i in range(0,n):
-            res.append(self.cards.pop(0))
-        return res
+    def draw(self,n=1,cards=[]):
+        if not cards:
+            res=[]
+            for i in range(0,n):
+                res.append(self.cards.pop(0))
+            return res
+        elif cards:
+            for i in cards:
+                self.cards.remove(i)
+            return cards
 
 
   

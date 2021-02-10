@@ -5,6 +5,8 @@ Created on Sat Jan 30 10:26:14 2021
 @author: brtk
 """
 
+import random
+
 class Strategy:  
     """ defining strategy methods that players can use"""
     def __init__(self, player, round_):
@@ -37,7 +39,9 @@ class Strategy:
                     else:
                         self.player.raise_(
                             max(self.round_.maxbet - self.player.bet + 
-                            self.round_.minraise , min(checkminbal, propos)))
+                            self.round_.minraise , min(checkminbal+
+                                                       self.round_.maxbet - 
+                                                       self.player.bet, propos)))
                 
             elif self.player.probwin>=thrsh and self.player.bet<self.round_.maxbet:
                 self.player.call()
@@ -47,3 +51,66 @@ class Strategy:
                 
             else:
                 self.player.fold()
+                
+    def strat_blind(self, stage):
+        tmp=random.uniform(0,1)
+
+
+# %macro opstrat(round=,myvar=_op,opvar=_my);
+# %if &round. ne 0 %then %do;
+# 	if bettotal&myvar.<=bettotal&opvar. and cap&myvar.>0 then do;
+# 	  temp=rand('Uniform');
+# 	  /*all in   */
+# 	  if temp<0.02 or cap&myvar.<&blind_b. then do;
+# 		  bet&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.)-bettotal&myvar.;
+#       bettotal&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.);
+# 		end;
+# 		/*raise by x*/
+# 		else if (temp<0.43 and bettotal&myvar.<bettotal&opvar.) or (temp<0.5 and bettotal&myvar.=bettotal&opvar.) then do;
+# 		  temp2=rand('ERLANG',3);
+# 		  bet&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.)-bettotal&myvar.; /*don't raise more than my has*/
+#       bettotal&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.);
+# 		end;
+# 		/*call or check*/
+# 		else if (temp<0.83 and bettotal&myvar.<bettotal&opvar.) or (temp>=0.5 and bettotal&myvar.=bettotal&opvar.) then do;
+#       bet&myvar.=bettotal&opvar.-bettotal&myvar.;
+# 			bettotal&myvar.=bettotal&opvar.;
+# 		end;
+# 		/* fold*/
+# 		else do;
+# 		  finish_fl='Y';
+# 	  end;
+# 	  cap&myvar.=cap&myvar.-bet&myvar.;
+# 	end;
+# %end;
+# %mend;
+
+# %macro mystrat(round=,myvar=_my,opvar=_op);
+# %if &round. ne 0 %then %do;
+# 	if bettotal&myvar.<=bettotal&opvar. and cap&myvar.>0 then do;
+# 	  /*all in   */
+# 	  if prob_win>90 or cap&myvar.<&blind_b. then do;
+# 		  bet&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.)-bettotal&myvar.;
+#       bettotal&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.);
+# 		end;
+# 		/*raise by x*/
+# 		else if (prob_win>50 and bettotal&myvar.<=bettotal&opvar.) then do;
+# 		  temp2=rand('ERLANG',5);
+# 		  bet&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.)-bettotal&myvar.; /*don't raise more than my has*/
+#       bettotal&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.);
+# 		end;
+# 		/*call or check*/
+# 		else if (prob_win>30 and bettotal&myvar.<bettotal&opvar.) or (bettotal&myvar.=bettotal&opvar.) then do;
+#       bet&myvar.=bettotal&opvar.-bettotal&myvar.;
+# 			bettotal&myvar.=bettotal&opvar.;
+# 		end;
+# 		/* fold*/
+# 		else do;
+# 		  finish_fl='Y';
+# 	  end;
+# 	  cap&myvar.=cap&myvar.-bet&myvar.;
+# 	end;
+# %end;
+# %mend;
+
+

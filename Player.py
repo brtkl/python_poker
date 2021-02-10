@@ -16,19 +16,24 @@ class Player():
         self.bet=0
         self.probwin=0
         self.folded=0
+        self.allin=0
+        self.pot_eligible_tot=0
+        self.pots_idx=[]
         
     def prepare_for_round(self, cur_round):
         self.hand=[]
         self.cur_round=cur_round
-        self.strategy=Strategy(self,cur_round)
+        self.strategy=Strategy(self, cur_round)
         self.bet=0
         self.probwin=0
         self.folded=0
         
     def updatebalance(self, bet, balanceonly=0):
-        self.balance+=bet
+        self.balance=round(self.balance+bet,2)
         if balanceonly == 0:
             self.bet+=-bet
+        if self.balance==0:
+            self.allin=1
         
     def updatetable(self, val, raise_='N', raisval=0):
         if raisval>val:

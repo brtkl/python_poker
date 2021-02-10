@@ -33,6 +33,16 @@ class DeckTestCase(unittest.TestCase):
     def test_draw(self):
         tst=self.d.draw(n=5)
         self.assertTrue(len(self.d.cards)==47 and tst not in self.d.cards)
+    
+    def test_draw_selected(self):
+        tst=self.d.draw(cards=[(14,'H'), (13,'C')])
+        self.assertTrue(len(self.d.cards)==50 and tst not in self.d.cards 
+                        and [(14,'H'), (13,'C')] == tst)
+    
+    def test_draw_deflt(self):
+        tst=self.d.draw()
+        self.assertTrue(len(self.d.cards)==51 and tst not in self.d.cards)
+
 
     
 if __name__ == '__main__':

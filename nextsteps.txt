@@ -2,28 +2,32 @@
 GENERAL status
 ##############################
 -upper cap when betting					done		
--all in implementation					done?
+-all in implementation					done
 -split check to call and check				done
 -creation of Game class					done
   -button rotating					done
   -adding stats/summary from a game			leave for now
   -speed up? 20 secs per round/player is too much	leave for now
-  -create some tests for Round/Game for 2 players	done
-  -implement strategies from sas?			after 10 players implemented?
+  -create some tests  for 2 players			done
+  -handle the issues below				done
+  -implement strategies from sas?			
   -refactor Strategy?					
+  -multiple all-ins - side pots				done
+  -not enough for bblind/sblind				done	
+  -raise by minus to correct (see tmp)
+  -multiple pots but should be 1, perhaps related
+  -in Game, define players with dictionaries for 
+   starting balance and human/player mode
 
-
--implementation for up to 8 players			
+-implementation for up to 8 players			done
   -To create simul prob mode for x players		done
     
 
 -interactive mode
   -player attrib - human vs comp?
 -use prob of draw in strats as well?
--Frontend implementation? 
-  -ask Kacper?
--Strategy() improvements
-  -Creating multiple strategies
+-Frontend implementation -ask Kacper?
+-Strategy() improvements				
   -Machine Learning implementation?
 
 
@@ -37,7 +41,7 @@ Deck			done
 Player			done
 Round			done, except betting() method - since strictly related to Strategy
 Strategy		leave for now
-Game			leave for now
+Game			wip
 
 
 
@@ -46,5 +50,5 @@ Game			leave for now
 ##############################
 ISSUES
 ##############################
+see tmp folder
 
-all in problem - check implementation, it raises minbalance -10 for some reason???
