@@ -5,19 +5,19 @@ GENERAL status
 -all in implementation					done
 -split check to call and check				done
 -creation of Game class					done
-  -button rotating					done
-  -adding stats/summary from a game			leave for now
-  -speed up? 20 secs per round/player is too much	leave for now
-  -create some tests  for 2 players			done
-  -handle the issues below				done
-  -implement strategies from sas?			
-  -refactor Strategy?					
-  -multiple all-ins - side pots				done
-  -not enough for bblind/sblind				done	
-  -raise by minus to correct (see tmp)
-  -multiple pots but should be 1, perhaps related
-  -in Game, define players with dictionaries for 
-   starting balance and human/player mode
+-button rotating					done
+-adding stats/summary from a game			leave for now
+-speed up? 20 secs per round/player is too much		leave for now
+-create some tests  for 2 players			done
+-handle the issues below				done
+-implement strategies from sas?				
+-refactor Strategy?					
+-multiple all-ins - side pots				done
+-not enough for bblind/sblind				done	
+-raise by minus to correct (see tmp)			
+-multiple pots but should be 1, perhaps related		
+-in Game, define players with dictionaries for 		done
+ starting balance and human/player mode
 
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done

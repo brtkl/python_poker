@@ -35,7 +35,10 @@ class Round():
     
     def assigncards(self):
         for p in self.players_r_active:
-            p.hand=self.deck.draw(2)
+            if not p.cards_req:
+                p.hand=self.deck.draw(2)
+            elif p.cards_req:
+                p.hand=self.deck.draw(cards=p.cards_req)
             print(f"{p.name} hand: {p.hand}")
         
     def assignblinds(self):

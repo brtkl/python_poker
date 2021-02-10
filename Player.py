@@ -19,6 +19,7 @@ class Player():
         self.allin=0
         self.pot_eligible_tot=0
         self.pots_idx=[]
+        self.cards_req=[]
         
     def prepare_for_round(self, cur_round):
         self.hand=[]

@@ -17,7 +17,19 @@ class Game():
     def __init__(self, players, mode='sim', maxrounds=20, simnum_prob=10000
                  , sblind=5, bblind=10):
         self.players_init=players
-        self.players_active=[Player(p) for p in players]
+        self.players_active=[]
+        for p in players:
+            if isinstance(p, str):
+                self.players_active.append(Player(p))
+            elif isinstance(p, dict): 
+                tmp=Player(p['name'])
+                self.players_active.append(tmp)
+                if 'balance' in p:
+                    tmp.balance=p['balance']
+                if 'cards' in p:
+                    tmp.cards_req=p['cards']
+                if 'strat' in p:
+                    tmp.strategy=p['strat']
         self.maxrounds=maxrounds
         self.mode=mode
         self.button_idx=0
@@ -35,16 +47,14 @@ class Game():
         for p in self.players_active:
             print(f"{p.name} balance: {p.balance}")
     
-    def play(self, test=0, r=None):
+    def play(self):
         n=1
         while(10>=len(self.players_active)>1 and n<=self.maxrounds):
-            if r==None:
-                r=Round(self, sblind=self.sblind, bblind=self.bblind)
+            r=Round(self, sblind=self.sblind, bblind=self.bblind)
             print(f"\nRound {n} begins")
-            if test==0:
-                for p in self.players_active[:]:
-                    p.prepare_for_round(r)
-                r.assigncards()
+            for p in self.players_active[:]:
+                p.prepare_for_round(r)
+            r.assigncards()
             r.assignblinds()
             #pre-flop bets
             r.betting()
@@ -78,5 +88,8 @@ class Game():
             n+=1
 
 
-#g=Game(['brtkl', 'comp1', 'comp2'])
+#g=Game([{'name':'brtkl', 'balance':1000, 'cards'=[]},
+#        {'name':'c1', 'balance':1000, 'cards'=[]},
+#        {'name':'c2', 'balance':1000, 'cards'=[]}])
+#
 #g.play()
