@@ -20,40 +20,53 @@ class Strategy:
             else:
                 thrsh=0.45
             if self.player.bet <= self.round_.maxbet:
-                checkminbal=min([i.balance for i in self.round_.players_r_active])
+                checkmaxbal=max([i.balance for i in self.round_.players_r_active
+                                 if i is not self.player])
                 if self.player.balance==0:
                     self.player.check() #already all in
                 elif self.player.probwin>0.6:
-                    if checkminbal==0: 
+                    if checkmaxbal==0: 
                         if self.player.bet < self.round_.maxbet:
                             self.player.call() 
-                            #if opp made all in it's sufficient to call
+                            #if all opps made all in it's sufficient to call
                         else:
                             self.player.check()
                     else:
-                        propos=self.round_.minraise #replace with Erlang dist?
+                        propos=min(self.round_.maxbet-self.player.bet
+                                +self.round_.minraise,self.player.balance)
+                                #replace with Erlang dist?
                         if self.player.probwin>0.8:
-                            propos=self.player.balance #go all-in
-                        if propos>=self.player.balance>0:
-                            self.player.call() #call to all in
+                            propos=min(self.player.balance,
+                                       checkmaxbal+self.round_.maxbet
+                                                -self.player.bet) 
+                            #go all-in or force opponnents to go all in
+                        if self.round_.maxbet>=propos+self.player.bet:
+                            self.player.call() 
+                            #call to all in
                         else:
-                            self.player.raise_(
-                                max(self.round_.maxbet - self.player.bet + 
-                                self.round_.minraise, min(checkminbal+
-                                                          self.round_.maxbet - 
-                                                          self.player.bet, propos)))
-                    
+                            self.player.raise_(propos)
                 elif self.player.probwin>=thrsh and self.player.bet<self.round_.maxbet:
                     self.player.call()
-                    
                 elif self.player.bet==self.round_.maxbet:
                     self.player.check()
-                    
                 else:
                     self.player.fold()
                     
         elif mode=='smartmonkey':
             tmp=random.uniform(0,1)
+            if self.player.balance==0:
+                self.player.check() #already all in
+            elif self.player.balance>0:
+                #go all in
+                if tmp<0.02 or self.player.balance<self.round_.minraise:
+                    propos=min(self.player.balance,
+                                       checkmaxbal+self.round_.maxbet
+                                                -self.player.bet) 
+                            #go all-in or force opponnents to go all in
+                    if self.round_.maxbet>=propos+self.player.bet:
+                        self.player.call() 
+                        #call to all in
+                    
 
 
 # %macro opstrat(round=,myvar=_op,opvar=_my);
