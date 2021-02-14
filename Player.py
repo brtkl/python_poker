@@ -9,9 +9,10 @@ from Strategy import Strategy
 
 class Player():
     """ defining a player with attributes"""
-    def __init__(self, name, balance=1000, strategy='default'):
+    def __init__(self, name, balance=1000, stratmode='test'):
         self.balance=balance
         self.name=name
+        self.stratmode=stratmode
         self.hand=[]
         self.bet=0
         self.probwin=0
@@ -24,7 +25,7 @@ class Player():
     def prepare_for_round(self, cur_round):
         self.hand=[]
         self.cur_round=cur_round
-        self.strategy=Strategy(self, cur_round)
+        self.strategy=Strategy(self, cur_round, mode=self.stratmode)
         self.bet=0
         self.probwin=0
         self.folded=0

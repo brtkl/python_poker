@@ -6,66 +6,109 @@ Created on Sat Jan 30 10:26:14 2021
 """
 
 import random
+import math
 
 class Strategy:  
     """ defining strategy methods that players can use"""
-    def __init__(self, player, round_):
+    def __init__(self, player, round_, mode='test'):
         self.player=player
         self.round_=round_
+        self.mode=mode
         
-    def strat(self, stage, mode='test'):
-        if mode=='test':
+    def allin(self):
+        checkmaxbal=max([i.balance for i in self.round_.players_r_active
+                              if i is not self.player])
+        """method to be used in strat"""
+        if checkmaxbal==0: 
+            if self.player.bet < self.round_.maxbet:
+                self.player.call() 
+                #if all opps made all in it's sufficient to call
+            else:
+                self.player.check()
+        else:
+            propos=min(self.player.balance, checkmaxbal+self.round_.maxbet
+                       -self.player.bet) 
+            #go all-in or force opponnents to go all in
+            if self.round_.maxbet>=propos+self.player.bet:
+                self.player.call() 
+                #call to all in whennot enough money to raise
+            else:
+                self.player.raise_(propos)
+    
+    def raise_str(self,raiseby=0):
+        """method to be used in strat"""
+        checkmaxbal=max([i.balance for i in self.round_.players_r_active
+                              if i is not self.player])
+        if raiseby<self.round_.minraise:
+            raiseby=self.round_.minraise
+        if checkmaxbal==0: 
+            if self.player.bet < self.round_.maxbet:
+                self.player.call() 
+                #if all opps made all in it's sufficient to call
+            else:
+                self.player.check()
+        else:
+            propos=min(checkmaxbal+self.round_.maxbet
+                       -self.player.bet, raiseby+self.round_.maxbet
+                       -self.player.bet) 
+            if (self.round_.maxbet>=propos+self.player.bet or 
+                propos>=self.player.balance):
+                    self.player.call() 
+                    #call to all in whennot enough money to raise
+            else:
+                self.player.raise_(propos)
+        
+    def strat(self, stage):
+        if self.mode=='test':
             if stage=='pre-flop':
                 thrsh=0.4
             else:
                 thrsh=0.45
-            if self.player.bet <= self.round_.maxbet:
-                checkmaxbal=max([i.balance for i in self.round_.players_r_active
-                                 if i is not self.player])
-                if self.player.balance==0:
-                    self.player.check() #already all in
-                elif self.player.probwin>0.6:
-                    if checkmaxbal==0: 
-                        if self.player.bet < self.round_.maxbet:
-                            self.player.call() 
-                            #if all opps made all in it's sufficient to call
-                        else:
-                            self.player.check()
-                    else:
-                        propos=min(self.round_.maxbet-self.player.bet
-                                +self.round_.minraise,self.player.balance)
-                                #replace with Erlang dist?
-                        if self.player.probwin>0.8:
-                            propos=min(self.player.balance,
-                                       checkmaxbal+self.round_.maxbet
-                                                -self.player.bet) 
-                            #go all-in or force opponnents to go all in
-                        if self.round_.maxbet>=propos+self.player.bet:
-                            self.player.call() 
-                            #call to all in
-                        else:
-                            self.player.raise_(propos)
-                elif self.player.probwin>=thrsh and self.player.bet<self.round_.maxbet:
-                    self.player.call()
-                elif self.player.bet==self.round_.maxbet:
-                    self.player.check()
-                else:
-                    self.player.fold()
+            if self.player.balance==0:
+                self.player.check() #already all in
+            elif self.player.probwin>0.8:
+                self.allin()
+            elif self.player.probwin>0.5:
+                self.raise_str()
+            elif self.player.probwin>=thrsh and self.player.bet<self.round_.maxbet:
+                self.player.call()
+            elif self.player.bet==self.round_.maxbet:
+                self.player.check()
+            else:
+                self.player.fold()
                     
-        elif mode=='smartmonkey':
+        elif self.mode=='sasmonkey':
             tmp=random.uniform(0,1)
             if self.player.balance==0:
                 self.player.check() #already all in
             elif self.player.balance>0:
-                #go all in
                 if tmp<0.02 or self.player.balance<self.round_.minraise:
-                    propos=min(self.player.balance,
-                                       checkmaxbal+self.round_.maxbet
-                                                -self.player.bet) 
-                            #go all-in or force opponnents to go all in
-                    if self.round_.maxbet>=propos+self.player.bet:
-                        self.player.call() 
-                        #call to all in
+                    self.allin() #go all in
+                elif ((tmp<0.43 and (self.player.bet<self.round_.maxbet)) or 
+                      (tmp<0.5 and (self.player.bet==self.round_.maxbet))):
+                    self.raise_str(raiseby=math.floor(tmp*self.player.balance))
+                elif tmp<0.83 and self.player.bet<self.round_.maxbet:
+                    self.player.call() 
+                elif tmp>=0.5 and self.player.bet==self.round_.maxbet:
+                    self.player.check()
+                else:
+                    self.player.fold()
+                    
+        elif self.mode=='sassimple':
+            tmp=self.player.probwin
+            if self.player.balance==0:
+                self.player.check() #already all in
+            elif self.player.balance>0:
+                if tmp>0.9 or self.player.balance<self.round_.minraise:
+                    self.allin() #go all in
+                elif tmp>=0.5 and self.player.bet<=self.round_.maxbet:
+                    self.raise_str(raiseby=math.floor(tmp*self.player.balance))
+                elif tmp>=0.3 and self.player.bet<self.round_.maxbet:
+                    self.player.call() 
+                elif self.player.bet==self.round_.maxbet:
+                    self.player.check()
+                else:
+                    self.player.fold()
                     
 
 

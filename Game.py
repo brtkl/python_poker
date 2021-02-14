@@ -28,7 +28,7 @@ class Game():
                 if 'cards' in p:
                     tmp.cards_req=p['cards']
                 if 'strat' in p:
-                    tmp.strategy=p['strat']
+                    tmp.stratmode=p['strat']
         self.flop_req=[]
         self.turn_req=[]
         self.river_req=[]

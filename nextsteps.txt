@@ -10,8 +10,9 @@ GENERAL status
 -speed up? 20 secs per round/player is too much		leave for now
 -create some tests  for 2 players			done
 -handle the issues below				done
--implement strategies from sas?				
--refactor Strategy?					
+-implement strategies from sas?				done
+-refactor Strategy?					done
+-ad test case fr game, round 10 from the html
 -multiple all-ins - side pots				done
 -not enough for bblind/sblind				done	
 -raise by minus to correct (see tmp)			done

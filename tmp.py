@@ -11,6 +11,14 @@ from calc_probwin import calc_probwin
 from Deck import Deck
 
 
+
+
+g=Game([{'name':'brtkl', 'strat':'sassimple'},
+        {'name':'c1', 'strat':'sasmonkey'},
+        {'name':'c2', 'strat':'test'}])
+
+g.play()
+
 d1=Deck()
 d1.shuffle()
 
