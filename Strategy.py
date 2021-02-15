@@ -50,9 +50,8 @@ class Strategy:
         else:
             propos=min(checkmaxbal+self.round_.maxbet
                        -self.player.bet, raiseby+self.round_.maxbet
-                       -self.player.bet) 
-            if (self.round_.maxbet>=propos+self.player.bet or 
-                propos>=self.player.balance):
+                       -self.player.bet, self.player.balance) 
+            if (self.round_.maxbet>=propos+self.player.bet):
                     self.player.call() 
                     #call to all in whennot enough money to raise
             else:

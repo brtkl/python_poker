@@ -61,6 +61,18 @@ class GameTestCase(unittest.TestCase):
         self.assertTrue(self.g.players_init[0].balance==3000 and
                         self.g.players_init[1].balance==0 )
     
+    def test_issue_raise0(self):
+        self.g=Game([{'name':'p1', 'balance':1100, 'cards':[(10, 'H'), (13, 'S')]
+                      ,'strat':'sassimple'},
+                     {'name':'p2', 'balance':1900, 'cards':[(4, 'C'), (4, 'H')]}],
+                    round_req={'flop':[(3, 'S'), (4, 'D'), (8, 'H')],
+                               'turn':[(12, 'S')], 'river':[(8,'C')]},
+                    maxrounds=1, button_idx=1)
+
+        self.g.play()
+        self.assertTrue(self.g.players_init[0].balance==0 and
+                        self.g.players_init[1].balance==3000 )
+    
     
 if __name__ == '__main__':
     unittest.main()

@@ -83,3 +83,27 @@ class Player():
         self.folded=1
         self.cur_round.players_r_active.remove(self)
         print(f'Player {self.name} folds')
+        
+    def bet(self, val):
+        """collating check, call, raise_ and fold methods depending 
+        on bet value. Might be used to simplify strategy."""
+        if val==0 and self.bet<self.cur_round.maxbet:
+            self.fold()
+        elif val==0 and self.bet>=self.cur_round.maxbet:
+            self.check()
+        elif val>=self.balance and self.cur_round.maxbet>self.balance+self.bet:
+            self.call() #all in call
+        elif val>=self.balance and self.cur_round.maxbet<=self.balance+self.bet:
+            self.raise_(self.balance) #all in raise
+        elif val<self.balance and val>=self.cur_round.minraise:
+            self.raise_(val)
+        elif val<self.balance and val<self.cur_round.minraise:
+            if (self.bet<self.cur_round.maxbet and val+self.balance>=
+                    self.cur_round.maxbet):
+                self.call()
+            elif self.bet==self.cur_round.maxbet:
+                self.check()
+            elif (self.bet<self.cur_round.maxbet and val+self.balance<
+                    self.cur_round.maxbet):
+                self.fold()
+        

@@ -6,13 +6,13 @@ GENERAL status
 -split check to call and check				done
 -creation of Game class					done
 -button rotating					done
--adding stats/summary from a game			leave for now
 -speed up? 20 secs per round/player is too much		leave for now
 -create some tests  for 2 players			done
 -handle the issues below				done
 -implement strategies from sas?				done
 -refactor Strategy?					done
--ad test case fr game, round 10 from the html
+-add test case fr game, round 10 from the html		done
+-add tests for bet method in Player
 -multiple all-ins - side pots				done
 -not enough for bblind/sblind				done	
 -raise by minus to correct (see tmp)			done
@@ -23,14 +23,15 @@ GENERAL status
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
     
-
 -interactive mode
   -player attrib - human vs comp?
--use prob of draw in strats as well?
 -Frontend implementation -ask Kacper?
--Strategy() improvements				
+-Strategy() improvements
+  -create some strats using bet method
+  -use prob of draw in strats as well?				
   -Machine Learning implementation?
-
+-create Simulation class??
+  -adding stats/summary from games/rounds		
 
 
 ##############################
