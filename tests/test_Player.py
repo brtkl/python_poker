@@ -91,6 +91,41 @@ class PlayerTestCase(unittest.TestCase):
         self.g.players_active[0].fold()
         self.assertTrue(self.g.players_active[0].folded==1 and 
                         self.g.players_active[0] not in self.r.players_r_active)
+        
+    def test_bet(self):
+        self.p.bet=5
+        self.p.balance=995
+        self.r.maxbet=10
+        self.r.pot=15
+        self.p.makebet(50)
+        self.assertTrue(self.p.balance==945 and self.p.bet==55 and 
+                        self.r.pot==65 and self.r.maxbet==55
+                        and self.r.minraise==45)
+        self.p.bet=250
+        self.p.balance=400
+        self.r.maxbet=300
+        self.r.minraise=100
+        self.r.pot=550
+        self.p.makebet(450)
+        self.assertTrue(self.p.balance==0 and self.p.bet==650 and 
+                        self.r.pot==950 and self.r.maxbet==650
+                        and self.r.minraise==350)
+        self.p.bet=5
+        self.p.balance=995
+        self.r.maxbet=10
+        self.r.pot=15
+        self.p.makebet(10)
+        self.assertTrue(self.p.balance==990 and self.p.bet==10 and 
+                        self.r.pot==20 and self.r.maxbet==10)
+        
+        self.g.players_active[0].balance=100
+        self.g.players_active[0].bet=200
+        self.r.maxbet=400
+        self.r.pot=600
+        self.g.players_active[0].makebet(80)
+        self.assertTrue(self.g.players_active[0].balance==100 and 
+                        self.g.players_active[0].folded==1 and 
+                        self.g.players_active[0] not in self.r.players_r_active)
     
 if __name__ == '__main__':
     unittest.main()

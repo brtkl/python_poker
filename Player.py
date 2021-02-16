@@ -84,7 +84,7 @@ class Player():
         self.cur_round.players_r_active.remove(self)
         print(f'Player {self.name} folds')
         
-    def bet(self, val):
+    def makebet(self, val):
         """collating check, call, raise_ and fold methods depending 
         on bet value. Might be used to simplify strategy."""
         if val==0 and self.bet<self.cur_round.maxbet:

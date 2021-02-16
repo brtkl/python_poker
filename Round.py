@@ -144,6 +144,7 @@ class Round():
                         valperp=round(math.floor((pots_all[i]/len(winplay))*100)/100,2)
                         rest=pots_all[i]-valperp*len(winplay)
                         idxrest=random.choice(list(range(len(winplay))))
+                        #if not possible to divide penny then give randomly
                     for p in winplay:
                         p.updatebalance(valperp, balanceonly=1)
                         if rest != 0 and winplay.index(p)==idxrest:

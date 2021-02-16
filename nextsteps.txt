@@ -12,7 +12,7 @@ GENERAL status
 -implement strategies from sas?				done
 -refactor Strategy?					done
 -add test case fr game, round 10 from the html		done
--add tests for bet method in Player
+-add tests for makebet method in Player			done
 -multiple all-ins - side pots				done
 -not enough for bblind/sblind				done	
 -raise by minus to correct (see tmp)			done
@@ -23,15 +23,15 @@ GENERAL status
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
     
--interactive mode
-  -player attrib - human vs comp?
--Frontend implementation -ask Kacper?
--Strategy() improvements
-  -create some strats using bet method
+-interactive mode					
+  -player attrib - human vs comp?			
+-Frontend implementation -ask Kacper?			
+-Strategy() improvements				
+  -create some strats using bet method			wip
   -use prob of draw in strats as well?				
-  -Machine Learning implementation?
 -create Simulation class??
-  -adding stats/summary from games/rounds		
+  -adding stats/summary from games/rounds
+  -Machine Learning implementatio for strats?		
 
 
 ##############################
