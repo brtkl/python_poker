@@ -9,25 +9,37 @@ from Strategy import Strategy
 
 class Player():
     """ defining a player with attributes"""
-    def __init__(self, name, balance=1000, stratmode='test'):
-        self.balance=balance
-        self.name=name
-        self.stratmode=stratmode
+    def __init__(self, defdict):
+        if isinstance(defdict, str):
+            self.name=defdict
+        elif isinstance(defdict, dict):
+            self.name=defdict['name']
+        self.balance=defdict['balance'] if 'balance' in defdict else 1000
+        self.type=defdict['type'] if 'type' in defdict else 'comp'
+        self.cards_req=defdict['cards'] if 'cards' in defdict else []
+        if 'strat' in defdict:
+            self.strat=defdict['strat']
+        else:
+            if 'type' in defdict and defdict['type']=='human':    
+                self.strat='human'
+            else:    
+                self.strat='test'
         self.hand=[]
         self.bet=0
         self.probwin=0
+        self.probdist=[]
         self.folded=0
-        self.allin=0
-        self.pot_eligible_tot=0
-        self.pots_idx=[]
-        self.cards_req=[]
+        self.allin=0 #20210220: not used at the moment
+        self.pot_eligible_tot=0 #total eligible pot amount
+        self.pots_idx=[] #indexes of eligible pots. 0 is the main pot
         
     def prepare_for_round(self, cur_round):
         self.hand=[]
         self.cur_round=cur_round
-        self.strategy=Strategy(self, cur_round, mode=self.stratmode)
+        self.strategy=Strategy(self, cur_round, mode=self.strat)
         self.bet=0
         self.probwin=0
+        self.probdist=0
         self.folded=0
         
     def updatebalance(self, bet, balanceonly=0):

@@ -40,7 +40,9 @@ class Round():
                 p.hand=self.deck.draw(2)
             elif p.cards_req:
                 p.hand=self.deck.draw(cards=p.cards_req)
-            print(f"{p.name} hand: {p.hand}")
+            if self.cur_game.mode=='sim' or (self.cur_game.mode=='interactive' 
+                                             and p.type=='human'):
+                print(f"{p.name} hand: {p.hand}")
         
     def assignblinds(self):
         lenact=len(self.players_r_active)
@@ -64,18 +66,22 @@ class Round():
                                                                +1) % lenact]
         self.pot=sblind+bblind
         self.maxbet=self.bblind  #self.bblind on purpose - dont remove self 
+        
+        print(f'sb: {self.players_r_active[(self.button+tmp) % lenact].name}\n'
+              +f'bb: {self.players_r_active[(self.button+tmp+1) % lenact].name}')
     
     def betting(self):
         if len(self.players_r_active)>1:
             n=0
             for p in self.players_r_active:
-               p.probwin=round(calc_probwin(p.hand, self.table, 
-                                            n=len(self.players_r_active),
-                                            simnum=self.simnum_prob)[0],2)
+                cp=calc_probwin(p.hand, self.table, n=len(self.players_r_active),
+                                 simnum=self.simnum_prob)
+                p.probwin=round(cp[0],2)
+                p.probdist=cp[:2]
             if self.stage == 'pre-flop':
-               tmp=self.player_ord_preflop
+                tmp=self.player_ord_preflop
             else:
-               tmp=self.player_ord_postflop
+                tmp=self.player_ord_postflop
             while((min([i.bet for i in self.players_r_active if i.balance!=0]
                        +[self.maxbet]) != self.maxbet) or n<1):
                 for p in tmp:

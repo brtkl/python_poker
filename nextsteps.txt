@@ -23,9 +23,12 @@ GENERAL status
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
     
--interactive mode					
-  -player attrib - human vs comp?			
+-convert the project into a package			
 -Frontend implementation -ask Kacper?			
+-multiplayer online???? - ask Kacper?			
+-interactive mode					wip, probs check
+  -create global quit?					done
+  -player attrib - human vs comp?			done
 -Strategy() improvements				
   -create some strats using bet method			wip
   -use prob of draw in strats as well?				

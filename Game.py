@@ -15,30 +15,13 @@ from Player import Player
 class Game():
     """ Game class - main mode"""
     def __init__(self, players, mode='sim', maxrounds=20, simnum_prob=10000
-                 , sblind=5, bblind=10, round_req=[], button_idx=0):
+                 , sblind=5, bblind=10, round_req={}, button_idx=0):
         self.players_active=[]
         for p in players:
-            if isinstance(p, str):
-                self.players_active.append(Player(p))
-            elif isinstance(p, dict): 
-                tmp=Player(p['name'])
-                self.players_active.append(tmp)
-                if 'balance' in p:
-                    tmp.balance=p['balance']
-                if 'cards' in p:
-                    tmp.cards_req=p['cards']
-                if 'strat' in p:
-                    tmp.stratmode=p['strat']
-        self.flop_req=[]
-        self.turn_req=[]
-        self.river_req=[]
-        if round_req:
-            if 'flop' in round_req:
-                self.flop_req=round_req['flop']
-            if 'turn' in round_req:
-                self.turn_req=round_req['turn']
-            if 'river' in round_req:
-                self.river_req=round_req['river']
+            self.players_active.append(Player(p))
+        self.flop_req=round_req['flop'] if 'flop' in round_req else []
+        self.turn_req=round_req['turn'] if 'turn' in round_req else []
+        self.river_req=round_req['river'] if 'river' in round_req else []
         self.maxrounds=maxrounds
         self.mode=mode
         self.button_idx=button_idx

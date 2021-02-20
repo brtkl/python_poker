@@ -5,6 +5,7 @@ Created on Sat Jan 30 10:26:14 2021
 @author: brtk
 """
 
+import sys
 import random
 import math
 
@@ -14,6 +15,15 @@ class Strategy:
         self.player=player
         self.round_=round_
         self.mode=mode
+        
+    def moveon(self):
+        checkmaxbal=max([i.balance for i in self.round_.players_r_active
+                              if i is not self.player])
+        if self.player.balance==0 or (checkmaxbal==0 and self.player.bet>=
+                                      self.round_.maxbet):
+            return 1
+        else:
+            return 0
         
     def allin(self):
         checkmaxbal=max([i.balance for i in self.round_.players_r_active
@@ -57,6 +67,8 @@ class Strategy:
             else:
                 self.player.raise_(propos)
         
+        
+    #MAIN STRAT METHOD
     def strat(self, stage):
         if self.mode=='test':
             if stage=='pre-flop':
@@ -109,63 +121,60 @@ class Strategy:
                 else:
                     self.player.fold()
                     
-
-
-# %macro opstrat(round=,myvar=_op,opvar=_my);
-# %if &round. ne 0 %then %do;
-# 	if bettotal&myvar.<=bettotal&opvar. and cap&myvar.>0 then do;
-# 	  temp=rand('Uniform');
-# 	  /*all in   */
-# 	  if temp<0.02 or cap&myvar.<&blind_b. then do;
-# 		  bet&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.)-bettotal&myvar.;
-#       bettotal&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.);
-# 		end;
-# 		/*raise by x*/
-# 		else if (temp<0.43 and bettotal&myvar.<bettotal&opvar.) or (temp<0.5 and bettotal&myvar.=bettotal&opvar.) then do;
-# 		  temp2=rand('ERLANG',3);
-# 		  bet&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.)-bettotal&myvar.; /*don't raise more than my has*/
-#       bettotal&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.);
-# 		end;
-# 		/*call or check*/
-# 		else if (temp<0.83 and bettotal&myvar.<bettotal&opvar.) or (temp>=0.5 and bettotal&myvar.=bettotal&opvar.) then do;
-#       bet&myvar.=bettotal&opvar.-bettotal&myvar.;
-# 			bettotal&myvar.=bettotal&opvar.;
-# 		end;
-# 		/* fold*/
-# 		else do;
-# 		  finish_fl='Y';
-# 	  end;
-# 	  cap&myvar.=cap&myvar.-bet&myvar.;
-# 	end;
-# %end;
-# %mend;
-
-# %macro mystrat(round=,myvar=_my,opvar=_op);
-# %if &round. ne 0 %then %do;
-# 	if bettotal&myvar.<=bettotal&opvar. and cap&myvar.>0 then do;
-# 	  /*all in   */
-# 	  if prob_win>90 or cap&myvar.<&blind_b. then do;
-# 		  bet&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.)-bettotal&myvar.;
-#       bettotal&myvar.=min(cap&myvar.+bettotal&myvar.,cap&opvar.+bettotal&opvar.);
-# 		end;
-# 		/*raise by x*/
-# 		else if (prob_win>50 and bettotal&myvar.<=bettotal&opvar.) then do;
-# 		  temp2=rand('ERLANG',5);
-# 		  bet&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.)-bettotal&myvar.; /*don't raise more than my has*/
-#       bettotal&myvar.=max(bettotal&opvar.,bettotal&myvar.)+min(ceil(temp2),cap&myvar.,cap&opvar.);
-# 		end;
-# 		/*call or check*/
-# 		else if (prob_win>30 and bettotal&myvar.<bettotal&opvar.) or (bettotal&myvar.=bettotal&opvar.) then do;
-#       bet&myvar.=bettotal&opvar.-bettotal&myvar.;
-# 			bettotal&myvar.=bettotal&opvar.;
-# 		end;
-# 		/* fold*/
-# 		else do;
-# 		  finish_fl='Y';
-# 	  end;
-# 	  cap&myvar.=cap&myvar.-bet&myvar.;
-# 	end;
-# %end;
-# %mend;
-
+        elif self.mode=='human':
+            if self.moveon()==1:
+                self.player.check() 
+                #already all in or all ops all in and our bet is covered
+            elif self.player.balance>0:
+                cordecide=0
+                print(f'Status:\n pot: {self.round_.pot}\n'+
+                      f' maxbet: {self.round_.maxbet}\n'+
+                      f' current bet: {self.player.bet}')
+                
+                while cordecide==0:
+                    if self.player.bet<self.round_.maxbet:
+                        text='call/fold/raise/allin'
+                    else:
+                        text='check/raise/allin'
+                    decide=input(f'Pick one: {text}\n')
+                    if decide=='exit':
+                        sys.exit(0)
+                    elif decide=='probs':
+                        print('probabilities: '+self.player.probdist)
+                    elif decide not in ('call','check','fold','raise','allin'):
+                        pass
+                    elif (self.player.bet<self.round_.maxbet and decide !='check'
+                          ) or (self.player.bet>=self.round_.maxbet and decide 
+                                not in ('call', 'fold')):
+                        cordecide=1                                
+                if decide=='raise':
+                    if (self.player.balance<self.round_.minraise+
+                        self.round_.maxbet-self.player.bet):
+                            self.allin()
+                    elif self.player.bet<self.round_.maxbet:
+                        print(f'{self.round_.maxbet-self.player.bet} to call')
+                    corraise=0
+                    while corraise==0:
+                        raiseval=input('Enter amount to raise\n'+'minimum to raise: '+
+                                       f'{self.round_.minraise}\n')
+                        if raiseval=='exit':
+                            sys.exit(0)
+                        elif decide=='probs':
+                            print(self.player.probdist)
+                        elif int(raiseval)>=self.round_.minraise:
+                            corraise=1
+                        else:
+                            print(f'at least {self.round_.minraise} required')
+                if decide=='allin':
+                    self.allin() #go all in
+                elif decide=='raise':
+                    self.raise_str(raiseby=int(raiseval))
+                elif decide=='call':
+                    self.player.call()
+                elif decide=='check':
+                    self.player.check()
+                elif decide=='fold':
+                    self.player.fold()
+                else:
+                    print('incorrect choice')
 

@@ -12,10 +12,9 @@ from Deck import Deck
 
 
 
-
-g=Game([{'name':'brtkl', 'strat':'sassimple'},
+g=Game([{'name':'brtkl', 'type':'human'},  ##why doesn't work without strat, defaults should work for type
         {'name':'c1', 'strat':'sasmonkey'},
-        {'name':'c2', 'strat':'test'}])
+        {'name':'c2', 'strat':'test'}], mode='interactive', simnum_prob=2000)
 
 g.play()
 
