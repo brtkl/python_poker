@@ -107,15 +107,17 @@ class Player():
             self.call() #all in call
         elif val>=self.balance and self.cur_round.maxbet<=self.balance+self.bet:
             self.raise_(self.balance) #all in raise
-        elif val<self.balance and val>=self.cur_round.minraise:
+        elif val<self.balance and (val-self.cur_round.maxbet+self.bet
+                                   >=self.cur_round.minraise):
             self.raise_(val)
-        elif val<self.balance and val<self.cur_round.minraise:
-            if (self.bet<self.cur_round.maxbet and val+self.balance>=
+        elif val<self.balance and (val-self.cur_round.maxbet+self.bet
+                                   <self.cur_round.minraise):
+            if (self.bet<self.cur_round.maxbet and val+self.bet>=
                     self.cur_round.maxbet):
                 self.call()
             elif self.bet==self.cur_round.maxbet:
                 self.check()
-            elif (self.bet<self.cur_round.maxbet and val+self.balance<
+            elif (self.bet<self.cur_round.maxbet and val+self.bet<
                     self.cur_round.maxbet):
                 self.fold()
         

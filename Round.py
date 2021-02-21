@@ -74,10 +74,9 @@ class Round():
         if len(self.players_r_active)>1:
             n=0
             for p in self.players_r_active:
-                cp=calc_probwin(p.hand, self.table, n=len(self.players_r_active),
+                p.probdist=calc_probwin(p.hand, self.table, n=len(self.players_r_active),
                                  simnum=self.simnum_prob)
-                p.probwin=round(cp[0],2)
-                p.probdist=cp[:2]
+                p.probwin=round(p.probdist[0],2)
             if self.stage == 'pre-flop':
                 tmp=self.player_ord_preflop
             else:

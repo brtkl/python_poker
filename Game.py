@@ -14,8 +14,16 @@ from Player import Player
 
 class Game():
     """ Game class - main mode"""
-    def __init__(self, players, mode='sim', maxrounds=20, simnum_prob=10000
-                 , sblind=5, bblind=10, round_req={}, button_idx=0):
+    def __init__(self
+                 , players
+                 , mode='sim' #sim or interactive
+                 , maxrounds=20
+                 , simnum_prob=10000
+                 , sblind=5
+                 , bblind=10
+                 , round_req={}
+                 , button_idx=0
+                 ):
         self.players_active=[]
         for p in players:
             self.players_active.append(Player(p))
@@ -29,9 +37,10 @@ class Game():
         self.bblind=bblind
         self.sblind=sblind
         self.players_init=self.players_active[:]
-        if self.players_active[(self.button_idx+2) % len(self.players_active)
+        tmp_2play=1 if len(self.players_active)==2 else 0
+        if self.players_active[(self.button_idx+2-tmp_2play) % len(self.players_active)
                                ].balance<sblind:
-            del self.players_active[self.button_idx+2]
+            del self.players_active[self.button_idx+2-tmp_2play]
             #removing player on bblind spot who has less than sblind amount
         if not (2<=len(self.players_active)<=10):
             print('ERROR: between 2 and 10 valid players need to be defined')
@@ -75,7 +84,9 @@ class Game():
             
             #after new button is determined we need to check whether new Bblind
             #player has at least Small blind amount. If not, then they are eliminated
-            bbpl=self.players_active[(self.button_idx+2) % len(self.players_active)]
+            tmp_2play=1 if len(self.players_active)==2 else 0
+            bbpl=self.players_active[(self.button_idx+2-tmp_2play) % 
+                                     len(self.players_active)]
             if bbpl.balance<self.sblind:
                 self.players_active.remove(bbpl)
             n+=1

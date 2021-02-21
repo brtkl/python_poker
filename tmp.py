@@ -12,10 +12,25 @@ from Deck import Deck
 
 
 
-g=Game([{'name':'brtkl', 'type':'human'},  ##why doesn't work without strat, defaults should work for type
-        {'name':'c1', 'strat':'sasmonkey'},
-        {'name':'c2', 'strat':'test'}], mode='interactive', simnum_prob=2000)
+g=Game([{'name':'brtkl', 'type':'human'}
+        , {'name':'c1', 'strat':'sasmonkey'}
+        , {'name':'c2', 'strat':'test'}
+        , {'name':'c3', 'strat':'usebetmeth1'}
+        ]
+       , mode='interactive'
+       , simnum_prob=2000
+       )
+g.play()
 
+g=Game([{'name':'brtkl'}
+        , {'name':'c1', 'strat':'sasmonkey'}
+        , {'name':'c2', 'strat':'test'}
+        , {'name':'c3', 'strat':'usebetmeth1'}
+        ]
+       , mode='sim'
+       , simnum_prob=2000
+       , maxrounds=100
+       )
 g.play()
 
 d1=Deck()

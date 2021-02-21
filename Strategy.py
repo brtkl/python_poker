@@ -121,6 +121,13 @@ class Strategy:
                 else:
                     self.player.fold()
                     
+        elif self.mode=='usebetmeth1':
+            tmp=self.player.probwin
+            if self.moveon()==1:
+                self.player.check() 
+            elif self.player.balance>0:
+                self.player.makebet(math.floor((tmp**3)*self.player.balance))
+                    
         elif self.mode=='human':
             if self.moveon()==1:
                 self.player.check() 
@@ -140,7 +147,7 @@ class Strategy:
                     if decide=='exit':
                         sys.exit(0)
                     elif decide=='probs':
-                        print('probabilities: '+self.player.probdist)
+                        print(self.player.probdist)
                     elif decide not in ('call','check','fold','raise','allin'):
                         pass
                     elif (self.player.bet<self.round_.maxbet and decide !='check'

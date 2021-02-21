@@ -24,16 +24,17 @@ GENERAL status
   -To create simul prob mode for x players		done
     
 -convert the project into a package			
+  -to replace all errors by raising custom except ?  	
 -Frontend implementation -ask Kacper?			
 -multiplayer online???? - ask Kacper?			
--interactive mode					wip, probs check
+-interactive mode					done
   -create global quit?					done
   -player attrib - human vs comp?			done
--Strategy() improvements				
-  -create some strats using bet method			wip
-  -use prob of draw in strats as well?				
--create Simulation class??
-  -adding stats/summary from games/rounds
+-Strategy() improvements				wip
+  -create some strats using bet method			done
+  -use prob of draw in strats as well?			
+-create Simulation class??				
+  -adding stats/summary from games/rounds		
   -Machine Learning implementatio for strats?		
 
 
