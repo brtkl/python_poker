@@ -61,7 +61,7 @@ class Player():
         allintxt='checks'
         if self.balance==0:
             allintxt='does nothing - already all in'
-        print(f'Player {self.name} {allintxt}')
+        print(f'##Player {self.name} {allintxt}')
         
     def call(self):
         allintxt=''
@@ -71,7 +71,7 @@ class Player():
             allintxt='(all in)'
         self.updatebalance(-val)
         self.updatetable(val)
-        print(f'Player {self.name} calls {allintxt}')
+        print(f'##Player {self.name} calls {allintxt}')
     
     def raise_(self, val):
         """ Note, when using raise_, val param denotes all the money the player
@@ -89,12 +89,12 @@ class Player():
             raisval=val
         self.updatebalance(-val)
         self.updatetable(val, raise_='Y', raisval=raisval)
-        print(f'Player {self.name} raises by {raisval} {allintxt}')
+        print(f'##Player {self.name} raises by {raisval} {allintxt}')
     
     def fold(self):
         self.folded=1
         self.cur_round.players_r_active.remove(self)
-        print(f'Player {self.name} folds')
+        print(f'##Player {self.name} folds')
         
     def makebet(self, val):
         """collating check, call, raise_ and fold methods depending 

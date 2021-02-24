@@ -42,7 +42,36 @@ class Round():
                 p.hand=self.deck.draw(cards=p.cards_req)
             if self.cur_game.mode=='sim' or (self.cur_game.mode=='interactive' 
                                              and p.type=='human'):
-                print(f"{p.name} hand: {p.hand}")
+                print(f"########{p.name} hand: {p.hand}")
+        
+    def showroundstatus(self):
+        lenact=len(self.players_r_started)
+        if lenact==2:
+            tmp=0
+        else:
+            tmp=1
+        for p in self.cur_game.players_init:
+            status=f'\t{p.name}: '+' '*(15-len(p.name))
+            if p not in self.cur_game.players_active:
+                status+='inactive'
+            else:
+                status+=f'bet: {p.bet} '
+                if (self.cur_game.players_init.index(p)==(self.button) 
+                    % lenact):
+                        status+='\t\tbtn'
+                if (self.cur_game.players_init.index(p)==(self.button+tmp) 
+                    % lenact):
+                        status+='\t\tsb'
+                elif (self.cur_game.players_init.index(p)==
+                      (self.button+tmp+1) % lenact):
+                        status+='\t\tbb'
+                else:
+                    status+='\t\t'
+                if p not in self.players_r_active:
+                    status+='\t\tfolded'
+                if p.balance<=0:
+                    status+='\t\tallin'
+            print(f'{status}')
         
     def assignblinds(self):
         lenact=len(self.players_r_active)
@@ -67,8 +96,12 @@ class Round():
         self.pot=sblind+bblind
         self.maxbet=self.bblind  #self.bblind on purpose - dont remove self 
         
-        print(f'sb: {self.players_r_active[(self.button+tmp) % lenact].name}\n'
+        if self.cur_game.mode=='sim':
+            print(f'sb: {self.players_r_active[(self.button+tmp) % lenact].name}\n'
               +f'bb: {self.players_r_active[(self.button+tmp+1) % lenact].name}')
+        elif self.cur_game.mode=='interactive':
+            self.showroundstatus()
+                
     
     def betting(self):
         if len(self.players_r_active)>1:
@@ -100,6 +133,8 @@ class Round():
         
         if len(self.players_r_active)>1:
             self.stage=newstage
+            if self.cur_game.mode=='interactive':
+                self.showroundstatus()
             if newstage=='flop':
                 self.table=self.deck.draw(3, cards=self.cur_game.flop_req)
             elif newstage=='turn':

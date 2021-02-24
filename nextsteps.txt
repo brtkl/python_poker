@@ -22,20 +22,23 @@ GENERAL status
 
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
-    
--convert the project into a package			
+
+-convert the project into a package			wip
+  -to update test subf in a package fassion		
   -to replace all errors by raising custom except ?  	
 -Frontend implementation -ask Kacper?			
 -multiplayer online???? - ask Kacper?			
 -interactive mode					done
   -create global quit?					done
   -player attrib - human vs comp?			done
+  -add small visual of a table + current bets		wip
 -Strategy() improvements				wip
   -create some strats using bet method			done
   -use prob of draw in strats as well?			
 -create Simulation class??				
   -adding stats/summary from games/rounds		
   -Machine Learning implementatio for strats?		
+  -create plots to see how probability changes for >3p?	
 
 
 ##############################
@@ -46,6 +49,7 @@ eval_hand		done
 Deck			done
 Player			done
 Round			done, except betting() method - since strictly related to Strategy and somewhat tested in Game
+  -showstatus		wip
 Strategy		leave for now
 Game			done
 
@@ -57,5 +61,22 @@ Game			done
 ISSUES
 ##############################
 see tmp folder
+
+
+
+
+exceptions:
+def results(status, data):
+    valid = {0, 1, 99}
+    if status not in valid:
+        raise ValueError("results: status must be one of %r." % valid)
+
+Always try to raise the most appropriate exception you can - ValueError tells the caller of the function what's going on better than Exception does, for example.
+
+
+
+##############################
+IDEAS - NOTES
+##############################
 
 #func = globals()["F" + temp]

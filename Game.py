@@ -53,7 +53,7 @@ class Game():
         n=1
         while(10>=len(self.players_active)>1 and n<=self.maxrounds):
             r=Round(self, sblind=self.sblind, bblind=self.bblind)
-            print(f"\nRound {n} begins")
+            print(f"#####################################\n##Round {n} begins")
             for p in self.players_active[:]:
                 p.prepare_for_round(r)
             r.assigncards()

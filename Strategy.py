@@ -134,16 +134,16 @@ class Strategy:
                 #already all in or all ops all in and our bet is covered
             elif self.player.balance>0:
                 cordecide=0
-                print(f'Status:\n pot: {self.round_.pot}\n'+
-                      f' maxbet: {self.round_.maxbet}\n'+
-                      f' current bet: {self.player.bet}')
+                print(f'##Status:\n\tpot: {self.round_.pot}\n'+
+                      f'\tmaxbet: {self.round_.maxbet}\n'+
+                      f'\tcurrent bet: {self.player.bet}')
                 
                 while cordecide==0:
                     if self.player.bet<self.round_.maxbet:
                         text='call/fold/raise/allin'
                     else:
                         text='check/raise/allin'
-                    decide=input(f'Pick one: {text}\n')
+                    decide=input(f'##Pick one: {text}\n')
                     if decide=='exit':
                         sys.exit(0)
                     elif decide=='probs':
@@ -162,7 +162,7 @@ class Strategy:
                         print(f'{self.round_.maxbet-self.player.bet} to call')
                     corraise=0
                     while corraise==0:
-                        raiseval=input('Enter amount to raise\n'+'minimum to raise: '+
+                        raiseval=input('##Enter amount to raise\n'+'minimum to raise: '+
                                        f'{self.round_.minraise}\n')
                         if raiseval=='exit':
                             sys.exit(0)
