@@ -48,19 +48,14 @@ class CalcProbwinTestCase(unittest.TestCase):
         
     
     def test_lessthan7(self):
-        self.assertEqual(calc_probwin(self.test_lesscards,[]),
-           ['2 cards in hand and between 0 and 5 cards in a table are'
-            +' needed in lists'])  
+        self.assertRaises(ValueError,calc_probwin,self.test_lesscards,[])
         
     def test_repeating_cards(self):
-        self.assertEqual(calc_probwin(self.testrep[:2],self.testrep[2:]),
-                        ['repeating cards in the input data'])
+        self.assertRaises(ValueError,calc_probwin,self.testrep[:2],self.testrep[2:])
     
     def test_wrongn(self):
-        self.assertEqual(calc_probwin(self.testhand_strflush[:2],[],n=1),
-                        ['n needs to be between 2 and 10'])
-        self.assertEqual(calc_probwin(self.testhand_strflush[:2],[],n=11),
-                        ['n needs to be between 2 and 10'])
+        self.assertRaises(ValueError,calc_probwin,self.testhand_strflush[:2],[],n=1)
+        self.assertRaises(ValueError,calc_probwin,self.testhand_strflush[:2],[],n=11)
     
     def test_cant_lose(self):
         self.assertTrue(calc_probwin(self.testhand_strflush[:2],

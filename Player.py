@@ -8,8 +8,12 @@ Created on Sat Jan 30 10:25:07 2021
 from Strategy import Strategy
 
 class Player():
-    """ defining a player with attributes"""
+    """ defining a player with attributes. All attributes need to be defined
+    in in a dictionarz and passed in defdict, e.g. 
+    Player({'name':'c1', 'strat':'sasmonkey'})"""
     def __init__(self, defdict):
+        """Possible keys for defdict:
+            name, balance, type, cards, strat"""
         if isinstance(defdict, str):
             self.name=defdict
         elif isinstance(defdict, dict):
@@ -51,7 +55,7 @@ class Player():
         
     def updatetable(self, val, raise_='N', raisval=0):
         if raisval>val:
-            return('ERROR: raisval greater than val')
+            raise ValueError('raisval greater than val')
         self.cur_round.pot+=val
         self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
         if raise_=='Y':

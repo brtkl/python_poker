@@ -3,7 +3,7 @@
 Created on 20210205
 
 @author: brtk
-"""
+""" 
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -153,7 +153,7 @@ class RoundTestCase(unittest.TestCase):
         self.assertEqual(len(self.r.deck.cards), 52-5)
         
         self.r.stage='pre-flop'
-        self.assertEqual(self.r.nextstage('river'), ['wrong order of stages'])
+        self.assertRaises(ValueError,self.r.nextstage,'river')
         
     
     def test_finalizeround_1(self):

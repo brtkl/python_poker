@@ -28,7 +28,7 @@ g=Game([{'name':'brtkl'}
         , {'name':'c3', 'strat':'usebetmeth1'}
         ]
        , mode='sim'
-       , simnum_prob=2000
+       , simnum_prob=10000
        , maxrounds=100
        )
 g.play()

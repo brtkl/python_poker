@@ -129,7 +129,7 @@ class Round():
         if ((self.stage=='pre-flop' and newstage != 'flop') or 
             (self.stage=='flop' and newstage != 'turn') or
             (self.stage=='turn' and newstage != 'river')):
-            return ['wrong order of stages']
+            raise ValueError('wrong order of stages')
         
         if len(self.players_r_active)>1:
             self.stage=newstage
@@ -159,7 +159,7 @@ class Round():
             pots_all=[x-y for x,y in zip(distnct_elig, [0]+distnct_elig)]
             
             if sum(pots_all) != self.pot:
-                return 'check pots_all calculation'
+                raise ValueError('check pots_all calculation')
             
             for p in self.players_r_active:
                 for i in range(len(distnct_elig)):

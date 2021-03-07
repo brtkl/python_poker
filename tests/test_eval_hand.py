@@ -40,13 +40,11 @@ class EvalHandTestCase(unittest.TestCase):
         self.testhand_highcard=[(13,'H'), (12,'C'), (3,'H'), (11,'S'), (2,'H'), 
                              (5,'C'), (8,'D')]
     
-    def test_lessthan7(self):
-        self.assertEqual(eval_hand(self.test_lesscards),
-                        ['Exactly 7 cards in a list should be evaluated'])  
+    def test_lessthan7(self): 
+        self.assertRaises(ValueError,eval_hand,self.test_lesscards)
         
     def test_repeating_cards(self):
-        self.assertEqual(eval_hand(self.testrep),
-                        ['repeating cards in the input data'])
+        self.assertRaises(ValueError,eval_hand,self.testrep)
     
     def test_straight_flush(self):
         self.assertEqual(eval_hand(self.testhand_strflush), [9,5,0,0])

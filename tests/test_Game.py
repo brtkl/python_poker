@@ -19,6 +19,11 @@ class GameTestCase(unittest.TestCase):
     def setUp(self):   
         pass
         
+    def test_1player(self):
+        self.assertRaises(ValueError,Game,[{'name':'p1', 'balance':20, 
+                                            'cards':[(2,'C'),(7,'H')]}],
+                    maxrounds=1)
+    
     def test_3p_game_noten_bb(self):
         self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
                      {'name':'p2', 'balance':20, 'cards':[(2,'S'),(6,'D')]},
@@ -40,12 +45,10 @@ class GameTestCase(unittest.TestCase):
                         self.g.players_init[2] not in self.g.players_active)
         
     def test_2p_game_noten_sb(self):
-        self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
-                     {'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
-                    maxrounds=1)
-        self.g.play()
-        self.assertTrue(self.g.players_active[0].balance==20 and
-                        self.g.players_init[1] not in self.g.players_active)
+        self.assertRaises(ValueError,Game,
+                          [{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
+                           {'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
+                          maxrounds=1)
  
     def test_3p_game_noten_sb_2(self):
         self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},

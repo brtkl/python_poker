@@ -43,7 +43,7 @@ class Game():
             del self.players_active[self.button_idx+2-tmp_2play]
             #removing player on bblind spot who has less than sblind amount
         if not (2<=len(self.players_active)<=10):
-            print('ERROR: between 2 and 10 valid players need to be defined')
+            raise ValueError('between 2 and 10 valid players need to be defined')
     
     def display_balances(self):
         for p in self.players_active:

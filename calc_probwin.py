@@ -17,11 +17,11 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000):
         table=[]
         
     if len(hand)!=2 or len(table)>5 or isinstance(hand,list) != True:
-        return ['2 cards in hand and between 0 and 5 cards in a table are'
-                +' needed in lists']
+        raise ValueError('2 cards in hand and between 0 and 5 cards in a table'
+                         +' are needed in lists')
     
     if len(hand+table) != len(set(hand+table)):
-        return ['repeating cards in the input data']
+        raise ValueError('repeating cards in the input data')
     
     if len(table)==5 and type=='def':
         type='exact'
@@ -29,7 +29,7 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000):
         type='simul'
         
     if not (2<=n<=10):
-        return ['n needs to be between 2 and 10']
+        raise ValueError('n needs to be between 2 and 10')
         
     if type=='exact':
         tmpdeck=Deck()

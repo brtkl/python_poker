@@ -23,15 +23,15 @@ GENERAL status
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
 
--convert the project into a package			wip
-  -to update test subf in a package fassion		
-  -to replace all errors by raising custom except ?  	
+-convert the project into a package			done
+  -to update test subf in a package fassion		done
+  -to replace all errors by raising custom except ?  	done
 -Frontend implementation -ask Kacper?			
 -multiplayer online???? - ask Kacper?			
 -interactive mode					done
   -create global quit?					done
   -player attrib - human vs comp?			done
-  -add small visual of a table + current bets		wip
+  -add small visual of a table + current bets		done
 -Strategy() improvements				wip
   -create some strats using bet method			done
   -use prob of draw in strats as well?			
@@ -48,8 +48,7 @@ calc_probwin		done
 eval_hand		done
 Deck			done
 Player			done
-Round			done, except betting() method - since strictly related to Strategy and somewhat tested in Game
-  -showstatus		wip
+Round			done, except betting() method - since strictly related to Strategy and somewhat tested in Game, and except showstatus
 Strategy		leave for now
 Game			done
 
@@ -62,7 +61,7 @@ ISSUES
 ##############################
 see tmp folder
 
-
+GAME TESTS to correct - ValueError			wip
 
 
 exceptions:
@@ -80,3 +79,19 @@ IDEAS - NOTES
 ##############################
 
 #func = globals()["F" + temp]
+
+
+/*interactive approach for tests:*/
+# import os,sys,inspect
+# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+# parentdir = os.path.dirname(currentdir)
+# sys.path.insert(0,parentdir) 
+
+/*command line approach - running all tests*/
+$ cd new_project
+$ python -m unittest tests.test_antigravity           - to run single test program
+$ python -m unittest				      - to run all test programs
+
+
+
+

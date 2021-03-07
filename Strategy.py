@@ -172,7 +172,7 @@ class Strategy:
                             corraise=1
                         else:
                             print(f'at least {self.round_.minraise} required')
-                if decide=='allin':
+                elif decide=='allin':
                     self.allin() #go all in
                 elif decide=='raise':
                     self.raise_str(raiseby=int(raiseval))

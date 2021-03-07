@@ -8,10 +8,10 @@ Created on Wed Jan 27 18:25:18 2021
 def eval_hand(hand):
     """ evaluate hand - recognize poker hand within 7 cards"""
     if len(hand)!=7 or isinstance(hand,list) != True:
-        return ['Exactly 7 cards in a list should be evaluated']
+        raise ValueError('Exactly 7 cards in a list should be evaluated')
     
     if len(hand) != len(set(hand)):
-        return ['repeating cards in the input data']
+        raise ValueError('repeating cards in the input data')
         
     #returning
     #[rank, rank_h1, rank_h2, remain_import]
