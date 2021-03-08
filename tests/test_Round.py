@@ -131,8 +131,7 @@ class RoundTestCase(unittest.TestCase):
     #add assignblinds tests for when balance<sblind or bblind
         
     def test_nextstage_1(self):
-        self.assertEqual(self.r.nextstage('abc'), 
-                         ['newstage needs to be flop, turn or river'])
+        self.assertRaises(ValueError,self.r.nextstage,'abc')
         
         self.r.stage='pre-flop'
         self.r.players_r_active=[self.g.players_active[0]]

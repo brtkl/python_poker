@@ -124,14 +124,13 @@ class Round():
     
     def nextstage(self,newstage):
         if newstage not in ['flop','turn','river']:
-            return ['newstage needs to be flop, turn or river']
-        
-        if ((self.stage=='pre-flop' and newstage != 'flop') or 
-            (self.stage=='flop' and newstage != 'turn') or
-            (self.stage=='turn' and newstage != 'river')):
-            raise ValueError('wrong order of stages')
+            raise ValueError('newstage needs to be flop, turn or river')
         
         if len(self.players_r_active)>1:
+            if ((self.stage=='pre-flop' and newstage != 'flop') or 
+                (self.stage=='flop' and newstage != 'turn') or
+                (self.stage=='turn' and newstage != 'river')):
+                    raise ValueError('wrong order of stages')
             self.stage=newstage
             if self.cur_game.mode=='interactive':
                 self.showroundstatus()
