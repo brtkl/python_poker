@@ -8,9 +8,20 @@ Created on Sat Jan 30 10:25:07 2021
 from Strategy import Strategy
 
 class Player():
-    """ defining a player with attributes. All attributes need to be defined
-    in in a dictionarz and passed in defdict, e.g. 
-    Player({'name':'c1', 'strat':'sasmonkey'})"""
+    """ defining a player with attributes. 
+    All attributes need to be defined in a dictionary and passed in defdict, 
+    e.g. 
+    Player({'name':'c1', 'strat':'sasmonkey'})
+    Player({'name':'Me', 'type':'human'})
+    Possible atributes;
+    -name
+    -balance (startig balance)
+    -strat (see strategy class for possible values. 
+            Note that human is reserved for type=human)
+    -type (should be human for iteractive game, otherwise 'comp' (default))
+    -cards (defining which cards the player should receive. Used only for
+            testing purposes.)
+    """
     def __init__(self, defdict):
         """Possible keys for defdict:
             name, balance, type, cards, strat"""
@@ -20,6 +31,8 @@ class Player():
             self.name=defdict['name']
         self.balance=defdict['balance'] if 'balance' in defdict else 1000
         self.type=defdict['type'] if 'type' in defdict else 'comp'
+        if self.type not in ['human', 'comp']:
+            raise ValueError('type should be human or comp')
         self.cards_req=defdict['cards'] if 'cards' in defdict else []
         if 'strat' in defdict:
             self.strat=defdict['strat']
@@ -65,7 +78,7 @@ class Player():
         allintxt='checks'
         if self.balance==0:
             allintxt='does nothing - already all in'
-        print(f'##Player {self.name} {allintxt}')
+        self.cur_round.cur_game.print_c(f'##Player {self.name} {allintxt}')
         
     def call(self):
         allintxt=''
@@ -75,7 +88,8 @@ class Player():
             allintxt='(all in)'
         self.updatebalance(-val)
         self.updatetable(val)
-        print(f'##Player {self.name} calls {allintxt}')
+        self.cur_round.cur_game.print_c(
+            f'##Player {self.name} calls {allintxt}')
     
     def raise_(self, val):
         """ Note, when using raise_, val param denotes all the money the player
@@ -93,12 +107,14 @@ class Player():
             raisval=val
         self.updatebalance(-val)
         self.updatetable(val, raise_='Y', raisval=raisval)
-        print(f'##Player {self.name} raises by {raisval} {allintxt}')
+        self.cur_round.cur_game.print_c(
+            f'##Player {self.name} raises by {raisval} {allintxt}')
     
     def fold(self):
         self.folded=1
         self.cur_round.players_r_active.remove(self)
-        print(f'##Player {self.name} folds')
+        self.cur_round.cur_game.print_c(
+            f'##Player {self.name} folds')
         
     def makebet(self, val):
         """collating check, call, raise_ and fold methods depending 

@@ -35,9 +35,11 @@ GENERAL status
 -Strategy() improvements				wip
   -create some strats using bet method			done
   -use prob of draw in strats as well?			
--create Simulation class??				
-  -adding stats/summary from games/rounds		
-  -Machine Learning implementatio for strats?		
+-create Simulation class??				wip
+  -create print method within Game class to suppress	done
+   printing for simulations and tests
+  -adding stats/summary from games/rounds		wip
+  -Machine Learning implementation for strats?		
   -create plots to see how probability changes for >3p?	
 
 
@@ -60,8 +62,6 @@ Game			done
 ISSUES
 ##############################
 see tmp folder
-
-GAME TESTS to correct - ValueError			wip
 
 
 exceptions:

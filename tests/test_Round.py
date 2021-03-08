@@ -17,7 +17,7 @@ class RoundTestCase(unittest.TestCase):
     """tests for Round class"""
     
     def setUp(self):
-        self.g=Game(['p1','p2'])
+        self.g=Game(['p1','p2'], console_print='N')
         self.r=Round(self.g)
  
     def test_assigncards(self):
@@ -46,7 +46,7 @@ class RoundTestCase(unittest.TestCase):
                                                      ,self.g.players_active[1]])
         
     def test_assignblinds_3play_1(self):
-        self.g=Game(['p1','p2','p3'])
+        self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
         self.r.assignblinds()
         self.assertTrue(self.g.players_active[0].balance==1000 and
@@ -62,7 +62,7 @@ class RoundTestCase(unittest.TestCase):
         self.assertTrue(self.r.maxbet==self.r.bblind)
         
     def test_assignblinds_3play_2(self):
-        self.g=Game(['p1','p2','p3'])
+        self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
         self.r.button=1
         self.r.assignblinds()
@@ -79,7 +79,7 @@ class RoundTestCase(unittest.TestCase):
         self.assertTrue(self.r.maxbet==self.r.bblind)
         
     def test_assignblinds_3play_3(self):
-        self.g=Game(['p1','p2','p3'])
+        self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
         self.r.button=2
         self.r.assignblinds()
@@ -96,7 +96,7 @@ class RoundTestCase(unittest.TestCase):
         self.assertTrue(self.r.maxbet==self.r.bblind)
         
     def test_assignblinds_8play_1(self):
-        self.g=Game(['p1','p2','p3','p4','p5','p6','p7','p8'])
+        self.g=Game(['p1','p2','p3','p4','p5','p6','p7','p8'], console_print='N')
         self.r=Round(self.g)
         self.r.button=4
         self.r.assignblinds()
@@ -203,7 +203,7 @@ class RoundTestCase(unittest.TestCase):
                         self.g.players_active[1].balance==1250)
         
     def test_finalizeround_5_allin_3plays_draw(self):
-        self.g=Game(['p1','p2','p3'])
+        self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
         self.r.table=[(14, 'C'), (13, 'H'), (13, 'C'), (13, 'D'), (13, 'S')]
         self.g.players_active[0].hand=[(5, 'H'), (2, 'D')]
@@ -228,7 +228,7 @@ class RoundTestCase(unittest.TestCase):
         
         
     def test_finalizeround_6_allin_3plays_win(self):
-        self.g=Game(['p1','p2','p3'])
+        self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
         self.r.table=[(14, 'C'), (10, 'H'), (13, 'C'), (13, 'D'), (13, 'S')]
         self.g.players_active[0].hand=[(5, 'H'), (2, 'D')]
@@ -253,7 +253,7 @@ class RoundTestCase(unittest.TestCase):
                         self.g.players_active[2].balance == 2300)
         
     def test_finalizeround_7_allin_4plays_win(self):
-        self.g=Game(['p1','p2','p3','p4'])
+        self.g=Game(['p1','p2','p3','p4'], console_print='N')
         self.r=Round(self.g)
         self.r.table=[(14, 'C'), (10, 'H'), (13, 'C'), (14, 'D'), (13, 'S')]
         self.g.players_active[0].hand=[(5, 'H'), (2, 'D')]
@@ -278,7 +278,7 @@ class RoundTestCase(unittest.TestCase):
                         round(self.g.players_active[3].balance,1)==1800)
         
     def test_finalizeround_7_allin_8plays_win(self):
-        self.g=Game(['p1','p2','p3','p4','p5','p6','p7','p8'])
+        self.g=Game(['p1','p2','p3','p4','p5','p6','p7','p8'], console_print='N')
         self.r=Round(self.g)
         self.r.table=[(14, 'C'), (12, 'H'), (10, 'C'), (8, 'D'), (6, 'S')]
         self.g.players_active[0].hand=[(14, 'H'), (2, 'D')]

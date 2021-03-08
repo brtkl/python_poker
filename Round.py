@@ -42,7 +42,7 @@ class Round():
                 p.hand=self.deck.draw(cards=p.cards_req)
             if self.cur_game.mode=='sim' or (self.cur_game.mode=='interactive' 
                                              and p.type=='human'):
-                print(f"########{p.name} hand: {p.hand}")
+                self.cur_game.print_c(f"########{p.name} hand: {p.hand}")
         
     def showroundstatus(self):
         lenact=len(self.players_r_started)
@@ -71,7 +71,7 @@ class Round():
                     status+='\t\tfolded'
                 if p.balance<=0:
                     status+='\t\tallin'
-            print(f'{status}')
+            self.cur_game.print_c(f'{status}')
         
     def assignblinds(self):
         lenact=len(self.players_r_active)
@@ -97,7 +97,8 @@ class Round():
         self.maxbet=self.bblind  #self.bblind on purpose - dont remove self 
         
         if self.cur_game.mode=='sim':
-            print(f'sb: {self.players_r_active[(self.button+tmp) % lenact].name}\n'
+            self.cur_game.print_c(
+                f'sb: {self.players_r_active[(self.button+tmp) % lenact].name}\n'
               +f'bb: {self.players_r_active[(self.button+tmp+1) % lenact].name}')
         elif self.cur_game.mode=='interactive':
             self.showroundstatus()
@@ -107,8 +108,9 @@ class Round():
         if len(self.players_r_active)>1:
             n=0
             for p in self.players_r_active:
-                p.probdist=calc_probwin(p.hand, self.table, n=len(self.players_r_active),
-                                 simnum=self.simnum_prob)
+                p.probdist=calc_probwin(p.hand, self.table
+                                        , n=len(self.players_r_active)
+                                        , simnum=self.simnum_prob)
                 p.probwin=round(p.probdist[0],2)
             if self.stage == 'pre-flop':
                 tmp=self.player_ord_preflop
@@ -140,12 +142,13 @@ class Round():
                 self.table+=self.deck.draw(1, cards=self.cur_game.turn_req)
             elif newstage=='river':
                 self.table+=self.deck.draw(1, cards=self.cur_game.river_req)
-            print(f"{newstage}: {self.table}")
+            self.cur_game.print_c(f"{newstage}: {self.table}")
             
     
     def finalizeround(self):
         if len(self.players_r_active)==1:
-            print(f"{self.players_r_active[0].name} wins, opponents folded")
+            self.cur_game.print_c(
+                f"{self.players_r_active[0].name} wins, opponents folded")
             self.players_r_active[0].updatebalance(self.pot, balanceonly=1)
             
         else:
@@ -171,16 +174,19 @@ class Round():
                     if i in p.pots_idx:
                         elig_players.append(p)
                 maxhand=max([eval_hand(p.hand+self.table) for p in elig_players])
-                winplay=[p for p in elig_players if eval_hand(p.hand+self.table)==maxhand]
+                winplay=[p for p in elig_players if eval_hand(p.hand+self.table
+                                                              )==maxhand]
                 if len(winplay)==1:
                     winplay[0].updatebalance(pots_all[i], balanceonly=1)
-                    print(f"{winplay[0].name} wins pot {i}, {pots_all[i]} having {maxhand}")
+                    self.cur_game.print_c(
+                        f"{winplay[0].name} wins pot {i}, {pots_all[i]} having {maxhand}")
                 elif len(winplay)>1:
                     if round(pots_all[i]/len(winplay),2)*len(winplay)==pots_all[i]:
                         valperp=round(pots_all[i]/len(winplay),2)
                         rest=0
                     else:    
-                        valperp=round(math.floor((pots_all[i]/len(winplay))*100)/100,2)
+                        valperp=round(math.floor((pots_all[i]/len(winplay))
+                                                 *100)/100,2)
                         rest=pots_all[i]-valperp*len(winplay)
                         idxrest=random.choice(list(range(len(winplay))))
                         #if not possible to divide penny then give randomly
@@ -188,7 +194,8 @@ class Round():
                         p.updatebalance(valperp, balanceonly=1)
                         if rest != 0 and winplay.index(p)==idxrest:
                             p.updatebalance(rest, balanceonly=1)
-                        print(f"{p.name} drew pot {i}, {valperp} having {maxhand}")
+                        self.cur_game.print_c(
+                            f"{p.name} drew pot {i}, {valperp} having {maxhand}")
                     
             
         

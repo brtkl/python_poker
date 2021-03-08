@@ -18,6 +18,7 @@ class Game():
                  , players
                  , mode='sim' #sim or interactive
                  , maxrounds=20
+                 , console_print='Y'
                  , simnum_prob=10000
                  , sblind=5
                  , bblind=10
@@ -31,6 +32,7 @@ class Game():
         self.turn_req=round_req['turn'] if 'turn' in round_req else []
         self.river_req=round_req['river'] if 'river' in round_req else []
         self.maxrounds=maxrounds
+        self.console_print=console_print
         self.mode=mode
         self.button_idx=button_idx
         self.simnum_prob=simnum_prob
@@ -44,16 +46,23 @@ class Game():
             #removing player on bblind spot who has less than sblind amount
         if not (2<=len(self.players_active)<=10):
             raise ValueError('between 2 and 10 valid players need to be defined')
+        if console_print not in ['Y', 'N']:
+            raise ValueError('console_print can be Y or N')
+            
+    def print_c(self, val):
+        if self.console_print=='Y':
+            print(val)
     
     def display_balances(self):
         for p in self.players_active:
-            print(f"{p.name} balance: {p.balance}")
+            self.print_c(f"{p.name} balance: {p.balance}")
     
     def play(self):
         n=1
         while(10>=len(self.players_active)>1 and n<=self.maxrounds):
             r=Round(self, sblind=self.sblind, bblind=self.bblind)
-            print(f"#####################################\n##Round {n} begins")
+            self.print_c("#####################################\n##Round"+
+                         f" {n} begins")
             for p in self.players_active[:]:
                 p.prepare_for_round(r)
             r.assigncards()

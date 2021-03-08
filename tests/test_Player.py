@@ -20,7 +20,7 @@ class PlayerTestCase(unittest.TestCase):
     
     def setUp(self):
         self.p=Player('playername')
-        self.g=Game(['test1','test2'])    
+        self.g=Game(['test1','test2'], console_print='N')    
         self.r=Round(self.g)
         self.p.prepare_for_round(self.r)
         self.g.players_active[0].prepare_for_round(self.r)

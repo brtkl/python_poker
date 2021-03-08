@@ -184,4 +184,7 @@ class Strategy:
                     self.player.fold()
                 else:
                     print('incorrect choice')
+                    
+        else:
+            raise ValueError('incorrect strategy defined for a player')
 
