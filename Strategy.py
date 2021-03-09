@@ -162,20 +162,27 @@ class Strategy:
                         print(f'{self.round_.maxbet-self.player.bet} to call')
                     corraise=0
                     while corraise==0:
-                        raiseval=input('##Enter amount to raise\n'+'minimum to raise: '+
+                        raiseval=input('##Enter amount to raise\n'+
+                                       'minimum to raise: '+
                                        f'{self.round_.minraise}\n')
                         if raiseval=='exit':
                             sys.exit(0)
                         elif decide=='probs':
                             print(self.player.probdist)
-                        elif int(raiseval)>=self.round_.minraise:
-                            corraise=1
                         else:
-                            print(f'at least {self.round_.minraise} required')
+                            try:
+                                int(raiseval)
+                            except ValueError:
+                                pass
+                            else:
+                                if int(raiseval)>=self.round_.minraise:
+                                    corraise=1
+                                    self.raise_str(raiseby=int(raiseval))
+                                else:
+                                    print(f'at least {self.round_.minraise}'
+                                          ,'required')
                 elif decide=='allin':
                     self.allin() #go all in
-                elif decide=='raise':
-                    self.raise_str(raiseby=int(raiseval))
                 elif decide=='call':
                     self.player.call()
                 elif decide=='check':
