@@ -32,7 +32,7 @@ GENERAL status
   -create global quit?					done
   -player attrib - human vs comp?			done
   -add small visual of a table + current bets		done
--Strategy() improvements				wip
+-Strategy() improvements				
   -create some strats using bet method			done
   -use prob of draw in strats as well?			
 -create Simulation class??				wip

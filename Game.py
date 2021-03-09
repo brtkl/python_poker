@@ -39,15 +39,15 @@ class Game():
         self.bblind=bblind
         self.sblind=sblind
         self.players_init=self.players_active[:]
-        tmp_2play=1 if len(self.players_active)==2 else 0
-        if self.players_active[(self.button_idx+2-tmp_2play) % len(self.players_active)
-                               ].balance<sblind:
-            del self.players_active[self.button_idx+2-tmp_2play]
-            #removing player on bblind spot who has less than sblind amount
+        self.remove_notenough_sb_on_bb()
         if not (2<=len(self.players_active)<=10):
             raise ValueError('between 2 and 10 valid players need to be defined')
         if console_print not in ['Y', 'N']:
             raise ValueError('console_print can be Y or N')
+        if mode not in ['sim', 'interactive']:
+            raise ValueError('mode can be sim or ineractive')
+        if not (0<=button_idx<=len(self.players_init)-1):
+            raise ValueError('starting button_idx incorrect')
             
     def print_c(self, val):
         if self.console_print=='Y':
@@ -56,6 +56,14 @@ class Game():
     def display_balances(self):
         for p in self.players_active:
             self.print_c(f"{p.name} balance: {p.balance}")
+            
+    def remove_notenough_sb_on_bb(self):
+        """removing player on bblind spot who has less than sblind amount"""
+        tmp_2play=1 if len(self.players_active)==2 else 0
+        bbpl=self.players_active[(self.button_idx+2-tmp_2play) % 
+                                 len(self.players_active)]
+        if bbpl.balance<self.sblind:
+            self.players_active.remove(bbpl)
     
     def play(self):
         n=1
@@ -81,30 +89,26 @@ class Game():
             r.finalizeround()
                         
             self.display_balances()
-            button_rem=0
             
+            button_rem=0
             for p in self.players_active[:]:
                 if p.balance<=0:
-                    if self.players_active.index(p)==self.button_idx:
-                        button_rem=1
-                        #if button lost everything we don't add +1 to self.button_idx
+                    if self.players_active.index(p)<=self.button_idx:
+                        button_rem+=1
+                        #if players before button were eliminated we need 
+                        #to go back with the new button idx since it takes
+                        #into account players_active only.
+                        #e.g. 5 players, no 4 was button.
+                        #players 2 and 4 are eliminated
+                        #new button should be no 5 but its now the 3rd player
+                        #in the new players_active list, so 4+1-2
                     self.players_active.remove(p)
-            self.button_idx=(self.button_idx+1-button_rem) % len(self.players_active)
+            self.button_idx=(self.button_idx+1-button_rem) % len(
+                self.players_active)
             
-            #after new button is determined we need to check whether new Bblind
-            #player has at least Small blind amount. If not, then they are eliminated
-            tmp_2play=1 if len(self.players_active)==2 else 0
-            bbpl=self.players_active[(self.button_idx+2-tmp_2play) % 
-                                     len(self.players_active)]
-            if bbpl.balance<self.sblind:
-                self.players_active.remove(bbpl)
+            #after new button is determined we need to check whether new 
+            #Bblind player has at least Small blind amount. If not, then they 
+            #are eliminated
+            self.remove_notenough_sb_on_bb()
             n+=1
 
-
-#g=Game([{'name':'brtkl', 'balance':1000, 'cards'=[]},
-#        {'name':'c1', 'balance':1000, 'cards'=[]},
-#        {'name':'c2', 'balance':1000, 'cards'=[]}],
-#       round_req={'flop':[], 'turn':[], 'river':[]})
-
-#g=Game(['brtkl','c1','c2'])
-#g.play()

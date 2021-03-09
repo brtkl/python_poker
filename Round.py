@@ -56,13 +56,13 @@ class Round():
                 status+='inactive'
             else:
                 status+=f'bet: {p.bet} '
-                if (self.cur_game.players_init.index(p)==(self.button) 
+                if (self.cur_game.players_active.index(p)==(self.button) 
                     % lenact):
                         status+='\t\tbtn'
-                if (self.cur_game.players_init.index(p)==(self.button+tmp) 
+                if (self.cur_game.players_active.index(p)==(self.button+tmp) 
                     % lenact):
                         status+='\t\tsb'
-                elif (self.cur_game.players_init.index(p)==
+                elif (self.cur_game.players_active.index(p)==
                       (self.button+tmp+1) % lenact):
                         status+='\t\tbb'
                 else:

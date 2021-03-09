@@ -124,3 +124,13 @@ myhand=d1.draw(n=2)
 table=d1.draw(n=3)
 
 calc_probwin(myhand, table)
+
+
+
+#g=Game([{'name':'brtkl', 'balance':1000, 'cards'=[]},
+#        {'name':'c1', 'balance':1000, 'cards'=[]},
+#        {'name':'c2', 'balance':1000, 'cards'=[]}],
+#       round_req={'flop':[], 'turn':[], 'river':[]})
+
+#g=Game(['brtkl','c1','c2'])
+#g.play()
