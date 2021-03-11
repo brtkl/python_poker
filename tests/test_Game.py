@@ -20,9 +20,11 @@ class GameTestCase(unittest.TestCase):
         pass
         
     def test_1player(self):
-        self.assertRaises(ValueError,Game,[{'name':'p1', 'balance':20, 
-                                            'cards':[(2,'C'),(7,'H')]}],
+        with self.assertRaises(ValueError) as er:
+            Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]}],
                     maxrounds=1, console_print='N')
+        self.assertEqual('between 2 and 10 valid players need to be defined',
+                    str(er.exception))
 
     def test_3p_game_noten_bb(self):
         self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
@@ -49,10 +51,12 @@ class GameTestCase(unittest.TestCase):
                         self.g.players_init[2] not in self.g.players_active)
         
     def test_2p_game_noten_sb(self):
-        self.assertRaises(ValueError,Game,
-                          [{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
-                           {'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
-                          maxrounds=1, console_print='N')
+        with self.assertRaises(ValueError) as er:
+            Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
+                  {'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
+                  maxrounds=1, console_print='N')
+        self.assertEqual('between 2 and 10 valid players need to be defined',
+                         str(er.exception))
  
     def test_3p_game_noten_sb_2(self):
         self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},

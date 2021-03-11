@@ -131,7 +131,10 @@ class RoundTestCase(unittest.TestCase):
     #add assignblinds tests for when balance<sblind or bblind
         
     def test_nextstage_1(self):
-        self.assertRaises(ValueError,self.r.nextstage,'abc')
+        with self.assertRaises(ValueError) as er:
+            self.r.nextstage('abc')
+        self.assertEqual('newstage needs to be flop, turn or river',
+                         str(er.exception))
         
         self.r.stage='pre-flop'
         self.r.players_r_active=[self.g.players_active[0]]
@@ -152,7 +155,9 @@ class RoundTestCase(unittest.TestCase):
         self.assertEqual(len(self.r.deck.cards), 52-5)
         
         self.r.stage='pre-flop'
-        self.assertRaises(ValueError,self.r.nextstage,'river')
+        with self.assertRaises(ValueError) as er:
+            self.r.nextstage('river')
+        self.assertEqual('wrong order of stages',str(er.exception))
         
     
     def test_finalizeround_1(self):

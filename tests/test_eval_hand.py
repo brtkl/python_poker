@@ -41,10 +41,15 @@ class EvalHandTestCase(unittest.TestCase):
                              (5,'C'), (8,'D')]
     
     def test_lessthan7(self): 
-        self.assertRaises(ValueError,eval_hand,self.test_lesscards)
+        with self.assertRaises(ValueError) as er:
+            eval_hand(self.test_lesscards)
+        self.assertEqual('Exactly 7 cards in a list should be evaluated',
+                         str(er.exception))
         
     def test_repeating_cards(self):
-        self.assertRaises(ValueError,eval_hand,self.testrep)
+        with self.assertRaises(ValueError) as er1:
+            eval_hand(self.testrep)
+        self.assertEqual('repeating cards in the input data',str(er1.exception))
     
     def test_straight_flush(self):
         self.assertEqual(eval_hand(self.testhand_strflush), [9,5,0,0])

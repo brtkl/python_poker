@@ -26,6 +26,7 @@ GENERAL status
 -convert the project into a package			done
   -to update test subf in a package fassion		done
   -to replace all errors by raising custom except ?  	done
+  -update testd for assertRaises with context manager	done
 -Frontend implementation -ask Kacper?			
 -multiplayer online???? - ask Kacper?			
 -interactive mode					done

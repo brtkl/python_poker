@@ -47,15 +47,25 @@ class CalcProbwinTestCase(unittest.TestCase):
         self.testhand_6any=[(8,'H'), (5,'C'), (11,'D'), (14,'D'), (2,'S'), (3,'S')]
         
     
-    def test_lessthan7(self):
-        self.assertRaises(ValueError,calc_probwin,self.test_lesscards,[])
+    def test_lessthan7(self): 
+        with self.assertRaises(ValueError) as er:
+            calc_probwin(self.test_lesscards,[])
+        self.assertEqual('2 cards in hand and between 0 and 5 cards in a table'
+                         +' are needed in lists',
+                         str(er.exception))
         
     def test_repeating_cards(self):
-        self.assertRaises(ValueError,calc_probwin,self.testrep[:2],self.testrep[2:])
+        with self.assertRaises(ValueError) as er:
+            calc_probwin(self.testrep[:2],self.testrep[2:])
+        self.assertEqual('repeating cards in the input data',str(er.exception))
     
     def test_wrongn(self):
-        self.assertRaises(ValueError,calc_probwin,self.testhand_strflush[:2],[],n=1)
-        self.assertRaises(ValueError,calc_probwin,self.testhand_strflush[:2],[],n=11)
+        with self.assertRaises(ValueError) as er:
+            calc_probwin(self.testhand_strflush[:2],[],n=1)
+        self.assertEqual('n needs to be between 2 and 10',str(er.exception))
+        with self.assertRaises(ValueError) as er2:
+            calc_probwin(self.testhand_strflush[:2],[],n=11)
+        self.assertEqual('n needs to be between 2 and 10',str(er2.exception))
     
     def test_cant_lose(self):
         self.assertTrue(calc_probwin(self.testhand_strflush[:2],
