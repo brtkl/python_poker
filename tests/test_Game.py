@@ -11,6 +11,7 @@ sys.path.insert(0,parentdir)
 
 import unittest
 from Game import Game
+from Player import Player
 
 
 class GameTestCase(unittest.TestCase):
@@ -56,6 +57,25 @@ class GameTestCase(unittest.TestCase):
                   {'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
                   maxrounds=1, console_print='N')
         self.assertEqual('between 2 and 10 valid players need to be defined',
+                         str(er.exception))
+        
+    def test_2p_game_assign_players(self):
+        self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
+                  {'name':'p2', 'balance':20, 'cards':[(14,'C'),(14,'H')]}],
+                  maxrounds=1, console_print='N')
+        self.p=Player('testplayer')
+        with self.assertRaises(ValueError) as er:
+            self.g.assign_players(self.p)
+        self.assertEqual('Some players already defined for a game',
+                         str(er.exception))
+        
+    def test_2p_game_assign_players2(self):
+        self.g=Game(None, maxrounds=1, console_print='N')
+        self.p1=Player({'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]})
+        self.p2=Player({'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]})
+        with self.assertRaises(ValueError) as er:
+            self.g.assign_players([self.p1])
+        self.assertEqual('between 2 and 10 valid players need to be assigned',
                          str(er.exception))
  
     def test_3p_game_noten_sb_2(self):

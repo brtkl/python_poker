@@ -150,7 +150,6 @@ class Round():
             self.cur_game.print_c(
                 f"{self.players_r_active[0].name} wins, opponents folded")
             self.players_r_active[0].updatebalance(self.pot, balanceonly=1)
-            
         else:
             #determine the main pot and side pots
             for p in self.players_r_active:
@@ -179,7 +178,8 @@ class Round():
                 if len(winplay)==1:
                     winplay[0].updatebalance(pots_all[i], balanceonly=1)
                     self.cur_game.print_c(
-                        f"{winplay[0].name} wins pot {i}, {pots_all[i]} having {maxhand}")
+                        f"{winplay[0].name} wins pot {i}, {pots_all[i]} having"
+                        +f" {maxhand}")
                 elif len(winplay)>1:
                     if round(pots_all[i]/len(winplay),2)*len(winplay)==pots_all[i]:
                         valperp=round(pots_all[i]/len(winplay),2)
@@ -196,7 +196,8 @@ class Round():
                             p.updatebalance(rest, balanceonly=1)
                         self.cur_game.print_c(
                             f"{p.name} drew pot {i}, {valperp} having {maxhand}")
-                    
+        for p in self.players_r_started:
+            p.update_bb100()
             
         
         

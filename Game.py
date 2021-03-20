@@ -26,8 +26,9 @@ class Game():
                  , button_idx=0
                  ):
         self.players_active=[]
-        for p in players:
-            self.players_active.append(Player(p))
+        if players != None and len(players)>0:
+            for p in players:
+                self.players_active.append(Player(p))
         self.flop_req=round_req['flop'] if 'flop' in round_req else []
         self.turn_req=round_req['turn'] if 'turn' in round_req else []
         self.river_req=round_req['river'] if 'river' in round_req else []
@@ -39,16 +40,38 @@ class Game():
         self.bblind=bblind
         self.sblind=sblind
         self.players_init=self.players_active[:]
-        self.remove_notenough_sb_on_bb()
-        if not (2<=len(self.players_active)<=10):
-            raise ValueError('between 2 and 10 valid players need to be defined')
+        if self.players_active:
+            self.remove_notenough_sb_on_bb()
+            if not (2<=len(self.players_active)<=10):
+                raise ValueError('between 2 and 10 valid players need to be'
+                                 +' defined')
+            if not (0<=button_idx<=len(self.players_active)-1):
+                raise ValueError('starting button_idx incorrect')
         if console_print not in ['Y', 'N']:
             raise ValueError('console_print can be Y or N')
         if mode not in ['sim', 'interactive']:
             raise ValueError('mode can be sim or ineractive')
-        if not (0<=button_idx<=len(self.players_init)-1):
-            raise ValueError('starting button_idx incorrect')
             
+    def assign_players(self
+                       , players_obj
+                       , restart_balance='N'
+                       ):
+        """to be used when Players not created in Game instance"""
+        if self.players_active:
+            raise ValueError('Some players already defined for a game')
+        if len(players_obj)>0 and players_obj not in (None,''):
+            for p in players_obj:
+                self.players_active.append(p)
+                if restart_balance=='Y':
+                    p.balance=p.balance_game_init
+        self.players_init=self.players_active[:]
+        self.remove_notenough_sb_on_bb()
+        if not (2<=len(self.players_active)<=10):
+            raise ValueError('between 2 and 10 valid players need to be'
+                             +' assigned')
+        if not (0<=self.button_idx<=len(self.players_active)-1):
+            raise ValueError('starting button_idx incorrect')
+    
     def print_c(self, val):
         if self.console_print=='Y':
             print(val)
@@ -62,8 +85,19 @@ class Game():
         tmp_2play=1 if len(self.players_active)==2 else 0
         bbpl=self.players_active[(self.button_idx+2-tmp_2play) % 
                                  len(self.players_active)]
+        button_rem=0
         if bbpl.balance<self.sblind:
+            if self.players_active.index(bbpl)<=self.button_idx:
+                button_rem=1
+                #if players before button were eliminated we need 
+                #to go back with the new button idx since it takes
+                #into account players_active only.
+                #e.g. 5 players, no 4 was button.
+                #players 2 and 4 are eliminated
+                #new button should be no 5 but its now the 3rd player
+                #in the new players_active list, so 4+1-2
             self.players_active.remove(bbpl)
+            self.button_idx=(self.button_idx-button_rem) % len(self.players_active)
     
     def play(self):
         n=1
@@ -108,7 +142,7 @@ class Game():
             
             #after new button is determined we need to check whether new 
             #Bblind player has at least Small blind amount. If not, then they 
-            #are eliminated
+            #are eliminated and button idx further adjusted if needed
             self.remove_notenough_sb_on_bb()
             n+=1
 

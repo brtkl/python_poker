@@ -33,15 +33,20 @@ GENERAL status
   -create global quit?					done
   -player attrib - human vs comp?			done
   -add small visual of a table + current bets		done
--Strategy() improvements				
+-Strategy() improvements				wip
   -create some strats using bet method			done
   -use prob of draw in strats as well?			
--create Simulation class??				wip
+-create Simulation class??				done	
   -create print method within Game class to suppress	done
    printing for simulations and tests
-  -adding stats/summary from games/rounds		wip
+  -bb/100						done
+  -random button_idx in Simulation			done	
+  -pickle?? saving paricular players in files		wip
+  -loading players for simulation - Training class?	wip
   -Machine Learning implementation for strats?		
   -create plots to see how probability changes for >3p?	
+-modify iteractive mode in Game, so that player can be	
+ specified (if already exists then load instead)
 
 
 ##############################

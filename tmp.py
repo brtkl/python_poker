@@ -134,3 +134,21 @@ calc_probwin(myhand, table)
 
 #g=Game(['brtkl','c1','c2'])
 #g.play()
+
+
+
+
+
+s=Simulation([{'name':'c1', 'strat':'test'}
+              , {'name':'c2', 'strat':'sasmonkey'}
+              , {'name':'c3', 'strat':'sassimple'}
+              , {'name':'c4', 'strat':'usebetmeth1'}]
+             , simnum_prob=500
+             , maxrounds=20
+       )
+s.run_sim()
+s.summary()
+
+
+
+

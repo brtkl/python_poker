@@ -46,7 +46,17 @@ class PlayerTestCase(unittest.TestCase):
     def test_updatebalance_only(self):
         self.p.updatebalance(-1000, balanceonly=1)
         self.assertTrue(self.p.balance==0 and self.p.bet==0)
-    
+        
+    def test_bb100_1(self):
+        self.p.balance=1300
+        self.p.update_bb100()
+        self.assertTrue(self.p.bb100==3000)
+        
+    def test_bb100_2(self):
+        self.p.balance=800
+        self.p.update_bb100()
+        self.assertTrue(self.p.bb100==-2000)
+        
     def test_prepare_for_round(self): 
         self.p.prepare_for_round(self.r)
         self.assertTrue(self.p.hand==[] and self.p.bet==0 and self.p.probwin==0

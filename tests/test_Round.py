@@ -19,6 +19,8 @@ class RoundTestCase(unittest.TestCase):
     def setUp(self):
         self.g=Game(['p1','p2'], console_print='N')
         self.r=Round(self.g)
+        for p in self.g.players_active[:]:
+            p.prepare_for_round(self.r)
  
     def test_assigncards(self):
         self.r.assigncards()
@@ -166,7 +168,6 @@ class RoundTestCase(unittest.TestCase):
         self.r.finalizeround()
         self.assertTrue(self.g.players_active[0].balance==1300 and 
                         self.g.players_active[0].bet==0)
-        
     
     def test_finalizeround_2(self):
         self.r.table=[(14, 'C'), (3, 'H'), (13, 'C'), (6, 'D'), (13, 'S')]
@@ -210,6 +211,8 @@ class RoundTestCase(unittest.TestCase):
     def test_finalizeround_5_allin_3plays_draw(self):
         self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
+        for p in self.g.players_active[:]:
+            p.prepare_for_round(self.r)
         self.r.table=[(14, 'C'), (13, 'H'), (13, 'C'), (13, 'D'), (13, 'S')]
         self.g.players_active[0].hand=[(5, 'H'), (2, 'D')]
         self.g.players_active[1].hand=[(7, 'D'), (2, 'H')]
@@ -235,6 +238,8 @@ class RoundTestCase(unittest.TestCase):
     def test_finalizeround_6_allin_3plays_win(self):
         self.g=Game(['p1','p2','p3'], console_print='N')
         self.r=Round(self.g)
+        for p in self.g.players_active[:]:
+            p.prepare_for_round(self.r)
         self.r.table=[(14, 'C'), (10, 'H'), (13, 'C'), (13, 'D'), (13, 'S')]
         self.g.players_active[0].hand=[(5, 'H'), (2, 'D')]
         self.g.players_active[1].hand=[(7, 'D'), (2, 'H')]
@@ -260,6 +265,8 @@ class RoundTestCase(unittest.TestCase):
     def test_finalizeround_7_allin_4plays_win(self):
         self.g=Game(['p1','p2','p3','p4'], console_print='N')
         self.r=Round(self.g)
+        for p in self.g.players_active[:]:
+            p.prepare_for_round(self.r)
         self.r.table=[(14, 'C'), (10, 'H'), (13, 'C'), (14, 'D'), (13, 'S')]
         self.g.players_active[0].hand=[(5, 'H'), (2, 'D')]
         self.g.players_active[1].hand=[(7, 'D'), (2, 'H')]
@@ -285,6 +292,8 @@ class RoundTestCase(unittest.TestCase):
     def test_finalizeround_7_allin_8plays_win(self):
         self.g=Game(['p1','p2','p3','p4','p5','p6','p7','p8'], console_print='N')
         self.r=Round(self.g)
+        for p in self.g.players_active[:]:
+            p.prepare_for_round(self.r)
         self.r.table=[(14, 'C'), (12, 'H'), (10, 'C'), (8, 'D'), (6, 'S')]
         self.g.players_active[0].hand=[(14, 'H'), (2, 'D')]
         self.g.players_active[1].hand=[(12, 'D'), (2, 'H')]

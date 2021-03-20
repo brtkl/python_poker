@@ -49,6 +49,11 @@ class Player():
         self.allin=0 #20210220: not used at the moment
         self.pot_eligible_tot=0 #total eligible pot amount
         self.pots_idx=[] #indexes of eligible pots. 0 is the main pot
+        self.simulation_results=0
+        self.balance_game_init=self.balance
+        self.bb100=0
+        self.hands_played=0
+        self.bb_won=0
         
     def prepare_for_round(self, cur_round):
         self.hand=[]
@@ -58,6 +63,17 @@ class Player():
         self.probwin=0
         self.probdist=0
         self.folded=0
+        self.allin=0 
+        self.pot_eligible_tot=0 
+        self.pots_idx=[] 
+        self.balance_round_init=self.balance #needed for bb100
+        self.hands_played+=1 #needed for bb100
+        
+    def update_bb100(self):
+        winamt=self.balance-self.balance_round_init
+        winbb=winamt/self.cur_round.bblind
+        self.bb_won+=winbb
+        self.bb100=self.bb_won/(self.hands_played/100)
         
     def updatebalance(self, bet, balanceonly=0):
         self.balance=round(self.balance+bet,2)
