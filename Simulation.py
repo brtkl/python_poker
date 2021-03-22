@@ -16,6 +16,7 @@ class Simulation():
                  , ngames=100
                  , maxrounds=100
                  , console_print='N'
+                 , trainmode='N'
                  , simnum_prob=2000
                  , sblind=5
                  , bblind=10
@@ -35,6 +36,7 @@ class Simulation():
         self.simnum_prob=simnum_prob
         self.bblind=bblind
         self.sblind=sblind
+        self.trainmode=trainmode
         if console_print not in ['Y', 'N']:
             raise ValueError('console_print can be Y or N')
             
@@ -73,6 +75,9 @@ class Simulation():
             if self.console_print=='Y':
                 print(f'\nStatus after game {i}')
                 self.summary()
+            if self.trainmode=='Y':
+                if i % round(self.ngames/10)==0 or i==self.ngames:
+                    print(f'{round((i/self.ngames)*100)}% completed ')
     
     def summary(self):
         for p in self.players_sim_init:

@@ -27,26 +27,29 @@ GENERAL status
   -to update test subf in a package fassion		done
   -to replace all errors by raising custom except ?  	done
   -update testd for assertRaises with context manager	done
--Frontend implementation -ask Kacper?			
--multiplayer online???? - ask Kacper?			
+-Frontend implementation -ask Kacper?			notstarted
+-multiplayer online???? - ask Kacper?			notstarted
 -interactive mode					done
   -create global quit?					done
   -player attrib - human vs comp?			done
   -add small visual of a table + current bets		done
--Strategy() improvements				wip
+  -modify iteractive mode in Game, so that player can 	notstarted
+   be specified (if already exists then load instead)
+  -create ConsoleGame for the above?			notstarted
+  -PyInstaller to convert console game instance?	notstarted
+-Strategy() improvements				notstarted
   -create some strats using bet method			done
-  -use prob of draw in strats as well?			
+  -use prob of draw in strats as well?			notstarted
 -create Simulation class??				done	
   -create print method within Game class to suppress	done
    printing for simulations and tests
   -bb/100						done
   -random button_idx in Simulation			done	
-  -pickle?? saving paricular players in files		wip
-  -loading players for simulation - Training class?	wip
-  -Machine Learning implementation for strats?		
-  -create plots to see how probability changes for >3p?	
--modify iteractive mode in Game, so that player can be	
- specified (if already exists then load instead)
+  -pickle - saving players in files (manageobs)		done
+-loading players for simulation - Training class?	wip
+  -storing obj info in SQLite???			notstarted - leave for now
+  -Machine Learning implementation for strats?		notstarted
+-create plots to see how probability changes for >3p?	notstarted
 
 
 ##############################
@@ -79,6 +82,8 @@ def results(status, data):
 Always try to raise the most appropriate exception you can - ValueError tells the caller of the function what's going on better than Exception does, for example.
 
 
+2021-03-21
+PicklingError: Can't pickle <class 'Strategy.Strategy'>: it's not the same object as Strategy.Strategy
 
 ##############################
 IDEAS - NOTES
@@ -99,5 +104,19 @@ $ python -m unittest tests.test_antigravity           - to run single test progr
 $ python -m unittest				      - to run all test programs
 
 
+Storing objects:
+a) pickle with shelves
+b) dill with shelves?
+c) json
+d) sqlite??
 
 
+
+with open('company_data.pkl', 'wb') as output:
+    company1 = Company('banana', 40)
+    pickle.dump(company1, output, pickle.HIGHEST_PROTOCOL)
+
+with open('company_data.pkl', 'rb') as input:
+    company1 = pickle.load(input)
+    print(company1.name)  # -> banana
+    print(company1.value)  # -> 40

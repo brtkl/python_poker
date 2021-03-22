@@ -149,6 +149,35 @@ s=Simulation([{'name':'c1', 'strat':'test'}
 s.run_sim()
 s.summary()
 
+from Player import Player
+p1=Player({'name':'20210321_p1_test', 'strat':'test'})
+p2=Player({'name':'20210321_p2_sasmonkey', 'strat':'sasmonkey'})
+p3=Player({'name':'20210321_p3_sassimple', 'strat':'sassimple'})
+p4=Player({'name':'20210321_p4_usebetmeth1', 'strat':'usebetmeth1'})
+
+save_player(p1)
+save_player(p2)
+save_player(p3)
+save_player(p4)
 
 
+s=Simulation([{'name':'c1', 'strat':'test'}
+              , {'name':'c3', 'strat':'sassimple'}]
+             , simnum_prob=500
+             , maxrounds=20
+             , console_print='Y'
+       )
+s.run_sim()
+s.summary()
 
+
+print(s.players_sim_init[0].__dict__)
+print(c1_new.__dict__)
+
+import pickle
+with open('data\\players\\c1_20210321.pkl', 'wb') as output:
+    pickle.dump(s.players_sim_init[0], output, pickle.HIGHEST_PROTOCOL)
+
+
+with open('data\\players\\c1_20210321.pkl', 'rb') as input:
+    c1_new = pickle.load(input)
