@@ -45,8 +45,9 @@ GENERAL status
    printing for simulations and tests
   -bb/100						done
   -random button_idx in Simulation			done	
-  -pickle - saving players in files (manageobs)		done
--loading players for simulation - Training class?	wip
+  -pickle - saving players (manageobs module)		done
+-loading players for simulation - Training class?	done
+  -think how to speed up simulations/trainings		wip
   -storing obj info in SQLite???			notstarted - leave for now
   -Machine Learning implementation for strats?		notstarted
 -create plots to see how probability changes for >3p?	notstarted
