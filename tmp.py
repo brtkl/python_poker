@@ -181,3 +181,23 @@ with open('data\\players\\c1_20210321.pkl', 'wb') as output:
 
 with open('data\\players\\c1_20210321.pkl', 'rb') as input:
     c1_new = pickle.load(input)
+
+
+
+
+
+
+
+sum=0
+for i in range(70000):
+    check=eval_hand(a[36:43])
+
+
+
+
+
+
+
+
+
+

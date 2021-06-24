@@ -59,7 +59,7 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000):
         return [round(nwin/ntot,3), round(ndra/ntot,3), round(nlos/ntot,3), 
                 'exact']
     
-    if type=='simul':
+    elif type=='simul':
         tmpdeck=Deck()
         tmpdeck2=[i for i in tmpdeck.cards if i not in hand+table]
         
@@ -73,21 +73,23 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000):
             rand_row=random.sample(tmpdeck2,2*(n-1)+5-len(table))
             #rand_row=tmpdeck2[:9-len(hand+table)]
             tmp_h=eval_hand(hand+table+rand_row[2*(n-1):])
-            tmp_comall=[]
-            for i in range(n-1):    
-                tmp_comall.append(
-                    eval_hand(rand_row[i*2:i*2+2]+table+rand_row[2*(n-1):]))
-                
-            ntot += 1
-            if tmp_h>max(tmp_comall):
-                nwin += 1
-            elif tmp_h==max(tmp_comall):
+            #tmp_comall=[]
+            #for i in range(n-1):    
+            #    tmp_comall.append(
+            #        eval_hand(rand_row[i*2:i*2+2]+table+rand_row[2*(n-1):]))
+            
+            tmp_max_comall=max([eval_hand(rand_row[i*2:i*2+2]+table+
+                                          rand_row[2*(n-1):]) 
+                                for i in range(n-1)])
+            if tmp_h<tmp_max_comall:
+                nlos += 1
+            elif tmp_h==tmp_max_comall:
                 ndra += 1
             else:
-                nlos += 1
+                nwin += 1
     
-        return [round(nwin/ntot,3), round(ndra/ntot,3), round(nlos/ntot,3), 
-                'sim']
+        return [round(nwin/simnum,3), round(ndra/simnum,3)
+                , round(nlos/simnum,3), 'sim']
     
     
     
