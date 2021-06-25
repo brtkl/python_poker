@@ -29,6 +29,8 @@ class CalcProbwinTestCase(unittest.TestCase):
                              (5,'S'), (6,'C')]
         self.testhand_flush=[(14,'H'), (13,'H'), (3,'H'), (9,'H'), (2,'H'), 
                              (5,'C'), (14,'C')]
+        self.testhand_flush2=[(14,'H'), (13,'H'), (3,'H'), (9,'S'), (2,'H'), 
+                             (5,'C'), (10,'H')]
         self.testhand_straight=[(5,'H'), (4,'S'), (3,'C'), (2,'H'), (14,'D'), 
                              (12,'C'), (10,'S')]
         self.testhand_3ofakind=[(10,'H'), (10,'C'), (3,'H'), (10,'S'), (9,'H'), 
@@ -58,6 +60,18 @@ class CalcProbwinTestCase(unittest.TestCase):
         with self.assertRaises(ValueError) as er:
             calc_probwin(self.testrep[:2],self.testrep[2:])
         self.assertEqual('repeating cards in the input data',str(er.exception))
+        
+    def test_wrong_exact(self):
+        with self.assertRaises(ValueError) as er:
+            calc_probwin(self.testhand_highcard[:2],self.testhand_highcard[2:]
+                         , n=3, type='exact')
+        self.assertEqual('exact can be only for n=2 and len(table)=5',str(er.exception))
+    
+    def test_wrong_exact2(self):
+        with self.assertRaises(ValueError) as er:
+            calc_probwin(self.testhand_highcard[:2],self.testhand_highcard[2:5]
+                         , n=2, type='exact')
+        self.assertEqual('exact can be only for n=2 and len(table)=5',str(er.exception))
     
     def test_wrongn(self):
         with self.assertRaises(ValueError) as er:
@@ -161,7 +175,6 @@ class CalcProbwinTestCase(unittest.TestCase):
                         calc_probwin(self.testhand_5any[:2],[],n=8)>
                         calc_probwin(self.testhand_5any[:2],[],n=9)>
                         calc_probwin(self.testhand_5any[:2],[],n=10))
-
 
 
 if __name__ == '__main__':

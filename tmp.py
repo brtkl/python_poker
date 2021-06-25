@@ -7,6 +7,7 @@ Created on Wed Jan 27 21:38:10 2021
 import os
 os.chdir(r'D:\FX\_GLOBAL\learning\python\poker')
 from eval_hand import eval_hand
+from eval_hand_old import eval_hand_old
 from calc_probwin import calc_probwin
 from Deck import Deck
 
@@ -187,15 +188,36 @@ with open('data\\players\\c1_20210321.pkl', 'rb') as input:
 
 
 
+import os
+os.chdir(r'D:\FX\_GLOBAL\learning\python\poker')
+from eval_hand import eval_hand
+from eval_hand_old import eval_hand_old
+from calc_probwin import calc_probwin
+from Deck import Deck
 
-sum=0
-for i in range(70000):
-    check=eval_hand(a[36:43])
+a=Deck()
+b=a.draw(7)
+
+
+for i in range(100000):
+    check=eval_hand_new2(b)
+    
+for i in range(100000):
+    check=eval_hand(b)
+
+for i in range(100000):
+    check=eval_hand_old(b)
 
 
 
-
-
+for x in range(10):
+    for y in range(10):
+        print(x*y)
+        if x*y > 90:
+            break
+    else:
+        continue  # only executed if the inner loop did NOT break
+    break  # only executed if the inner loop DID break
 
 
 
