@@ -6,7 +6,7 @@ GENERAL status
 -split check to call and check				done
 -creation of Game class					done
 -button rotating					done
--speed up? 20 secs per round/player is too much		leave for now
+-speed up? 20 secs per round/player is too much		done - eval_hand updated 25Jun2021
 -create some tests  for 2 players			done
 -handle the issues below				done
 -implement strategies from sas?				done
@@ -37,9 +37,9 @@ GENERAL status
    be specified (if already exists then load instead)
   -create ConsoleGame for the above?			notstarted
   -PyInstaller to convert console game instance?	notstarted
--Strategy() improvements				notstarted
+-Strategy() improvements				notstarted wip2
   -create some strats using bet method			done
-  -use prob of draw in strats as well?			notstarted
+  -use prob of draw in strats as well?			notstarted wip3?
 -create Simulation class??				done	
   -create print method within Game class to suppress	done
    printing for simulations and tests
@@ -47,10 +47,10 @@ GENERAL status
   -random button_idx in Simulation			done	
   -pickle - saving players (manageobs module)		done
 -loading players for simulation - Training class?	done
-  -think how to speed up simulations/trainings		wip
+  -think how to speed up simulations/trainings		done - eval_hand updated 25Jun2021
   -storing obj info in SQLite???			notstarted - leave for now
   -Machine Learning implementation for strats?		notstarted
--create plots to see how probability changes for >3p?	notstarted
+-create plots to see how probability changes for >3p?	wip1
 
 
 ##############################
