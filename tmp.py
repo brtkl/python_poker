@@ -191,7 +191,6 @@ with open('data\\players\\c1_20210321.pkl', 'rb') as input:
 import os
 os.chdir(r'D:\FX\_GLOBAL\learning\python\poker')
 from eval_hand import eval_hand
-from eval_hand_old import eval_hand_old
 from calc_probwin import calc_probwin
 from Deck import Deck
 

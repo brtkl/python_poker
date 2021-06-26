@@ -8,8 +8,12 @@ from itertools import combinations
 from Deck import Deck
 from eval_hand import eval_hand
 import random
+import json
+if 'lkp20210626' not in globals():
+    with open(r'D:\FX\_GLOBAL\learning\python\poker\data\probs\2cards_simnum50000_lookup.json') as fp:
+                lkp20210626=json.load(fp)
 
-def calc_probwin(hand, table, n=2, type='def', simnum=10000):
+def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
     """ calc probability of winning with a given hand.
         Returns probability of winning, drawing and loosing""" 
     
@@ -25,13 +29,21 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000):
     
     if len(table)==5 and n==2 and type=='def':
         type='exact'
+    elif type=='def' and table==[]:
+        type='lookup'
     elif type=='def':
         type='simul'
         
     if not (2<=n<=10):
         raise ValueError('n needs to be between 2 and 10')
         
-    if type=='simul':
+    if type=='lookup':
+        
+        arg=[min(hand[0][0], hand[1][0]), max(hand[0][0], hand[1][0])
+             , 1 if hand[0][1]==hand[1][1] else 0, n]
+        return lkp[f'{arg[0]}_{arg[1]}_{arg[2]}_{arg[3]}'][:3]+['lookup']
+    
+    elif type=='simul':
         tmpdeck=Deck()
         tmpdeck2=[i for i in tmpdeck.cards if i not in hand+table]
         

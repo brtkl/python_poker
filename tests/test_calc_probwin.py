@@ -123,6 +123,14 @@ class CalcProbwinTestCase(unittest.TestCase):
                         -calc_probwin(self.testhand_3ofakind[:2],
                                      self.testhand_3ofakind[2:])[0])<0.01)
         
+    def test_dif_sim_lookup1(self):
+        self.assertTrue(abs(calc_probwin(self.testhand_3ofakind[:2],[],type='lookup')[0]
+                        -calc_probwin(self.testhand_3ofakind[:2],[])[0])==0)
+        
+    def test_dif_sim_lookup2(self):
+        self.assertTrue(abs(calc_probwin(self.testhand_3ofakind[:2],[],type='lookup')[0]
+                        -calc_probwin(self.testhand_3ofakind[:2],[],type='simul')[0])<0.01)
+        
     def test_2card_sim_high(self):
         self.assertTrue(calc_probwin(self.testhand_2high,[],type='simul')[0]
                         >0.8)
@@ -166,15 +174,27 @@ class CalcProbwinTestCase(unittest.TestCase):
         self.assertAlmostEqual(a[0]+a[1]+a[2],1,places=2)
         
     def test_increment_n10(self):
-        self.assertTrue(calc_probwin(self.testhand_5any[:2],[],n=2)>
-                        calc_probwin(self.testhand_5any[:2],[],n=3)>
-                        calc_probwin(self.testhand_5any[:2],[],n=4)>
-                        calc_probwin(self.testhand_5any[:2],[],n=5)>
-                        calc_probwin(self.testhand_5any[:2],[],n=6)>
-                        calc_probwin(self.testhand_5any[:2],[],n=7)>
-                        calc_probwin(self.testhand_5any[:2],[],n=8)>
-                        calc_probwin(self.testhand_5any[:2],[],n=9)>
-                        calc_probwin(self.testhand_5any[:2],[],n=10))
+        self.assertTrue(calc_probwin(self.testhand_5any[:2],[],n=2, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=3, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=4, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=5, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=6, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=7, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=8, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=9, type='lookup')>
+                        calc_probwin(self.testhand_5any[:2],[],n=10, type='lookup'))
+        
+    
+    def test_increment_n10_simul(self):
+        self.assertTrue(calc_probwin(self.testhand_5any[:2],[],n=2, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=3, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=4, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=5, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=6, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=7, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=8, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=9, type='simul')>
+                        calc_probwin(self.testhand_5any[:2],[],n=10, type='simul'))
 
 
 if __name__ == '__main__':
