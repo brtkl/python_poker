@@ -48,9 +48,9 @@ GENERAL status
   -pickle - saving players (manageobs module)		done
 -loading players for simulation - Training class?	done
   -think how to speed up simulations/trainings		done - eval_hand updated 25Jun2021
-  -further improvements to prob calc speed?		wip
+  -further improvements to prob calc speed?		done
    i.e. lookup table for table=[]
-  -add new tests for type='lookup'. compare with simul? wip
+  -add new tests for type='lookup'. compare with simul? done
   -storing obj info in SQLite???			notstarted - leave for now
   -Machine Learning implementation for strats?		notstarted
 
