@@ -27,13 +27,15 @@ GENERAL status
   -to update test subf in a package fassion		done
   -to replace all errors by raising custom except ?  	done
   -update testd for assertRaises with context manager	done
+
 -Frontend implementation -ask Kacper?			notstarted
-  -to convert to exe?
+  -to convert to exe - PyInstaller ?			notstarted
    https://www.youtube.com/watch?v=QWqxRchawZY
    &ab_channel=Codemy.com
 -multiplayer online???? - ask Kacper?			notstarted
    https://www.youtube.com/watch?v=McoDjOCb2Zo
    &ab_channel=freeCodeCamp.org
+
 -interactive mode					done
   -create global quit?					done
   -player attrib - human vs comp?			done
@@ -41,24 +43,35 @@ GENERAL status
   -modify iteractive mode in Game, so that player can 	notstarted
    be specified (if already exists then load instead)
   -create ConsoleGame for the above?			notstarted
-  -PyInstaller to convert console game instance?	notstarted
--Strategy() improvements				notstarted wip2
+
+-Strategy() improvements				notstarted
   -create some strats using bet method			done
-  -use prob of draw in strats as well?			notstarted wip3?
+  -use prob of draw in strats as well?			notstarted
   -Machine Learning implementation for strats?		notstarted
+
 -create Simulation class??				done	
   -create print method within Game class to suppress	done
    printing for simulations and tests
   -bb/100						done
+  -to validate bb/100					notstarted
   -random button_idx in Simulation			done	
   -pickle - saving players (manageobs module)		done
+
 -loading players for simulation - Training class?	done
   -think how to speed up simulations/trainings		done (eval_hand updated 25Jun2021)
   -further improvements to prob calc speed?		done
    i.e. lookup table for table=[]
   -add new tests for type='lookup'. compare with simul? done
-  -storing obj info in SQLite???			notstarted - WIP
-
+  -storing obj info in SQLite				WIP
+    -_util_sqlalch_setup created - data\pokerdb		done
+    -probabilities migrated to Probs table		done
+    -_util_managedb created for db queries              done
+    -modify calc_probwin to use load_lkp2		done
+    -UserStat table create				done
+    -to migrate players to UserStat table		notstarted
+    -to modify Player class to interact with db		notstarted
+    
+    
 
 
 ##############################

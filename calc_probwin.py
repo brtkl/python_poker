@@ -7,11 +7,11 @@ Created on Wed Jan 27 20:44:33 2021
 from itertools import combinations
 from Deck import Deck
 from eval_hand import eval_hand
+from _util_managedb import load_lkp2
 import random
-import json
+
 if 'lkp20210626' not in globals():
-    with open(r'data\probs\2cards_simnum50000_lookup.json') as fp:
-                lkp20210626=json.load(fp)
+    lkp20210626=load_lkp2()
 
 def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
     """ calc probability of winning with a given hand.
