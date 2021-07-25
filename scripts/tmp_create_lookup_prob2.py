@@ -1,7 +1,5 @@
 
 
-import os
-os.chdir(r'D:\FX\_GLOBAL\learning\python\poker')
 from calc_probwin import calc_probwin
 import json
 
@@ -23,7 +21,7 @@ combnew_dict = {f'{combnew[i][0]}_{combnew[i][1]}_{combnew[i][2]}_{combnew[i][3]
 combnew_dict2 = {combnew[i][:4]: combnew[i][4] for i in range(len(combnew))}
 
 
-with open(r'data\probs\2cards_simnum50000_lookup.json', 'w') as fp:
+with open(r'data\probs\2cards_simnum50000_lookup2.json', 'w') as fp:
     json.dump(combnew_dict, fp)
     
     

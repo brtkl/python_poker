@@ -10,7 +10,7 @@ from eval_hand import eval_hand
 import random
 import json
 if 'lkp20210626' not in globals():
-    with open(r'D:\FX\_GLOBAL\learning\python\poker\data\probs\2cards_simnum50000_lookup.json') as fp:
+    with open(r'data\probs\2cards_simnum50000_lookup.json') as fp:
                 lkp20210626=json.load(fp)
 
 def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
@@ -58,12 +58,14 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
             tmp_max_comall=max([eval_hand(rand_row[i*2:i*2+2]+table+
                                           rand_row[2*(n-1):]) 
                                 for i in range(n-1)])
+                        
             if tmp_h<tmp_max_comall:
                 nlos += 1
             elif tmp_h==tmp_max_comall:
                 ndra += 1
             else:
                 nwin += 1
+                
     
         return [round(nwin/simnum,3), round(ndra/simnum,3)
                 , round(nlos/simnum,3), 'sim']

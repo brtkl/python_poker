@@ -5,7 +5,7 @@ Created on Sun Mar 21 19:49:04 2021
 @author: brtk
 """
 
-import manageobj
+import _util_pickl
 from Simulation import Simulation
 
 class Training():
@@ -33,9 +33,9 @@ class Training():
         self.balance_game_init=balance_game_init
         self.button=button
     
-    def train(self, update_results='Y'):
+    def train_pickl(self, update_results='Y'):
         for p in self.players_to_load:
-            tmp=manageobj.load_player(p)
+            tmp=_util_pickl.load_player(p)
             tmp.balance_game_init=self.balance_game_init
             self.players_loaded.append(tmp)
         s=Simulation(None
@@ -53,5 +53,28 @@ class Training():
         s.summary()
         if update_results=='Y':
             for p in self.players_loaded:
-                manageobj.save_player(p, overwrite='Y')
+                _util_pickl.save_player(p, overwrite='Y')
+                
+                
+    def train(self, update_results='Y'):
+        for p in self.players_to_load:
+            tmp=_util_pickl.load_player(p)
+            tmp.balance_game_init=self.balance_game_init
+            self.players_loaded.append(tmp)
+        s=Simulation(None
+                    , ngames=self.ngames
+                    , maxrounds=self.maxrounds
+                    , console_print='N'
+                    , trainmode='Y'
+                    , simnum_prob=self.simnum_prob
+                    , sblind=self.sblind
+                    , bblind=self.bblind
+                    , button=self.button
+                    )
+        s.assign_players(self.players_loaded)
+        s.run_sim()
+        s.summary()
+        if update_results=='Y':
+            for p in self.players_loaded:
+                _util_pickl.save_player(p, overwrite='Y')
         

@@ -6,7 +6,7 @@ GENERAL status
 -split check to call and check				done
 -creation of Game class					done
 -button rotating					done
--speed up? 20 secs per round/player is too much		done - eval_hand updated 25Jun2021
+-speed up? 20 secs per round/player is too much		done (eval_hand updated 25Jun2021)
 -create some tests  for 2 players			done
 -handle the issues below				done
 -implement strategies from sas?				done
@@ -28,7 +28,12 @@ GENERAL status
   -to replace all errors by raising custom except ?  	done
   -update testd for assertRaises with context manager	done
 -Frontend implementation -ask Kacper?			notstarted
+  -to convert to exe?
+   https://www.youtube.com/watch?v=QWqxRchawZY
+   &ab_channel=Codemy.com
 -multiplayer online???? - ask Kacper?			notstarted
+   https://www.youtube.com/watch?v=McoDjOCb2Zo
+   &ab_channel=freeCodeCamp.org
 -interactive mode					done
   -create global quit?					done
   -player attrib - human vs comp?			done
@@ -40,6 +45,7 @@ GENERAL status
 -Strategy() improvements				notstarted wip2
   -create some strats using bet method			done
   -use prob of draw in strats as well?			notstarted wip3?
+  -Machine Learning implementation for strats?		notstarted
 -create Simulation class??				done	
   -create print method within Game class to suppress	done
    printing for simulations and tests
@@ -47,12 +53,11 @@ GENERAL status
   -random button_idx in Simulation			done	
   -pickle - saving players (manageobs module)		done
 -loading players for simulation - Training class?	done
-  -think how to speed up simulations/trainings		done - eval_hand updated 25Jun2021
+  -think how to speed up simulations/trainings		done (eval_hand updated 25Jun2021)
   -further improvements to prob calc speed?		done
    i.e. lookup table for table=[]
   -add new tests for type='lookup'. compare with simul? done
-  -storing obj info in SQLite???			notstarted - leave for now
-  -Machine Learning implementation for strats?		notstarted
+  -storing obj info in SQLite???			notstarted - WIP
 
 
 

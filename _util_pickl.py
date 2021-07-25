@@ -5,8 +5,6 @@ Created on Sun Mar 21 19:14:39 2021
 @author: brtk
 """
 import pickle
-import os
-os.chdir(r'D:\FX\_GLOBAL\learning\python\poker')
 
 def save_player(obj
                 , overwrite='N'

@@ -5,8 +5,8 @@ Created on Thu Jan 28 00:32:25 2021
 @author: brtk
 """
 
-import os
-os.chdir(r'D:\FX\_GLOBAL\learning\python\poker')
+# import os
+# os.chdir(r'C:\_D\FX\_GLOBAL\learning\python\poker')
 
 from Round import Round
 from Player import Player
