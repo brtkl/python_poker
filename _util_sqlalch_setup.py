@@ -10,7 +10,6 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
-
 Base = declarative_base()
 
 
@@ -43,11 +42,15 @@ class Probs(Base):
     dict = Column(String)
     
     
-    
+"""
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine) #class - a factory of Session instances
-session = Session() 
+session = Session()
+session.commit()
+session.close()
+"""
+
 #create a session (instance), whenever you need to talk to the database
 
 #####how to add rows
@@ -74,10 +77,6 @@ session = Session()
 
 ####history of entries. DB created on 20210725 19:00
 #session.add(Probs(name='lkp20210626', numcards=2, simnum=50000, dict=testchar))
-
-
-
-
 
 
 

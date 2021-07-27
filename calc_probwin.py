@@ -7,11 +7,11 @@ Created on Wed Jan 27 20:44:33 2021
 from itertools import combinations
 from Deck import Deck
 from eval_hand import eval_hand
-from _util_managedb import load_lkp2
+from _util_managedb import load_lkp
 import random
 
 if 'lkp20210626' not in globals():
-    lkp20210626=load_lkp2()
+    lkp20210626=load_lkp()
 
 def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
     """ calc probability of winning with a given hand.
