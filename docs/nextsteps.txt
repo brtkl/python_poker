@@ -68,8 +68,8 @@ GENERAL status
     -_util_managedb created for db queries              done
     -modify calc_probwin to use load_lkp2		done
     -UserStat table create				done
-    -to migrate players to UserStat table		notstarted
-    -to modify Player class to interact with db		notstarted
+    -to migrate players to UserStat table		done
+    -to modify Training class to interact with db	notstarted
     
     
 

@@ -7,7 +7,7 @@ Created on Thu Jul  8 22:51:45 2021
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 import json
-import _util_sqlalch_setup
+from _util_sqlalch_setup import UserStat, Probs
 
 def load_lkp(name='lkp20210626'):
     engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
@@ -15,7 +15,7 @@ def load_lkp(name='lkp20210626'):
     Session = sessionmaker(bind=engine) 
     session = Session() 
 
-    getprobs = session.query(_util_sqlalch_setup.Probs).filter_by(name=name).first()
+    getprobs = session.query(Probs).filter_by(name=name).first()
     session.close()
     
     return json.loads(getprobs.dict)
@@ -41,19 +41,19 @@ def save_stats(player):
     Session = sessionmaker(bind=engine) 
     session = Session() 
     
-    getstat = session.query(_util_sqlalch_setup.UserStat).\
-        filter(_util_sqlalch_setup.UserStat.name==player.name,
-               _util_sqlalch_setup.UserStat.type==player.type).first()
+    getstat = session.query(UserStat).\
+        filter(UserStat.name==player.name,
+               UserStat.type==player.type).first()
         
     if not getstat:
-        newentry=_util_sqlalch_setup.UserStat(player.name, player.type, 
-                                              player.strat, player.bb100, 
-                                              player.hands_played, player.bbwon)
+        newentry=UserStat(name=player.name, type=player.type, 
+                         strat=player.strat, bb100=player.bb100, 
+                         hands_played=player.hands_played, bb_won=player.bb_won)
         session.add(newentry)
         session.commit()
     else:
         getstat.bb100=player.bb100
-        getstat.bbwon=player.bbwon
+        getstat.bb_won=player.bb_won
         getstat.hands_played=player.hands_played
         session.commit()
         
@@ -65,16 +65,16 @@ def load_stats(player):
     Session = sessionmaker(bind=engine) 
     session = Session() 
     
-    getstat = session.query(_util_sqlalch_setup.UserStat).\
-        filter(_util_sqlalch_setup.UserStat.name==player.name,
-               _util_sqlalch_setup.UserStat.type==player.type).first()
+    getstat = session.query(UserStat).\
+        filter(UserStat.name==player.name,
+               UserStat.type==player.type).first()
     
     if not getstat:
         raise ValueError('Player with given name and type doesn\'t exist')
     else:
         player.bb100=getstat.bb100
         player.hands_played=getstat.hands_played
-        player.bbwon=getstat.bbwon
+        player.bb_won=getstat.bb_won
         session.commit()
         
     session.close()
