@@ -40,9 +40,9 @@ GENERAL status
   -create global quit?					done
   -player attrib - human vs comp?			done
   -add small visual of a table + current bets		done
-  -modify iteractive mode in Game, so that player can 	notstarted
+  -modify iteractive mode in Game, so that player can 	notstarted - do only in frontend
    be specified (if already exists then load instead)
-  -create ConsoleGame for the above?			notstarted
+  -create ConsoleGame for the above?			notstarted - do only in frontend
 
 -Strategy() improvements				notstarted
   -create some strats using bet method			done
@@ -56,20 +56,26 @@ GENERAL status
   -to validate bb/100					notstarted
   -random button_idx in Simulation			done	
   -pickle - saving players (manageobs module)		done
+  -multithreading to speed up training ???		notstarted
+   e.g. instead of 100 games in 1 loop 12 games in each
+   thread running in parallel? since objects are 
+   recreated shouldn't be a problem when loading. 
+   When saving apply sort of a queue when saving to DB?
 
 -loading players for simulation - Training class?	done
   -think how to speed up simulations/trainings		done (eval_hand updated 25Jun2021)
   -further improvements to prob calc speed?		done
    i.e. lookup table for table=[]
   -add new tests for type='lookup'. compare with simul? done
-  -storing obj info in SQLite				WIP
+  -storing obj info in SQLite				done
     -_util_sqlalch_setup created - data\pokerdb		done
     -probabilities migrated to Probs table		done
     -_util_managedb created for db queries              done
     -modify calc_probwin to use load_lkp2		done
     -UserStat table create				done
     -to migrate players to UserStat table		done
-    -to modify Training class to interact with db	notstarted
+    -to modify Training class to interact with db	done
+    -resolve relative path problem 			done
     
     
 

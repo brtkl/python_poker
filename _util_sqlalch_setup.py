@@ -29,9 +29,9 @@ class UserStat(Base):
     name = Column(String, primary_key=True)
     type = Column(String, primary_key=True)
     strat = Column(String)
+    hands_played = Column(Integer)
+    bb_won = Column(Integer)
     bb100 = Column(Float)
-    hands_played = Column (Integer)
-    bb_won = Column (Integer)
     
 class Probs(Base):
     __tablename__='probs'
@@ -71,6 +71,10 @@ session.close()
 #our_user = session.query(UserStat).filter_by(name='testuser').first() 
 #getprobs = session.query(Probs).filter_by(name='lkp20210626').first()
 ##lkp20210626_l=json.loads(getprobs.dict)
+
+# print all rows
+# for i in session.query(UserStat):
+    # print (i.__dict__)
 
 
 

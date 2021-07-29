@@ -8,9 +8,13 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 import json
 from _util_sqlalch_setup import UserStat, Probs
+import Player
+import os, sys
+
+db_path = os.path.abspath(sys.path[0])+"\\data\\pokerdb.db"
 
 def load_lkp(name='lkp20210626'):
-    engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=True)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
@@ -22,7 +26,7 @@ def load_lkp(name='lkp20210626'):
 
 
 def load_lkp2(name='lkp20210626'):
-    engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=True)
 
     metadata = MetaData(engine)
     metadata.reflect()
@@ -36,7 +40,7 @@ def load_lkp2(name='lkp20210626'):
 
 
 def save_stats(player):
-    engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=True)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
@@ -60,7 +64,7 @@ def save_stats(player):
     session.close()
 
 def load_stats(player):
-    engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=True)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
@@ -75,13 +79,27 @@ def load_stats(player):
         player.bb100=getstat.bb100
         player.hands_played=getstat.hands_played
         player.bb_won=getstat.bb_won
+        player.strat=getstat.strat
+        player.type=getstat.type
         session.commit()
         
     session.close()
-
-    #query to see if a record exists with player name and type.
-    # if yes then update player attributes. If not then raise an ezcept?
     
-    #to add a function for creating players only?
+def recreate_player(name, type='comp'):
+    p_tmp=Player.Player({'name':name, 'type': type})
+    load_stats(p_tmp)
+    return p_tmp
+
+def select_all(model=UserStat, limit=5):
+    engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
+
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    for i in session.query(model)[:limit]:
+        print (i.__dict__)
+
+    session.close()
+
+
 
     

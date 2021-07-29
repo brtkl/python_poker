@@ -49,7 +49,6 @@ class Player():
         self.allin=0 #20210220: not used at the moment
         self.pot_eligible_tot=0 #total eligible pot amount
         self.pots_idx=[] #indexes of eligible pots. 0 is the main pot
-        self.simulation_results=0
         self.balance_game_init=self.balance
         self.bb100=0
         self.hands_played=0

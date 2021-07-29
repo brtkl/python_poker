@@ -6,6 +6,7 @@ Created on Sun Mar 21 19:49:04 2021
 """
 
 import _util_pickl
+import _util_managedb
 from Simulation import Simulation
 
 class Training():
@@ -58,7 +59,7 @@ class Training():
                 
     def train(self, update_results='Y'):
         for p in self.players_to_load:
-            tmp=_util_pickl.load_player(p)
+            tmp=_util_managedb.recreate_player(p)
             tmp.balance_game_init=self.balance_game_init
             self.players_loaded.append(tmp)
         s=Simulation(None
@@ -76,5 +77,5 @@ class Training():
         s.summary()
         if update_results=='Y':
             for p in self.players_loaded:
-                _util_pickl.save_player(p, overwrite='Y')
+                _util_managedb.save_stats(p)
         

@@ -70,8 +70,8 @@ class Simulation():
                              , restart_balance='Y'
                              )
             g.play()
-            for p in self.players_sim_init:
-                p.simulation_results+=p.balance
+            # for p in self.players_sim_init:
+            #     p.simulation_results+=p.balance
             if self.console_print=='Y':
                 print(f'\nStatus after game {i}')
                 self.summary()
@@ -81,7 +81,7 @@ class Simulation():
     
     def summary(self):
         for p in self.players_sim_init:
-            print(f'{p.name}/{p.strat}: {p.simulation_results}  bb/100: '
-                  +f'{p.bb100}  nrounds: {p.hands_played}')
+            print(f'{p.name}/{p.strat}: bb/100: {p.bb100}, bbwon: {p.bb_won}, '
+                  +f'nrounds: {p.hands_played}')
         
     
