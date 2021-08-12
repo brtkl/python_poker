@@ -48,12 +48,13 @@ GENERAL status
   -create some strats using bet method			done
   -use prob of draw in strats as well?			notstarted
   -Machine Learning implementation for strats?		notstarted
+  -to create a bot based on a real player?
 
 -create Simulation class??				done	
   -create print method within Game class to suppress	done
    printing for simulations and tests
   -bb/100						done
-  -to validate bb/100					notstarted
+  -to validate bb/100					done
   -random button_idx in Simulation			done	
   -pickle - saving players (manageobs module)		done
   -multithreading to speed up training ???		notstarted

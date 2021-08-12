@@ -14,7 +14,7 @@ import os, sys
 db_path = os.path.abspath(sys.path[0])+"\\data\\pokerdb.db"
 
 def load_lkp(name='lkp20210626'):
-    engine = create_engine('sqlite:///'+db_path, echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=False)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
@@ -26,7 +26,7 @@ def load_lkp(name='lkp20210626'):
 
 
 def load_lkp2(name='lkp20210626'):
-    engine = create_engine('sqlite:///'+db_path, echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=False)
 
     metadata = MetaData(engine)
     metadata.reflect()
@@ -40,7 +40,7 @@ def load_lkp2(name='lkp20210626'):
 
 
 def save_stats(player):
-    engine = create_engine('sqlite:///'+db_path, echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=False)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
@@ -64,7 +64,7 @@ def save_stats(player):
     session.close()
 
 def load_stats(player):
-    engine = create_engine('sqlite:///'+db_path, echo=True)
+    engine = create_engine('sqlite:///'+db_path, echo=False)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
@@ -91,7 +91,7 @@ def recreate_player(name, type='comp'):
     return p_tmp
 
 def select_all(model=UserStat, limit=5):
-    engine = create_engine('sqlite:///data\\pokerdb.db', echo=True)
+    engine = create_engine('sqlite:///data\\pokerdb.db', echo=False)
 
     Session = sessionmaker(bind=engine) 
     session = Session() 
