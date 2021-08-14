@@ -10,10 +10,12 @@ from eval_hand import eval_hand
 from _util_managedb import load_lkp
 import random
 
+
 if 'lkp20210626' not in globals():
     lkp20210626=load_lkp()
 
-def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
+def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626
+                 , roundnum=3):
     """ calc probability of winning with a given hand.
         Returns probability of winning, drawing and loosing""" 
     
@@ -52,6 +54,7 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
         nlos=0
         ntot=0
         
+        random.seed()
         for i in range(simnum):
             rand_row=random.sample(tmpdeck2,2*(n-1)+5-len(table))
             tmp_h=eval_hand(hand+table+rand_row[2*(n-1):])
@@ -67,8 +70,8 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
                 nwin += 1
                 
     
-        return [round(nwin/simnum,3), round(ndra/simnum,3)
-                , round(nlos/simnum,3), 'sim']
+        return [round(nwin/simnum,roundnum), round(ndra/simnum,roundnum)
+                , round(nlos/simnum,roundnum), 'sim']
         
     elif type=='exact' and n==2 and len(table)==5:
         tmpdeck=Deck()
@@ -94,11 +97,18 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626):
             else:
                 nwin += 1
         
-        return [round(nwin/ntot,3), round(ndra/ntot,3), round(nlos/ntot,3), 
-                'exact']
+        return [round(nwin/ntot,roundnum), round(ndra/ntot,roundnum)
+                , round(nlos/ntot,roundnum), 'exact']
     
     elif type=='exact':
         raise ValueError('exact can be only for n=2 and len(table)=5')
+    
+
+    
+    
+    
+    
+    
     
     
     

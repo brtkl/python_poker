@@ -7,7 +7,7 @@ Created on Sat Jan 30 10:43:21 2021
 
 from Deck import Deck
 from eval_hand import eval_hand
-from calc_probwin import calc_probwin
+from calc_probwin_multi import calc_probwin_multi
 import math
 import random
 
@@ -108,7 +108,7 @@ class Round():
         if len(self.players_r_active)>1:
             n=0
             for p in self.players_r_active:
-                p.probdist=calc_probwin(p.hand, self.table
+                p.probdist=calc_probwin_multi(p.hand, self.table
                                         , n=len(self.players_r_active)
                                         , simnum=self.simnum_prob)
                 p.probwin=round(p.probdist[0],2)

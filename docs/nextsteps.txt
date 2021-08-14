@@ -57,11 +57,14 @@ GENERAL status
   -to validate bb/100					done
   -random button_idx in Simulation			done	
   -pickle - saving players (manageobs module)		done
-  -multithreading to speed up training ???		notstarted
+  -multithreading to speed up training ???		done
    e.g. instead of 100 games in 1 loop 12 games in each
    thread running in parallel? since objects are 
    recreated shouldn't be a problem when loading. 
    When saving apply sort of a queue when saving to DB?
+  -calc_probwin_multi create tests 			done
+  -calc_probwin_multi to update in Round		done
+  -ogarnac dependencies.. to somehow replace sys.path?	notstarted - low priority
 
 -loading players for simulation - Training class?	done
   -think how to speed up simulations/trainings		done (eval_hand updated 25Jun2021)

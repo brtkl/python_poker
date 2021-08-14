@@ -6,10 +6,12 @@ sys.path.insert(0,parentdir)
 
 from Training import Training
 
-t=Training(['20210321_p1_test'
-            , '20210321_p2_sasmonkey'
-            , '20210321_p3_sassimple'
-            , '20210321_p4_usebetmeth1']
+t=Training(['20210814_p1_test'
+            , '20210814_p2_sasmonkey'
+            , '20210814_p3_sassimple'
+            , '20210814_p4_usebetmeth1']
            , ngames=1000
-           , simnum_prob=500)
+           , simnum_prob=10000)
 t.train()
+
+

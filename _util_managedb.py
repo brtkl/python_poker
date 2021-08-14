@@ -11,6 +11,9 @@ from _util_sqlalch_setup import UserStat, Probs
 import Player
 import os, sys
 
+if "poker" not in sys.path[0]:
+    sys.path.insert(0,os.getcwd()) 
+
 db_path = os.path.abspath(sys.path[0])+"\\data\\pokerdb.db"
 
 def load_lkp(name='lkp20210626'):
