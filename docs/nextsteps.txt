@@ -44,11 +44,12 @@ GENERAL status
    be specified (if already exists then load instead)
   -create ConsoleGame for the above?			notstarted - do only in frontend
 
--Strategy() improvements				notstarted
+-Strategy() improvements				WIP
   -create some strats using bet method			done
-  -use prob of draw in strats as well?			notstarted
   -Machine Learning implementation for strats?		notstarted
-  -to create a bot based on a real player?
+  -to create a bot based on a real player?		notstarted - no good database to use?
+   model: bet(bb)=probability+stage+pot(bb)+balance(bb)
+   +r_players_active+maxbalance_amongplayers(bb)
 
 -create Simulation class??				done	
   -create print method within Game class to suppress	done

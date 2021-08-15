@@ -224,4 +224,5 @@ for x in range(10):
 d=Deck()
 d.shuffle()
 c=d.draw(5)
-res1=calc_probwin_multi(c[:2],c[2:])
+res1=calc_probwin_multi(c[:2],c[2:],n=9,simnum=100000)
+res2=calc_probwin(c[:2],c[2:],n=9,simnum=100000)
