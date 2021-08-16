@@ -159,8 +159,9 @@ class Round():
                                           self.players_r_active])))
             pots_all=[x-y for x,y in zip(distnct_elig, [0]+distnct_elig)]
             
-            if sum(pots_all) != self.pot:
-                raise ValueError('check pots_all calculation')
+            if round(sum(pots_all)) != round(self.pot):
+                raise ValueError('check pots_all calculation. '+
+                                 f'pot: {self.pot} sumpot: {sum(pots_all)}')
             
             for p in self.players_r_active:
                 for i in range(len(distnct_elig)):
