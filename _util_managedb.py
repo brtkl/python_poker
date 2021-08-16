@@ -93,7 +93,7 @@ def recreate_player(name, type='comp'):
     load_stats(p_tmp)
     return p_tmp
 
-def select_all(model=UserStat, limit=5):
+def select_all(model=UserStat, limit=100):
     engine = create_engine('sqlite:///data\\pokerdb.db', echo=False)
 
     Session = sessionmaker(bind=engine) 

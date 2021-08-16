@@ -134,9 +134,9 @@ class Player():
     def makebet(self, val):
         """collating check, call, raise_ and fold methods depending 
         on bet value. Might be used to simplify strategy."""
-        if val==0 and self.bet<self.cur_round.maxbet:
+        if val<=0 and self.bet<self.cur_round.maxbet:
             self.fold()
-        elif val==0 and self.bet>=self.cur_round.maxbet:
+        elif val<=0 and self.bet>=self.cur_round.maxbet:
             self.check()
         elif val>=self.balance and self.cur_round.maxbet>self.balance+self.bet:
             self.call() #all in call

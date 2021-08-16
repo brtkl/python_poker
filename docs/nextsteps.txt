@@ -50,6 +50,8 @@ GENERAL status
   -to create a bot based on a real player?		notstarted - no good database to use?
    model: bet(bb)=probability+stage+pot(bb)+balance(bb)
    +r_players_active+maxbalance_amongplayers(bb)
+  -sprawdzic probs, powinno byc aktualizowane kiedy 	notstarted
+   jakis gracz odpada z rundy
 
 -create Simulation class??				done	
   -create print method within Game class to suppress	done

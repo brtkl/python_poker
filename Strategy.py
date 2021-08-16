@@ -21,9 +21,9 @@ class Strategy:
                               if i is not self.player])
         if self.player.balance==0 or (checkmaxbal==0 and self.player.bet>=
                                       self.round_.maxbet):
-            return 1
+            return True
         else:
-            return 0
+            return False
         
     def allin(self):
         checkmaxbal=max([i.balance for i in self.round_.players_r_active
@@ -46,11 +46,14 @@ class Strategy:
                 self.player.raise_(propos)
     
     def raise_str(self,raiseby=0):
-        """method to be used in strat"""
+        """method to be used in strat
+        here raisby is the actual raise value
+        e.g. if 5 to call and raiseby==10 then 15 is shifted"""
         checkmaxbal=max([i.balance for i in self.round_.players_r_active
                               if i is not self.player])
         if raiseby<self.round_.minraise:
-            raiseby=self.round_.minraise
+            #raiseby=self.round_.minraise
+            raiseby=0 #0 is more conservative
         if checkmaxbal==0: 
             if self.player.bet < self.round_.maxbet:
                 self.player.call() 
@@ -70,6 +73,7 @@ class Strategy:
         
     #MAIN STRAT METHOD
     def strat(self, stage):
+        
         if self.mode=='test':
             if stage=='pre-flop':
                 thrsh=0.4
@@ -87,6 +91,52 @@ class Strategy:
                 self.player.check()
             else:
                 self.player.fold()
+        
+        elif self.mode=='tryharder':
+            tmp=self.player.probwin
+            numpl=len(self.round_.players_r_active)
+            pst=tmp*numpl/2 #standardized prob
+            
+            if self.moveon():
+                self.player.check() 
+                
+            elif self.player.balance>0:
+                if pst>0.8 or self.player.balance<self.round_.minraise:
+                    self.allin() #go all in
+                elif pst>=0.5 and self.player.bet<=self.round_.maxbet:
+                    self.raise_str(raiseby=math.floor(tmp*self.player.balance))
+                elif pst>=0.3 and self.player.bet<self.round_.maxbet:
+                    self.player.call() 
+                else:
+                    self.player.fold()
+                    
+            
+        elif self.mode=='tryharder2':
+            tmp=self.player.probwin
+            numpl=len(self.round_.players_r_active)
+            if self.moveon():
+                self.player.check() 
+            elif self.player.balance>0:
+                if tmp>0.8 or self.player.balance<self.round_.minraise:
+                    self.allin() #go all in
+                elif tmp>=(1/numpl) and self.player.bet<=self.round_.maxbet:
+                    self.raise_str(raiseby=math.floor(tmp*self.player.balance))
+                elif tmp>=(1/numpl)*0.6 and self.player.bet<self.round_.maxbet:
+                    self.player.call() 
+                else:
+                    self.player.fold()
+                
+        
+        elif self.mode=='potexp':
+            tmp=self.player.probwin
+            if self.moveon():
+                self.player.check() 
+            elif self.player.balance>0:
+                bet=(tmp*self.round_.pot-self.player.bet)/(1-tmp)
+                if tmp>0.95 or self.player.balance<self.round_.minraise:
+                    self.allin() #go all in
+                else:
+                    self.player.makebet(bet)
                     
         elif self.mode=='sasmonkey':
             tmp=random.uniform(0,1)
@@ -123,13 +173,23 @@ class Strategy:
                     
         elif self.mode=='usebetmeth1':
             tmp=self.player.probwin
-            if self.moveon()==1:
+            if self.moveon():
                 self.player.check() 
             elif self.player.balance>0:
                 self.player.makebet(math.floor((tmp**3)*self.player.balance))
+        
+        elif self.mode=='usebetmeth2':
+            tmp=self.player.probwin
+            numpl=len(self.round_.players_r_active)
+            pst=tmp*numpl/2 #standardized prob
+            if self.moveon():
+                self.player.check() 
+            elif self.player.balance>0:
+                self.player.makebet(math.floor((pst**3)*self.player.balance))
                     
+        
         elif self.mode=='human':
-            if self.moveon()==1:
+            if self.moveon():
                 self.player.check() 
                 #already all in or all ops all in and our bet is covered
             elif self.player.balance>0:
