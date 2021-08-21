@@ -18,7 +18,7 @@ g=Game([{'name':'brtkl', 'type':'human'}
         , {'name':'c3', 'strat':'usebetmeth1'}
         ]
        , mode='interactive'
-       , simnum_prob=2000
+       , simnum_prob=10000
        )
 g.play()
 
@@ -29,7 +29,8 @@ g=Game([{'name':'brtkl'}
         ]
        , mode='sim'
        , simnum_prob=10000
-       , maxrounds=100
+       , maxrounds=3
+       , log=True
        )
 g.play()
 
@@ -165,7 +166,7 @@ s=Simulation([{'name':'c1', 'strat':'test'}
               , {'name':'c3', 'strat':'sassimple'}]
              , simnum_prob=500
              , maxrounds=20
-             , console_print='Y'
+             , console_print=True
        )
 s.run_sim()
 s.summary()

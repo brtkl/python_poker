@@ -46,14 +46,13 @@ class Strategy:
                 self.player.raise_(propos)
     
     def raise_str(self,raiseby=0):
-        """method to be used in strat
+        """method to be used in strat when we want to raise no matter what
         here raisby is the actual raise value
         e.g. if 5 to call and raiseby==10 then 15 is shifted"""
         checkmaxbal=max([i.balance for i in self.round_.players_r_active
                               if i is not self.player])
         if raiseby<self.round_.minraise:
-            #raiseby=self.round_.minraise
-            raiseby=0 #0 is more conservative
+            raiseby=self.round_.minraise
         if checkmaxbal==0: 
             if self.player.bet < self.round_.maxbet:
                 self.player.call() 
@@ -132,7 +131,8 @@ class Strategy:
             if self.moveon():
                 self.player.check() 
             elif self.player.balance>0:
-                bet=(tmp*self.round_.pot-self.player.bet)/(1-tmp)
+                den=1-tmp if tmp!=1 else 0.00000001
+                bet=(tmp*self.round_.pot-self.player.bet)/den
                 if tmp>0.95 or self.player.balance<self.round_.minraise:
                     self.allin() #go all in
                 else:

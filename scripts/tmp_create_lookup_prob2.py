@@ -1,6 +1,6 @@
 
 
-from calc_probwin import calc_probwin
+from calc_probwin_multi import calc_probwin_multi
 import json
 
 ###for simnum=50000 the below code takes approx 12 hours to run
@@ -10,8 +10,11 @@ for i1 in range(2,15):
         for j in range(2):
             for n in range(2,11):
                 if not(i1==i2 and j==1):
-                    combnew.append([i1,i2,j,n,calc_probwin([(i1,'D'),(i2,'D' if j==1 else 'S')]
-                                                           ,[],n=n,simnum=50000)])
+                    combnew.append([i1,i2,j,n,
+                                    calc_probwin_multi([(i1,'D'),
+                                                        (i2,'D' if j==1 else 'S')]
+                                                           ,[],n=n,simnum=50000
+                                                           ,type='simul')])
                     print(f'{round((len(combnew)/1521)*100,2)}%')
         
 combnew_dict = {f'{combnew[i][0]}_{combnew[i][1]}_{combnew[i][2]}_{combnew[i][3]}': 

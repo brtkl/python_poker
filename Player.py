@@ -46,13 +46,15 @@ class Player():
         self.probwin=0
         self.probdist=[]
         self.folded=0
-        self.allin=0 #20210220: not used at the moment
+        self.allin=0 
         self.pot_eligible_tot=0 #total eligible pot amount
         self.pots_idx=[] #indexes of eligible pots. 0 is the main pot
         self.balance_game_init=self.balance
         self.bb100=0
         self.hands_played=0
         self.bb_won=0
+        self.last_action=None
+        self.last_bet=0
         
     def prepare_for_round(self, cur_round):
         self.hand=[]
@@ -63,6 +65,8 @@ class Player():
         self.probdist=0
         self.folded=0
         self.allin=0 
+        self.last_action=None
+        self.last_bet=0
         self.pot_eligible_tot=0 
         self.pots_idx=[] 
         self.balance_round_init=self.balance #needed for bb100
@@ -77,23 +81,27 @@ class Player():
     def updatebalance(self, bet, balanceonly=0):
         self.balance=round(self.balance+bet,2)
         if balanceonly == 0:
+            self.last_bet=-bet
             self.bet+=-bet
         if self.balance==0:
             self.allin=1
         
-    def updatetable(self, val, raise_='N', raisval=0):
+    def updatetable(self, val, raise_=False, raisval=0):
         if raisval>val:
             raise ValueError('raisval greater than val')
         self.cur_round.pot+=val
         self.cur_round.maxbet=max(self.cur_round.maxbet,self.bet)
-        if raise_=='Y':
+        if raise_:
             self.cur_round.minraise=max(self.cur_round.minraise, raisval)
             
     def check(self):
         allintxt='checks'
+        self.last_action='check'
         if self.balance==0:
             allintxt='does nothing - already all in'
+            self.last_action='wait (all in)'
         self.cur_round.cur_game.print_c(f'##Player {self.name} {allintxt}')
+        
         
     def call(self):
         allintxt=''
@@ -105,6 +113,7 @@ class Player():
         self.updatetable(val)
         self.cur_round.cur_game.print_c(
             f'##Player {self.name} calls {allintxt}')
+        self.last_action=f'call {allintxt}'
     
     def raise_(self, val):
         """ Note, when using raise_, val param denotes all the money the player
@@ -121,12 +130,14 @@ class Player():
         else:
             raisval=val
         self.updatebalance(-val)
-        self.updatetable(val, raise_='Y', raisval=raisval)
+        self.updatetable(val, raise_=True, raisval=raisval)
         self.cur_round.cur_game.print_c(
             f'##Player {self.name} raises by {raisval} {allintxt}')
+        self.last_action=f'raise {allintxt}'
     
     def fold(self):
         self.folded=1
+        self.last_action='fold'
         self.cur_round.players_r_active.remove(self)
         self.cur_round.cur_game.print_c(
             f'##Player {self.name} folds')

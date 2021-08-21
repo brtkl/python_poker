@@ -15,8 +15,8 @@ class Simulation():
                  , players
                  , ngames=100
                  , maxrounds=100
-                 , console_print='N'
-                 , trainmode='N'
+                 , console_print=False
+                 , trainmode=False
                  , simnum_prob=2000
                  , sblind=5
                  , bblind=10
@@ -37,8 +37,8 @@ class Simulation():
         self.bblind=bblind
         self.sblind=sblind
         self.trainmode=trainmode
-        if console_print not in ['Y', 'N']:
-            raise ValueError('console_print can be Y or N')
+        if type(console_print) != type(True):
+            raise ValueError('console_print should be boolean')
             
     def assign_players(self
                        , players_obj
@@ -60,22 +60,28 @@ class Simulation():
             g=Game(None
                    , maxrounds=self.maxrounds
                    , simnum_prob=self.simnum_prob
-                   , console_print='N'
+                   , console_print=False
                    , sblind=self.sblind
                    , bblind=self.bblind
                    , button_idx=self.button_idx
                    )
             
+            if i==1:
+                tmpord=False
+            else:
+                tmpord=True
+            
             g.assign_players(self.players_sim_init
-                             , restart_balance='Y'
+                             , restart_balance=True
+                             , reorder_players=tmpord
                              )
             g.play()
             # for p in self.players_sim_init:
             #     p.simulation_results+=p.balance
-            if self.console_print=='Y':
+            if self.console_print:
                 print(f'\nStatus after game {i}')
                 self.summary()
-            if self.trainmode=='Y':
+            if self.trainmode:
                 if i % round(self.ngames/10)==0 or i==self.ngames:
                     print(f'{round((i/self.ngames)*100)}% completed ')
     

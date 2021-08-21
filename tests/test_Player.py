@@ -20,7 +20,7 @@ class PlayerTestCase(unittest.TestCase):
     
     def setUp(self):
         self.p=Player('playername')
-        self.g=Game(['test1','test2'], console_print='N')    
+        self.g=Game(['test1','test2'], console_print=False)    
         self.r=Round(self.g)
         self.p.prepare_for_round(self.r)
         self.g.players_active[0].prepare_for_round(self.r)
@@ -39,7 +39,7 @@ class PlayerTestCase(unittest.TestCase):
                         self.r.maxbet==310)
         
         self.g.players_active[0].bet=510
-        self.g.players_active[0].updatetable(200,raise_='Y',raisval=200)
+        self.g.players_active[0].updatetable(200,raise_=True,raisval=200)
         self.assertTrue(self.r.pot==810 and self.r.minraise==200 and 
                         self.r.maxbet==510)
     

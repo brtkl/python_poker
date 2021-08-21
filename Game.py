@@ -10,6 +10,8 @@ Created on Thu Jan 28 00:32:25 2021
 
 from Round import Round
 from Player import Player
+import pandas
+from random import shuffle
 
 
 class Game():
@@ -18,12 +20,13 @@ class Game():
                  , players
                  , mode='sim' #sim or interactive
                  , maxrounds=20
-                 , console_print='Y'
+                 , console_print=True
                  , simnum_prob=10000
                  , sblind=5
                  , bblind=10
                  , round_req={}
                  , button_idx=0
+                 , log=True
                  ):
         self.players_active=[]
         if players != None and len(players)>0:
@@ -40,6 +43,8 @@ class Game():
         self.bblind=bblind
         self.sblind=sblind
         self.players_init=self.players_active[:]
+        self.log=log
+        self.listres=[]
         if self.players_active:
             self.remove_notenough_sb_on_bb()
             if not (2<=len(self.players_active)<=10):
@@ -47,22 +52,25 @@ class Game():
                                  +' defined')
             if not (0<=button_idx<=len(self.players_active)-1):
                 raise ValueError('starting button_idx incorrect')
-        if console_print not in ['Y', 'N']:
-            raise ValueError('console_print can be Y or N')
+        if type(console_print) != type(True):
+            raise ValueError('console_print should be boolean')
         if mode not in ['sim', 'interactive']:
             raise ValueError('mode can be sim or ineractive')
             
     def assign_players(self
                        , players_obj
-                       , restart_balance='N'
+                       , restart_balance=False
+                       , reorder_players=False
                        ):
         """to be used when Players not created in Game instance"""
         if self.players_active:
             raise ValueError('Some players already defined for a game')
         if len(players_obj)>0 and players_obj not in (None,''):
+            if reorder_players:
+                shuffle(players_obj)
             for p in players_obj:
                 self.players_active.append(p)
-                if restart_balance=='Y':
+                if restart_balance:
                     p.balance=p.balance_game_init
         self.players_init=self.players_active[:]
         self.remove_notenough_sb_on_bb()
@@ -73,7 +81,7 @@ class Game():
             raise ValueError('starting button_idx incorrect')
     
     def print_c(self, val):
-        if self.console_print=='Y':
+        if self.console_print:
             print(val)
     
     def display_balances(self):
@@ -110,17 +118,17 @@ class Game():
             r.assigncards()
             r.assignblinds()
             #pre-flop bets
-            r.betting()
+            r.betting(n_r=n, log=self.log, listsave=self.listres)
             #flop bets
             r.nextstage('flop')
-            r.betting()
+            r.betting(n_r=n, log=self.log, listsave=self.listres)
             #turn bets
             r.nextstage('turn')
-            r.betting()
+            r.betting(n_r=n, log=self.log, listsave=self.listres)
             #river bets
             r.nextstage('river')
-            r.betting()
-            r.finalizeround()
+            r.betting(n_r=n, log=self.log, listsave=self.listres)
+            r.finalizeround(n_r=n, log=self.log, listsave=self.listres)
                         
             self.display_balances()
             
@@ -145,4 +153,8 @@ class Game():
             #are eliminated and button idx further adjusted if needed
             self.remove_notenough_sb_on_bb()
             n+=1
+            
+            if self.log==True and (len(self.players_active)<2 or 
+                                   n>self.maxrounds):
+                self.df_log=pandas.DataFrame(self.listres)
 

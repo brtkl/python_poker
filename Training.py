@@ -16,7 +16,7 @@ class Training():
                  , players_to_load
                  , ngames=100
                  , maxrounds=100
-                 , console_print='N'
+                 , console_print=False
                  , simnum_prob=2000
                  , sblind=5
                  , bblind=10
@@ -34,7 +34,7 @@ class Training():
         self.balance_game_init=balance_game_init
         self.button=button
     
-    def train_pickl(self, update_results='Y'):
+    def train_pickl(self, update_results=True):
         for p in self.players_to_load:
             tmp=_util_pickl.load_player(p)
             tmp.balance_game_init=self.balance_game_init
@@ -42,8 +42,8 @@ class Training():
         s=Simulation(None
                     , ngames=self.ngames
                     , maxrounds=self.maxrounds
-                    , console_print='N'
-                    , trainmode='Y'
+                    , console_print=False
+                    , trainmode=True
                     , simnum_prob=self.simnum_prob
                     , sblind=self.sblind
                     , bblind=self.bblind
@@ -52,12 +52,12 @@ class Training():
         s.assign_players(self.players_loaded)
         s.run_sim()
         s.summary()
-        if update_results=='Y':
+        if update_results:
             for p in self.players_loaded:
-                _util_pickl.save_player(p, overwrite='Y')
+                _util_pickl.save_player(p, overwrite=True)
                 
                 
-    def train(self, update_results='Y'):
+    def train(self, update_results=True):
         for p in self.players_to_load:
             tmp=_util_managedb.recreate_player(p)
             tmp.balance_game_init=self.balance_game_init
@@ -65,8 +65,8 @@ class Training():
         s=Simulation(None
                     , ngames=self.ngames
                     , maxrounds=self.maxrounds
-                    , console_print='N'
-                    , trainmode='Y'
+                    , console_print=False
+                    , trainmode=True
                     , simnum_prob=self.simnum_prob
                     , sblind=self.sblind
                     , bblind=self.bblind
@@ -75,7 +75,7 @@ class Training():
         s.assign_players(self.players_loaded)
         s.run_sim()
         s.summary()
-        if update_results=='Y':
+        if update_results:
             for p in self.players_loaded:
                 _util_managedb.save_stats(p)
         

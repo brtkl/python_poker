@@ -17,8 +17,8 @@ from _util_managedb import save_stats,select_all
 p1=Player({'name':'20210322_p1_test', 'strat':'test'})
 p2=Player({'name':'20210322_p2_sassimple', 'strat':'sassimple'})
 
-_util_pickl.save_player(p1, overwrite='N')
-_util_pickl.save_player(p2, overwrite='N')
+_util_pickl.save_player(p1, overwrite=False)
+_util_pickl.save_player(p2, overwrite=False)
 
 
 

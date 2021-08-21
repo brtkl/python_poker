@@ -23,7 +23,7 @@ class GameTestCase(unittest.TestCase):
     def test_1player(self):
         with self.assertRaises(ValueError) as er:
             Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]}],
-                    maxrounds=1, console_print='N')
+                    maxrounds=1, console_print=False)
         self.assertEqual('between 2 and 10 valid players need to be defined',
                     str(er.exception))
 
@@ -33,7 +33,7 @@ class GameTestCase(unittest.TestCase):
                      {'name':'p3', 'balance':7, 'cards':[(14,'C'),(14,'H')]}],
                     round_req={'flop':[(6, 'S'), (8, 'H'), (3, 'S')],
                                'turn':[(5, 'D')], 'river':[(5,'S')]},
-                    maxrounds=1, console_print='N')
+                    maxrounds=1, console_print=False)
         self.g.play()
         self.assertTrue(self.g.players_active[0].balance==20 and
                         self.g.players_active[1].balance==15 and
@@ -45,7 +45,7 @@ class GameTestCase(unittest.TestCase):
                      {'name':'p3', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
                     round_req={'flop':[(6, 'S'), (8, 'H'), (3, 'S')],
                                'turn':[(5, 'D')], 'river':[(5,'S')]},
-                    maxrounds=1, console_print='N')
+                    maxrounds=1, console_print=False)
         self.g.play()
         self.assertTrue(self.g.players_active[0].balance==15 and
                         self.g.players_active[1].balance==25 and
@@ -55,14 +55,14 @@ class GameTestCase(unittest.TestCase):
         with self.assertRaises(ValueError) as er:
             Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
                   {'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
-                  maxrounds=1, console_print='N')
+                  maxrounds=1, console_print=False)
         self.assertEqual('between 2 and 10 valid players need to be defined',
                          str(er.exception))
         
     def test_2p_game_assign_players(self):
         self.g=Game([{'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]},
                   {'name':'p2', 'balance':20, 'cards':[(14,'C'),(14,'H')]}],
-                  maxrounds=1, console_print='N')
+                  maxrounds=1, console_print=False)
         self.p=Player('testplayer')
         with self.assertRaises(ValueError) as er:
             self.g.assign_players(self.p)
@@ -70,7 +70,7 @@ class GameTestCase(unittest.TestCase):
                          str(er.exception))
         
     def test_2p_game_assign_players2(self):
-        self.g=Game(None, maxrounds=1, console_print='N')
+        self.g=Game(None, maxrounds=1, console_print=False)
         self.p1=Player({'name':'p1', 'balance':20, 'cards':[(2,'C'),(7,'H')]})
         self.p2=Player({'name':'p2', 'balance':4, 'cards':[(14,'C'),(14,'H')]})
         with self.assertRaises(ValueError) as er:
@@ -84,7 +84,7 @@ class GameTestCase(unittest.TestCase):
                      {'name':'p3', 'balance':4, 'cards':[(14,'C'),(14,'H')]}],
                     round_req={'flop':[(6, 'S'), (8, 'H'), (3, 'S')],
                                'turn':[(5, 'D')], 'river':[(5,'S')]},
-                    maxrounds=1, button_idx=2, console_print='N')
+                    maxrounds=1, button_idx=2, console_print=False)
         self.g.play()
         self.assertTrue(self.g.players_active[0].balance==15 and
                         self.g.players_active[1].balance==17 and
@@ -95,7 +95,7 @@ class GameTestCase(unittest.TestCase):
                      {'name':'p2', 'balance':1015, 'cards':[(9, 'H'), (3, 'H')]}],
                     round_req={'flop':[(7, 'S'), (10, 'C'), (9, 'C')],
                                'turn':[(5, 'S')], 'river':[(10,'H')]},
-                    maxrounds=1, button_idx=0, console_print='N')
+                    maxrounds=1, button_idx=0, console_print=False)
 
         self.g.play()
         self.assertTrue(self.g.players_init[0].balance==3000 and
@@ -107,7 +107,7 @@ class GameTestCase(unittest.TestCase):
                      {'name':'p2', 'balance':1900, 'cards':[(4, 'C'), (4, 'H')]}],
                     round_req={'flop':[(3, 'S'), (4, 'D'), (8, 'H')],
                                'turn':[(12, 'S')], 'river':[(8,'C')]},
-                    maxrounds=1, button_idx=1, console_print='N')
+                    maxrounds=1, button_idx=1, console_print=False)
 
         self.g.play()
         self.assertTrue(self.g.players_init[0].balance==0 and

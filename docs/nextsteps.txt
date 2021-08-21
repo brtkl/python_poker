@@ -42,16 +42,23 @@ GENERAL status
   -add small visual of a table + current bets		done
   -modify iteractive mode in Game, so that player can 	notstarted - do only in frontend
    be specified (if already exists then load instead)
-  -create ConsoleGame for the above?			notstarted - do only in frontend
 
 -Strategy() improvements				WIP
   -create some strats using bet method			done
+  -create logger (dataframe?) to be stored in sqlite	done
+   after each simulation/game?
+  -to identify what info/structure is needed in df_log	notstarted
+  -to implement logger into sqlite (Game/Simulation)	notstarted
+  -make table position of players random, not only	done
+   starting button
+  -to restrict number of raises to 4?			notstarted
+  -to implement opponent modelling			notstarted
   -Machine Learning implementation for strats?		notstarted
-  -to create a bot based on a real player?		notstarted - no good database to use?
-   model: bet(bb)=probability+stage+pot(bb)+balance(bb)
+  -to get inspiration from Alberta group papers		WIP
+  
+
+model: bet(bb)=probability+stage+pot(bb)+balance(bb)
    +r_players_active+maxbalance_amongplayers(bb)
-  -sprawdzic probs, powinno byc aktualizowane kiedy 	notstarted
-   jakis gracz odpada z rundy
 
 -create Simulation class??				done	
   -create print method within Game class to suppress	done

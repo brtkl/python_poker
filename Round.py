@@ -104,7 +104,43 @@ class Round():
             self.showroundstatus()
                 
     
-    def betting(self):
+    def logger(self, n, p, listsave, stage='def'):
+        lenact=len(self.players_r_started)
+        pos=''
+        if lenact==2:
+            _2plfn=0
+        else:
+            _2plfn=1
+        if (self.cur_game.players_active.index(p)==(self.button) 
+            % lenact):
+                pos+='btn '
+        if (self.cur_game.players_active.index(p)==(self.button+_2plfn) 
+            % lenact):
+                pos+='sb '
+        elif (self.cur_game.players_active.index(p)==
+              (self.button+_2plfn+1) % lenact):
+                pos+='bb '
+        if lenact>3 and pos=='':
+            i=self.player_ord_preflop[:lenact-3].index(p)+1
+            pos+=f'utg+{i} '
+        
+        profit=p.balance-p.balance_round_init
+        if stage=='def':
+            stage=self.stage
+            profit=None
+        
+        listsave.append({'round':n, 'stage':stage, 'player': p.name
+                         , 'player_typ': p.type, 'player_strat': p.strat
+           , 'balance': p.balance, 'pot': self.pot, 'hand': p.hand
+           , 'table': self.table[:], 'probdist': p.probdist, 'position':pos 
+           , 'bet_round' : p.bet, 'action': p.last_action
+           , 'last_bet': p.last_bet, 'profit':profit})
+    
+    def betting(self
+                , n_r=0  #to be defined in game instance
+                , listsave=[] #to be defined in game instance
+                , log=False #set True if want to log actions to a dataframe
+                ):
         if len(self.players_r_active)>1:
             n=0
             for p in self.players_r_active:
@@ -122,6 +158,8 @@ class Round():
                     if len(self.players_r_active)>1 and (p.bet<self.maxbet or 
                                                          n<1) and p.folded==0:
                         p.strategy.strat(self.stage)
+                        if log:
+                            self.logger(n_r, p, listsave)
                 n+=1
     
     def nextstage(self,newstage):
@@ -145,7 +183,11 @@ class Round():
             self.cur_game.print_c(f"{newstage}: {self.table}")
             
     
-    def finalizeround(self):
+    def finalizeround(self
+                        , n_r=0  #to be defined in game instance
+                        , listsave=[] #to be defined in game instance
+                        , log=False #set True if want to log actions to a df
+                        ):
         if len(self.players_r_active)==1:
             self.cur_game.print_c(
                 f"{self.players_r_active[0].name} wins, opponents folded")
@@ -199,6 +241,8 @@ class Round():
                             f"{p.name} drew pot {i}, {valperp} having {maxhand}")
         for p in self.players_r_started:
             p.update_bb100()
+            if log:
+                self.logger(n_r, p, listsave, stage='finalization')
             
         
         
