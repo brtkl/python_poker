@@ -8,6 +8,8 @@ Created on Sat Mar 20 11:56:58 2021
 from Game import Game
 from Player import Player
 import random
+import pandas
+from _util_managedb import save_log
 
 class Simulation():
     """simulating multiple games and presenting results"""
@@ -20,7 +22,9 @@ class Simulation():
                  , simnum_prob=2000
                  , sblind=5
                  , bblind=10
-                 , button='random'):
+                 , button='random'
+                 , log=True
+                 , logsql=True):
         self.players_sim_init=[]
         self.button_meth=button
         if players != None and len(players)>0:
@@ -37,6 +41,9 @@ class Simulation():
         self.bblind=bblind
         self.sblind=sblind
         self.trainmode=trainmode
+        self.log=log
+        self.logsql=logsql
+        self.listres_sim=[]
         if type(console_print) != type(True):
             raise ValueError('console_print should be boolean')
             
@@ -84,6 +91,13 @@ class Simulation():
             if self.trainmode:
                 if i % round(self.ngames/10)==0 or i==self.ngames:
                     print(f'{round((i/self.ngames)*100)}% completed ')
+            if self.log:
+                self.listres_sim+=g.listres
+                
+        if self.log:
+            self.df_log=pandas.DataFrame(self.listres_sim)
+            if self.logsql:
+                save_log(self.df_log)
     
     def summary(self):
         for p in self.players_sim_init:

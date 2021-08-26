@@ -12,6 +12,8 @@ from Round import Round
 from Player import Player
 import pandas
 from random import shuffle
+import uuid
+from _util_managedb import save_log
 
 
 class Game():
@@ -25,9 +27,11 @@ class Game():
                  , sblind=5
                  , bblind=10
                  , round_req={}
-                 , button_idx=0
+                 , button_idx=0 
                  , log=True
+                 , logsql=False
                  ):
+        self.id=str(uuid.uuid1())
         self.players_active=[]
         if players != None and len(players)>0:
             for p in players:
@@ -44,6 +48,7 @@ class Game():
         self.sblind=sblind
         self.players_init=self.players_active[:]
         self.log=log
+        self.logsql=logsql
         self.listres=[]
         if self.players_active:
             self.remove_notenough_sb_on_bb()
@@ -154,7 +159,8 @@ class Game():
             self.remove_notenough_sb_on_bb()
             n+=1
             
-            if self.log==True and (len(self.players_active)<2 or 
-                                   n>self.maxrounds):
+            if self.log and (len(self.players_active)<2 or n>self.maxrounds):
                 self.df_log=pandas.DataFrame(self.listres)
+                if self.logsql:
+                    save_log(self.df_log)
 

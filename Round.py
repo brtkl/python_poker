@@ -129,12 +129,15 @@ class Round():
             stage=self.stage
             profit=None
         
-        listsave.append({'round':n, 'stage':stage, 'player': p.name
-                         , 'player_typ': p.type, 'player_strat': p.strat
-           , 'balance': p.balance, 'pot': self.pot, 'hand': p.hand
-           , 'table': self.table[:], 'probdist': p.probdist, 'position':pos 
-           , 'bet_round' : p.bet, 'action': p.last_action
-           , 'last_bet': p.last_bet, 'profit':profit})
+        listsave.append({'game_id': self.cur_game.id,'round':n, 'stage':stage, 
+                         'player': p.name, 'player_typ': p.type, 
+                         'player_strat': p.strat, 'balance': p.balance, 
+                         'pot': self.pot, 'hand': str(p.hand), 
+                         'table': str(self.table[:]), 'prob_w': p.probdist[0], 
+                         'prob_d': p.probdist[1], 'prob_l': p.probdist[2], 
+                         'prob_inf': p.probdist[3], 'position':pos, 
+                         'bet_round' : p.bet, 'action': p.last_action, 
+                         'last_bet': p.last_bet, 'profit':profit})
     
     def betting(self
                 , n_r=0  #to be defined in game instance

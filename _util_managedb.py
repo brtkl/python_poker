@@ -103,6 +103,8 @@ def select_all(model=UserStat, limit=100):
 
     session.close()
 
-
+def save_log(df):
+    engine = create_engine('sqlite:///'+db_path, echo=False)
+    df.to_sql('game_log', con=engine, if_exists='append')
 
     

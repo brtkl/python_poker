@@ -129,7 +129,8 @@ class CalcProbwinTestCase(unittest.TestCase):
         
     def test_dif_sim_lookup2(self):
         self.assertTrue(abs(calc_probwin(self.testhand_3ofakind[:2],[],type='lookup')[0]
-                        -calc_probwin(self.testhand_3ofakind[:2],[],type='simul')[0])<0.01)
+                        -calc_probwin(self.testhand_3ofakind[:2],[],type='simul'
+                                      ,simnum=20000)[0])<0.01)
         
     def test_2card_sim_high(self):
         self.assertTrue(calc_probwin(self.testhand_2high,[],type='simul')[0]
@@ -138,7 +139,7 @@ class CalcProbwinTestCase(unittest.TestCase):
                         >0.7)
         
     def test_2card_sim_low(self):
-        self.assertTrue(calc_probwin(self.testhand_2low,[],type='simul')[0]
+        self.assertTrue(calc_probwin(self.testhand_2low,[],type='simul',simnum=15000)[0]
                         <0.35)
         
     def test_3any(self):

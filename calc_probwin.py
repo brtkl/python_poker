@@ -28,6 +28,9 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626
     
     if len(hand+table) != len(set(hand+table)):
         raise ValueError('repeating cards in the input data')
+        
+    if not (2<=n<=10):
+        raise ValueError('n needs to be between 2 and 10')
     
     if len(table)==5 and n==2 and type=='def':
         type='exact'
@@ -35,9 +38,6 @@ def calc_probwin(hand, table, n=2, type='def', simnum=10000, lkp=lkp20210626
         type='lookup'
     elif type=='def':
         type='simul'
-        
-    if not (2<=n<=10):
-        raise ValueError('n needs to be between 2 and 10')
         
     if type=='lookup':
         

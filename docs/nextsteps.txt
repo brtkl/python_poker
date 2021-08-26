@@ -43,18 +43,22 @@ GENERAL status
   -modify iteractive mode in Game, so that player can 	notstarted - do only in frontend
    be specified (if already exists then load instead)
 
--Strategy() improvements				WIP
+-Strategy() improvements				WIP2
   -create some strats using bet method			done
   -create logger (dataframe?) to be stored in sqlite	done
    after each simulation/game?
   -to identify what info/structure is needed in df_log	notstarted
-  -to implement logger into sqlite (Game/Simulation)	notstarted
+  -to implement logger into sqlite (Game/Simulation)	done - to testt
+  -to add getter from sql to dataframe			WIP1
   -make table position of players random, not only	done
    starting button
   -to restrict number of raises to 4?			notstarted
+  -after restriction easier to transpose logs, i.e. 1	notstarted 
+   rec/player/round?
+  -develop some tools for data manipulation/analysis	notstarted
   -to implement opponent modelling			notstarted
   -Machine Learning implementation for strats?		notstarted
-  -to get inspiration from Alberta group papers		WIP
+  -to get inspiration from Alberta group papers		WIP3
   
 
 model: bet(bb)=probability+stage+pot(bb)+balance(bb)
@@ -73,6 +77,11 @@ model: bet(bb)=probability+stage+pot(bb)+balance(bb)
    recreated shouldn't be a problem when loading. 
    When saving apply sort of a queue when saving to DB?
   -calc_probwin_multi create tests 			done
+  -calc_probwin_multi tests fail.. main problem		done
+   ans: added param and __name__ condition in calc_
+  -ensure seed() is always different			done
+   ans: variance check added
+  -how are the exceptions raised in multiprocessing?	done
   -calc_probwin_multi to update in Round		done
   -ogarnac dependencies.. to somehow replace sys.path?	notstarted - low priority
 

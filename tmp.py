@@ -225,5 +225,16 @@ for x in range(10):
 d=Deck()
 d.shuffle()
 c=d.draw(5)
-res1=calc_probwin_multi(c[:2],c[2:],n=9,simnum=100000)
-res2=calc_probwin(c[:2],c[2:],n=9,simnum=100000)
+res1=calc_probwin_multi(c[:2],c[2:],n=9,simnum=10000)
+res2=calc_probwin(c[:2],c[2:],n=9,simnum=10000)
+
+standard=[]
+multi=[]
+for i in range(100):
+    multi.append(calc_probwin_multi(c[:2],c[2:],n=3,simnum=50000)[0])
+    standard.append(calc_probwin(c[:2],c[2:],n=3,simnum=10000)[0])
+
+import numpy as np
+
+varmulti=np.var(multi)
+varstandard=np.var(standard)

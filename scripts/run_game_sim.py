@@ -4,10 +4,10 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir) 
 
-import Game
+from Game import Game
 
 
-g=Game.Game([{'name':'brtkl', 'strat':'sassimple'}
+g=Game([{'name':'brtkl', 'strat':'sassimple'}
         , {'name':'c1', 'strat':'sasmonkey'}
         , {'name':'c2', 'strat':'test'}
         , {'name':'c3', 'strat':'usebetmeth1'}
@@ -15,5 +15,6 @@ g=Game.Game([{'name':'brtkl', 'strat':'sassimple'}
        , mode='sim'
        , simnum_prob=10000
        , log=True
+       , maxrounds=3
        )
 g.play()
