@@ -43,22 +43,25 @@ GENERAL status
   -modify iteractive mode in Game, so that player can 	notstarted - do only in frontend
    be specified (if already exists then load instead)
 
--Strategy() improvements				WIP2
+-Strategy() improvements				WIP3
   -create some strats using bet method			done
   -create logger (dataframe?) to be stored in sqlite	done
    after each simulation/game?
   -to identify what info/structure is needed in df_log	notstarted
-  -to implement logger into sqlite (Game/Simulation)	done - to testt
-  -to add getter from sql to dataframe			WIP1
+  -to implement logger into sqlite (Game/Simulation)	done
+  -to add getter from sql to dataframe			done
+  -sim_multi not used in simulations?? check with cons	WIP
   -make table position of players random, not only	done
    starting button
   -to restrict number of raises to 4?			notstarted
+   maybe just for bot development
   -after restriction easier to transpose logs, i.e. 1	notstarted 
    rec/player/round?
   -develop some tools for data manipulation/analysis	notstarted
-  -to implement opponent modelling			notstarted
+  -read Raschka book					WIP2
   -Machine Learning implementation for strats?		notstarted
-  -to get inspiration from Alberta group papers		WIP3
+  -to get inspiration from Alberta group papers		WIP4
+  -to implement opponent modelling			notstarted
   
 
 model: bet(bb)=probability+stage+pot(bb)+balance(bb)

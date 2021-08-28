@@ -10,6 +10,7 @@ import json
 from _util_sqlalch_setup import UserStat, Probs
 import Player
 import os, sys
+import pandas
 
 if "poker" not in sys.path[0]:
     sys.path.insert(0,os.getcwd()) 
@@ -103,8 +104,12 @@ def select_all(model=UserStat, limit=100):
 
     session.close()
 
-def save_log(df):
+def save_log(df, ifexists='append'):
     engine = create_engine('sqlite:///'+db_path, echo=False)
-    df.to_sql('game_log', con=engine, if_exists='append')
+    df.to_sql('game_log', con=engine, if_exists=ifexists)
 
+    
+def load_log():
+    engine = create_engine('sqlite:///'+db_path, echo=False)
+    return pandas.read_sql('game_log', con=engine)
     

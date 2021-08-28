@@ -14,6 +14,7 @@ import pandas
 from random import shuffle
 import uuid
 from _util_managedb import save_log
+from datetime import datetime
 
 
 class Game():
@@ -32,6 +33,7 @@ class Game():
                  , logsql=False
                  ):
         self.id=str(uuid.uuid1())
+        self.dtstart=datetime.now()
         self.players_active=[]
         if players != None and len(players)>0:
             for p in players:

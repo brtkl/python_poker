@@ -15,6 +15,7 @@ g=Game([{'name':'brtkl', 'strat':'sassimple'}
        , mode='sim'
        , simnum_prob=10000
        , log=True
+       , logsql=True
        , maxrounds=3
        )
 g.play()

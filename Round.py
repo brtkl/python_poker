@@ -121,7 +121,7 @@ class Round():
               (self.button+_2plfn+1) % lenact):
                 pos+='bb '
         if lenact>3 and pos=='':
-            i=self.player_ord_preflop[:lenact-3].index(p)+1
+            i=self.player_ord_preflop[:lenact-3].index(p)
             pos+=f'utg+{i} '
         
         profit=p.balance-p.balance_round_init
@@ -129,8 +129,9 @@ class Round():
             stage=self.stage
             profit=None
         
-        listsave.append({'game_id': self.cur_game.id,'round':n, 'stage':stage, 
-                         'player': p.name, 'player_typ': p.type, 
+        listsave.append({'game_id': self.cur_game.id, 
+                         'datetime': self.cur_game.dtstart, 'round':n, 
+                         'stage':stage, 'player': p.name, 'player_typ': p.type, 
                          'player_strat': p.strat, 'balance': p.balance, 
                          'pot': self.pot, 'hand': str(p.hand), 
                          'table': str(self.table[:]), 'prob_w': p.probdist[0], 
