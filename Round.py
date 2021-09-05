@@ -7,6 +7,7 @@ Created on Sat Jan 30 10:43:21 2021
 
 from Deck import Deck
 from eval_hand import eval_hand
+from calc_probwin import calc_probwin
 from calc_probwin_multi import calc_probwin_multi
 import math
 import random
@@ -148,9 +149,14 @@ class Round():
         if len(self.players_r_active)>1:
             n=0
             for p in self.players_r_active:
-                p.probdist=calc_probwin_multi(p.hand, self.table
-                                        , n=len(self.players_r_active)
-                                        , simnum=self.simnum_prob)
+                if len(self.players_r_active)>=5:
+                    p.probdist=calc_probwin_multi(p.hand, self.table
+                                            , n=len(self.players_r_active)
+                                            , simnum=self.simnum_prob, cores=3)
+                else:
+                    p.probdist=calc_probwin(p.hand, self.table
+                                            , n=len(self.players_r_active)
+                                            , simnum=self.simnum_prob)
                 p.probwin=round(p.probdist[0],2)
             if self.stage == 'pre-flop':
                 tmp=self.player_ord_preflop
@@ -205,7 +211,7 @@ class Round():
                                           self.players_r_active])))
             pots_all=[x-y for x,y in zip(distnct_elig, [0]+distnct_elig)]
             
-            if round(sum(pots_all)) != round(self.pot):
+            if round(sum(pots_all), 2) != round(self.pot, 2):
                 raise ValueError('check pots_all calculation. '+
                                  f'pot: {self.pot} sumpot: {sum(pots_all)}')
             

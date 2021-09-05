@@ -14,20 +14,24 @@ if 'lkp20210626' not in globals():
     lkp20210626=load_lkp()
     
 def calc_probwin_multi(hand, table, n=2, type='def', simnum=10000
-                       , lkp=lkp20210626, roundnum=10, test=False):
-    if (__name__=='__main__' or (__name__=='calc_probwin_multi' and test)) \
-            and table and not (n==2 and len(table)==5) and type != 'exact' \
+                       , lkp=lkp20210626, roundnum=10, test=False, cores=3):
+    # if (__name__=='__main__' or (__name__=='calc_probwin_multi' and test)) \
+    #         and 
+    if table and not (n==2 and len(table)==5) and type != 'exact' \
             and not(len(hand)!=2 or len(table)>5 or isinstance(hand,list) != True 
                     or len(hand+table) != len(set(hand+table)) or not (2<=n<=10)):
         mp.freeze_support()
         
-        np=mp.cpu_count()
+        if cores=='def':
+            np=mp.cpu_count()
+        else:
+            np=cores
         part_count=round(simnum/np)
         arg_tmp=(part_count, n, hand, table, type, lkp, roundnum)
-        pool=mp.Pool()
+        pool=mp.Pool(processes=np)
         res1=pool.starmap(calc_probwin_1pos, [arg_tmp]*np)
         pool.close()
-        pool.join()
+        # pool.join()
         r_pwin=0
         r_pdraw=0
         for r1 in res1:

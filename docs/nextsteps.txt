@@ -50,7 +50,10 @@ GENERAL status
   -to identify what info/structure is needed in df_log	notstarted
   -to implement logger into sqlite (Game/Simulation)	done
   -to add getter from sql to dataframe			done
-  -sim_multi not used in simulations?? check with cons	WIP
+  -sim_multi not used in simulations?? check with cons	done
+   it wasn't used since we need __main__ at top lvl	
+  -multi not always faster than std, to create benchm	done
+  -to update Round according to benchmark		done
   -make table position of players random, not only	done
    starting button
   -to restrict number of raises to 4?			notstarted

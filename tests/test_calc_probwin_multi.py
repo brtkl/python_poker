@@ -159,7 +159,7 @@ class CalcProbwinTestCase(unittest.TestCase):
         
     def test_2card_sim_low(self):
         self.assertTrue(calc_probwin_multi(self.testhand_2low,[],type='simul'
-                                           , test=True)[0]<0.35)
+                                           , test=True, simnum=20000)[0]<0.35)
         
     def test_3any(self):
         self.assertTrue(1>calc_probwin_multi(self.testhand_3any[:2],
