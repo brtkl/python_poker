@@ -5,7 +5,7 @@ Created on Wed Jan 27 21:38:10 2021
 @author: brtk
 """
 import os
-os.chdir(r'C:\_D\FX\_GLOBAL\learning\python\poker')
+os.chdir(r'C:\_D\PROJECTS\py_001_poker')
 from eval_hand import eval_hand
 from calc_probwin import calc_probwin
 from Deck import Deck
@@ -189,7 +189,7 @@ with open('data\\players\\c1_20210321.pkl', 'rb') as input:
 
 
 import os
-os.chdir(r'C:\_D\FX\_GLOBAL\learning\python\poker')
+os.chdir(r'C:\_D\PROJECTS\py_001_poker')
 from eval_hand import eval_hand
 from calc_probwin import calc_probwin
 from Deck import Deck
@@ -227,6 +227,20 @@ d.shuffle()
 c=d.draw(5)
 res1=calc_probwin_multi(c[:2],c[2:],n=9,simnum=10000)
 res2=calc_probwin(c[:2],c[2:],n=9,simnum=10000)
+
+
+myhand=[(10,'D'),(11,'D')]
+
+myhand2=[(2,'H'),(7,'C')]
+flop=[(6,'D'),(13,'C'),(5,'S'),(14,'C'),(9,'D')]
+
+res1=calc_probwin_multi(myhand,flop,n=2,simnum=20000)
+res2=calc_probwin_multi(myhand2,flop,n=2,simnum=20000)
+
+
+res10=calc_probwin_multi(myhand,flop,n=2,simnum=20000)
+res11=calc_probwin_multi(myhand2,flop,n=2,simnum=20000)
+
 
 standard=[]
 multi=[]

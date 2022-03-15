@@ -193,12 +193,12 @@ class Strategy:
                 self.player.check() 
                 #already all in or all ops all in and our bet is covered
             elif self.player.balance>0:
-                cordecide=0
+                cordecide=False
                 print(f'##Status:\n\tpot: {self.round_.pot}\n'+
                       f'\tmaxbet: {self.round_.maxbet}\n'+
                       f'\tcurrent bet: {self.player.bet}')
                 
-                while cordecide==0:
+                while cordecide==False:
                     if self.player.bet<self.round_.maxbet:
                         text='call/fold/raise/allin'
                     else:
@@ -213,7 +213,7 @@ class Strategy:
                     elif (self.player.bet<self.round_.maxbet and decide !='check'
                           ) or (self.player.bet>=self.round_.maxbet and decide 
                                 not in ('call', 'fold')):
-                        cordecide=1                                
+                        cordecide=True                               
                 if decide=='raise':
                     if (self.player.balance<self.round_.minraise+
                         self.round_.maxbet-self.player.bet):

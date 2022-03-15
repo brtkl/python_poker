@@ -19,6 +19,8 @@ GENERAL status
 -multiple pots but should be 1, perhaps related		done (ok)
 -in Game, define players with dictionaries for 		done
  starting balance and human/player mode			
+-when anyone drops from a round recalculate probs for 	notstarted
+ remaining players
 
 -implementation for up to 8 players			done
   -To create simul prob mode for x players		done
@@ -54,6 +56,7 @@ GENERAL status
    it wasn't used since we need __main__ at top lvl	
   -multi not always faster than std, to create benchm	done
   -to update Round according to benchmark		done
+  -to add cores param acc to bench results		done
   -make table position of players random, not only	done
    starting button
   -to restrict number of raises to 4?			notstarted
