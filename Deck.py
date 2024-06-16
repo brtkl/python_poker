@@ -33,8 +33,14 @@ class Deck():
                 self.cards.remove(i)
             return cards
 
-
-  
+    def add(self,cards,top=True):
+        for i in cards:
+            if i in self.cards:
+                raise ValueError('repeating cards in the input data')
+        if top:
+            self.cards=cards+self.cards
+        else:
+            self.cards=self.cards+cards
 
 
     
